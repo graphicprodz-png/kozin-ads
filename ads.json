@@ -58,6 +58,45 @@
       "link": "https://www.kortoba-aluminium.com/",
       "start": "2026-10-23",
       "end": "2026-10-23"
+    },
+    {
+      "id": "amvlhdhq91",
+      "slot": 1,
+      "order": 1,
+      "active": true,
+      "apps": [
+        "kozinalum"
+      ],
+      "img": "https://raw.githubusercontent.com/graphicprodz-png/kozin-ads/main/ad_n_mvlhdhq9.jpg",
+      "link": "https://www.facebook.com/construtech.dz",
+      "start": "2026-10-23",
+      "end": "2026-10-23"
+    },
+    {
+      "id": "amvlhekn12",
+      "slot": 1,
+      "order": 2,
+      "active": true,
+      "apps": [
+        "kozinalum"
+      ],
+      "img": "https://raw.githubusercontent.com/graphicprodz-png/kozin-ads/main/ad_n_mvlhekn1.jpg",
+      "link": "https://www.facebook.com/construtech.dz",
+      "start": "2026-10-23",
+      "end": "2026-10-23"
+    },
+    {
+      "id": "amvlhf2z63",
+      "slot": 1,
+      "order": 3,
+      "active": true,
+      "apps": [
+        "kozinalum"
+      ],
+      "img": "https://raw.githubusercontent.com/graphicprodz-png/kozin-ads/main/ad_n_mvlhf2z6.jpg",
+      "link": "https://www.facebook.com/construtech.dz",
+      "start": "2026-10-23",
+      "end": "2026-10-23"
     }
   ]
 }
