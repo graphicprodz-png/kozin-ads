@@ -10,20 +10,6 @@
       "active": true,
       "order": 1,
       "apps": []
-    },
-    {
-      "id": "a2",
-      "img": "https://raw.githubusercontent.com/graphicprodz-png/kozin-ads/main/a2.png",
-      "link": "https://example.com",
-      "slot": 2,
-      "active": true
-    },
-    {
-      "id": "a3",
-      "img": "https://raw.githubusercontent.com/graphicprodz-png/kozin-ads/main/a3.png",
-      "link": "https://example.com",
-      "slot": 3,
-      "active": true
     }
   ]
 }
