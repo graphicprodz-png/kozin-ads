@@ -1,0 +1,17 @@
+{
+  "ads": [
+    {
+      "id": "a1",
+      "title": "اسم الشركة المصنّعة",
+      "sub": "بروفيلات ألمنيوم · إكسسوارات",
+      "bg": "#1b1d22",
+      "fg": "#f6efdc",
+      "img": "https://raw.githubusercontent.com/graphicprodz-png/kozin-ads/main/logo1.png",
+      "link": "https://example.com",
+      "start": "2026-11-01",
+      "end": "2026-12-31",
+      "order": 1,
+      "active": true
+    }
+  ]
+}
