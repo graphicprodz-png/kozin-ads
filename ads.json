@@ -10,6 +10,16 @@
       "active": true,
       "order": 1,
       "apps": []
+    },
+    {
+      "id": "amvlc05vx",
+      "link": "https://www.leader-aluminium.com/",
+      "order": 2,
+      "active": true,
+      "apps": [
+        "windoor"
+      ],
+      "img": "https://raw.githubusercontent.com/graphicprodz-png/kozin-ads/main/ad_amvlc05vx_mvlc05vy.jpg"
     }
   ]
 }
