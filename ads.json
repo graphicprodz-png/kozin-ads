@@ -6,5 +6,58 @@
       "3": 5
     }
   },
-  "ads": []
+  "ads": [
+    {
+      "id": "amvlgodzw1",
+      "slot": 1,
+      "order": 1,
+      "active": true,
+      "apps": [
+        "windoor"
+      ],
+      "img": "https://raw.githubusercontent.com/graphicprodz-png/kozin-ads/main/ad_n_mvlgodzw.jpg",
+      "link": "https://www.kortoba-aluminium.com/",
+      "start": "2026-10-23",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "amvlgpgtd2",
+      "slot": 1,
+      "order": 2,
+      "active": true,
+      "apps": [
+        "windoor"
+      ],
+      "img": "https://raw.githubusercontent.com/graphicprodz-png/kozin-ads/main/ad_n_mvlgpgtd.jpg",
+      "link": "https://www.kortoba-aluminium.com/",
+      "start": "2026-10-23",
+      "end": "2026-10-23"
+    },
+    {
+      "id": "amvlgq4so3",
+      "slot": 1,
+      "order": 3,
+      "active": true,
+      "apps": [
+        "windoor"
+      ],
+      "img": "https://raw.githubusercontent.com/graphicprodz-png/kozin-ads/main/ad_n_mvlgq4so.jpg",
+      "link": "https://www.kortoba-aluminium.com/",
+      "start": "2026-10-23",
+      "end": "2026-10-23"
+    },
+    {
+      "id": "amvlgqtfn4",
+      "slot": 1,
+      "order": 4,
+      "active": true,
+      "apps": [
+        "windoor"
+      ],
+      "img": "https://raw.githubusercontent.com/graphicprodz-png/kozin-ads/main/ad_n_mvlgqtfm.jpg",
+      "link": "https://www.kortoba-aluminium.com/",
+      "start": "2026-10-23",
+      "end": "2026-10-23"
+    }
+  ]
 }
