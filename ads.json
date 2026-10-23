@@ -1,7 +1,29 @@
 {
   "ads": [
-    {"id":"a1","img":"https://raw.githubusercontent.com/graphicprodz-png/kozin-ads/main/a1.png","link":"https://example.com","slot":1,"start":"2026-10-01","end":"2026-12-31","active":true},
-    {"id":"a2","img":"https://raw.githubusercontent.com/graphicprodz-png/kozin-ads/main/a2.png","link":"https://example.com","slot":2,"active":true},
-    {"id":"a3","img":"https://raw.githubusercontent.com/graphicprodz-png/kozin-ads/main/a3.png","link":"https://example.com","slot":3,"active":true}
+    {
+      "id": "a1",
+      "img": "https://raw.githubusercontent.com/graphicprodz-png/kozin-ads/main/ad_a1_mvlaxuz2.jpg",
+      "link": "https://www.kortoba-aluminium.com/",
+      "slot": 1,
+      "start": "2026-10-01",
+      "end": "2026-12-31",
+      "active": true,
+      "order": 1,
+      "apps": []
+    },
+    {
+      "id": "a2",
+      "img": "https://raw.githubusercontent.com/graphicprodz-png/kozin-ads/main/a2.png",
+      "link": "https://example.com",
+      "slot": 2,
+      "active": true
+    },
+    {
+      "id": "a3",
+      "img": "https://raw.githubusercontent.com/graphicprodz-png/kozin-ads/main/a3.png",
+      "link": "https://example.com",
+      "slot": 3,
+      "active": true
+    }
   ]
 }
