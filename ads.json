@@ -97,6 +97,18 @@
       "link": "https://www.facebook.com/construtech.dz",
       "start": "2026-10-23",
       "end": "2026-10-23"
+    },
+    {
+      "id": "amvmqo5bb1",
+      "slot": 1,
+      "order": 1,
+      "active": true,
+      "apps": [
+        "rclean"
+      ],
+      "img": "https://raw.githubusercontent.com/graphicprodz-png/kozin-ads/main/ad_n_mvmqo5bb.jpg",
+      "start": "2026-10-24",
+      "end": "2026-10-24"
     }
   ]
 }
