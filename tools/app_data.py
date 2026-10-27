@@ -72,9 +72,9 @@ applications = {
   "rclean": dict(
     NAME="Rclean", VERSION="v1.39", LOGO="rclean.png", APK="RClean.apk",
     COLOR=dict(primary="#159e8a", accent="#1fb87f"),
-    TAGLINE="إدارة الفوترة والتصنيع وشراء المواد الأولية للمنتجات الجاهزة.",
-    TAGLINE_EN="Manage invoicing, manufacturing, and raw-material purchasing for finished products.",
-    AUDIENCE="التطبيق موجَّه للمؤسسات الصغيرة العاملة في تصنيع وبيع المنتجات الجاهزة، والتي تحتاج إلى إدارة الفوترة ومخزون المواد الأولية ومتابعة ديون الزبائن والموردين في مكان واحد.",
+    TAGLINE="تطبيق لإدارة تصنيع ومبيعات مواد التنظيف: مواد أولية، وصفات وإنتاج، مخزون، مبيعات وفواتير PDF، زبائن وموردون، وتقارير.",
+    TAGLINE_EN="An app for managing the manufacturing and sales of cleaning products: raw materials, recipes and production, inventory, sales and PDF invoices, customers and suppliers, and reports.",
+    AUDIENCE="التطبيق موجَّه للمؤسسات الصغيرة العاملة في تصنيع وبيع مواد التنظيف، والتي تحتاج إلى إدارة الفوترة ومخزون المواد الأولية ومتابعة ديون الزبائن والموردين في مكان واحد.",
     AUDIENCE_EN="Built for small businesses that manufacture and sell finished products — needing invoicing, raw-material stock, and tracking customer and supplier debts, all in one place.",
     HIGHLIGHTS=[
       dict(icon="📊", title="لوحة تحكم شاملة", desc="تشاهد مبيعات اليوم وربح الشهر بنظرة واحدة فور فتح التطبيق.",
