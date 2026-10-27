@@ -101,7 +101,7 @@ applications = {
       "Create an invoice directly, or from a previous delivery note.",
       "Track today's sales, this month's profit, and outstanding debts from the dashboard.",
     ],
-    SHOTS=["1.png","2.png"],
+    SHOTS=["s1-home.png","s2-materials.png","s3-recipe.png","s4-invoice.png","s5-reports.png","s6-clients.png"],
   ),
   "plafonpro": dict(
     NAME="Plafonpro", VERSION="v1.43", LOGO="plafonpro.png", APK="PlafonPro.apk",
