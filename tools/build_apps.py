@@ -2,8 +2,27 @@ import sys, os, json
 sys.path.insert(0, os.path.dirname(__file__))
 from app_data import applications
 
+REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+OUT = os.path.join(REPO_ROOT, 'apps')
+os.makedirs(OUT, exist_ok=True)
+
 UPDATES_PATH = os.path.join(os.path.dirname(__file__), 'updates.json')
 updates = json.load(open(UPDATES_PATH, encoding='utf-8')) if os.path.isfile(UPDATES_PATH) else {}
+
+# Facts confirmed directly from each app's own app/build.gradle + AndroidManifest.xml
+# in the kitchen-calc source repo: minSdk 24 (Android 7.0) and the single
+# android.permission.INTERNET permission, identical across all 5 apps.
+MIN_ANDROID = "Android 7.0 أو أحدث"
+PERMISSIONS = "الإنترنت فقط"
+
+def human_size(path):
+    if not os.path.isfile(path):
+        return None
+    n = os.path.getsize(path)
+    mb = n / (1024 * 1024)
+    if mb >= 1:
+        return f"{mb:.1f} ميغا"
+    return f"{n // 1024} كيلو"
 
 TPL = '''<!doctype html>
 <html lang="ar" dir="rtl">
@@ -54,6 +73,16 @@ TPL = '''<!doctype html>
     background:var(--install); color:#fff; font-size:12.5px; font-weight:600;
     padding:5px 12px; border-radius:999px; width:fit-content;
   }
+
+  .quickfacts{
+    max-width:800px; margin:0 auto; padding:2px 16px 16px;
+    display:flex; justify-content:center; gap:22px; flex-wrap:wrap;
+  }
+  .quickfacts .qf{display:flex; flex-direction:column; align-items:center; gap:3px; min-width:64px}
+  .quickfacts .qf .ic{font-size:17px}
+  .quickfacts .qf b{color:var(--text); font-size:13px; font-weight:700}
+  .quickfacts .qf span{color:var(--muted); font-size:11.5px}
+
   .hero-actions{max-width:800px; margin:0 auto; padding:14px 16px 8px; display:flex; justify-content:center; gap:10px; flex-wrap:wrap}
   .dl-btn{
     display:inline-flex; align-items:center; gap:8px; background:var(--install); color:#fff;
@@ -67,10 +96,10 @@ TPL = '''<!doctype html>
   }
   .pdf-btn:hover{border-color:var(--brand); color:var(--brand)}
 
-  .tagline-wrap{max-width:800px; margin:0 auto; padding:6px 16px 20px; text-align:center}
+  .tagline-wrap{max-width:800px; margin:0 auto; padding:6px 16px 10px; text-align:center}
   .tagline-wrap p{color:var(--muted); font-size:15px; margin:0 auto; max-width:560px}
 
-  .shots{max-width:800px; margin:0 auto; padding:0 0 26px}
+  .shots{max-width:800px; margin:0 auto; padding:10px 0 26px}
   .shots-row{display:flex; gap:12px; overflow-x:auto; padding:4px 16px 8px; scroll-snap-type:x proximity; justify-content:center}
   .shots-row img{
     height:360px; border-radius:16px; border:1px solid var(--line); scroll-snap-align:start; flex:0 0 auto;
@@ -83,8 +112,34 @@ TPL = '''<!doctype html>
   main{max-width:800px; margin:0 auto; padding:0 16px 60px}
   section{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px 24px; margin-bottom:16px}
   section h2{margin:0 0 14px; font-size:17px}
+  section > p.lead{margin:0 0 14px; color:var(--muted); font-size:13.5px}
+
+  .highlights{display:grid; grid-template-columns:repeat(auto-fit, minmax(190px,1fr)); gap:14px}
+  .hl-card{background:var(--bg); border:1px solid var(--line); border-radius:12px; padding:16px}
+  .hl-card .ic{font-size:26px; margin-bottom:8px; display:block}
+  .hl-card h3{margin:0 0 6px; font-size:14.5px}
+  .hl-card p{margin:0; color:var(--muted); font-size:13px}
+
+  .audience p{margin:0; font-size:14.5px; color:var(--text)}
+
   .chips{display:flex; flex-wrap:wrap; gap:8px}
   .chip{background:var(--bg); border:1px solid var(--line); border-radius:999px; padding:6px 13px; font-size:13.5px; color:var(--text)}
+
+  .infotable{width:100%; border-collapse:collapse}
+  .infotable tr{border-bottom:1px solid var(--line)}
+  .infotable tr:last-child{border-bottom:none}
+  .infotable td{padding:11px 4px; font-size:14px; vertical-align:top}
+  .infotable td:first-child{color:var(--muted); width:38%}
+  .infotable td:last-child{font-weight:600}
+
+  .faq details{border-bottom:1px solid var(--line); padding:12px 0}
+  .faq details:last-child{border-bottom:none}
+  .faq summary{cursor:pointer; font-weight:600; font-size:14.5px; list-style:none; display:flex; justify-content:space-between; align-items:center; gap:10px}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:'+'; font-size:19px; color:var(--muted); flex:0 0 auto}
+  .faq details[open] summary::after{content:'−'}
+  .faq p{margin:10px 0 0; color:var(--muted); font-size:13.5px}
+
   ol{margin:0; padding-right:20px}
   li{margin-bottom:9px; font-size:14.5px}
   .note{margin-top:14px; font-size:13px; color:var(--muted); border-top:1px dashed var(--line); padding-top:12px}
@@ -105,6 +160,13 @@ TPL = '''<!doctype html>
 
 <div class="tagline-wrap"><p>__TAGLINE__</p></div>
 
+<div class="quickfacts">
+  <div class="qf"><span class="ic">📦</span><b>__SIZE__</b><span>الحجم</span></div>
+  <div class="qf"><span class="ic">🤖</span><b>7.0+</b><span>Android</span></div>
+  <div class="qf"><span class="ic">🌐</span><b>الإنترنت</b><span>الأذونات</span></div>
+  <div class="qf"><span class="ic">🏷️</span><b>Construtech</b><span>المطور</span></div>
+</div>
+
 <div class="hero-actions">
   <a class="dl-btn" href="../apks/__APK__" download>⬇ تحميل APK</a>
   <a class="pdf-btn" href="../guides/__KEY__-guide.pdf" download>📄 دليل الاستخدام (PDF)</a>
@@ -115,6 +177,18 @@ __SHOTS__
 </div>
 
 <main>
+  <section>
+    <h2>ليش __NAME__</h2>
+    <div class="highlights">
+__HIGHLIGHTS__
+    </div>
+  </section>
+
+  <section class="audience">
+    <h2>لمن هذا التطبيق</h2>
+    <p>__AUDIENCE__</p>
+  </section>
+
   <section>
     <h2>التطبيق فيه</h2>
     <div class="chips">
@@ -127,6 +201,22 @@ __CHIPS__
     <ol>
 __USAGE__
     </ol>
+  </section>
+
+  <section>
+    <h2>معلومات التطبيق</h2>
+    <table class="infotable">
+      <tr><td>الحجم</td><td>__SIZE__</td></tr>
+      <tr><td>يتطلب</td><td>__MIN_ANDROID__</td></tr>
+      <tr><td>الأذونات</td><td>__PERMISSIONS__</td></tr>
+      <tr><td>المطور</td><td>Construtech</td></tr>
+      <tr><td>النسخة الحالية</td><td>__VERSION__</td></tr>
+    </table>
+  </section>
+
+  <section class="faq">
+    <h2>أسئلة شائعة</h2>
+__FAQ__
   </section>
 
   <section>
@@ -158,10 +248,6 @@ __USAGE__
 </html>
 '''
 
-REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-OUT = os.path.join(REPO_ROOT, 'apps')
-os.makedirs(OUT, exist_ok=True)
-
 ONLY_KEYS = set(sys.argv[1:]) or None  # optional: regenerate only specific app keys
 
 for key, a in applications.items():
@@ -174,11 +260,47 @@ for key, a in applications.items():
     html = html.replace("__APK__", a["APK"])
     html = html.replace("__KEY__", key)
     html = html.replace("__TAGLINE__", a["TAGLINE"])
+    html = html.replace("__AUDIENCE__", a["AUDIENCE"])
     html = html.replace("__UPDATED__", updates.get(key, ""))
+    html = html.replace("__MIN_ANDROID__", MIN_ANDROID)
+    html = html.replace("__PERMISSIONS__", PERMISSIONS)
+
+    apk_path = os.path.join(REPO_ROOT, 'apks', a["APK"])
+    size_txt = human_size(apk_path) or "—"
+    html = html.replace("__SIZE__", size_txt)
+
     chips = "\n".join(f'      <div class="chip">{c}</div>' for c in a["FEATURES"])
     html = html.replace("__CHIPS__", chips)
     usage = "\n".join(f"      <li>{u}</li>" for u in a["USAGE"])
     html = html.replace("__USAGE__", usage)
+
+    hl = "\n".join(
+        f'      <div class="hl-card"><span class="ic">{h["icon"]}</span><h3>{h["title"]}</h3><p>{h["desc"]}</p></div>'
+        for h in a["HIGHLIGHTS"]
+    )
+    html = html.replace("__HIGHLIGHTS__", hl)
+
+    # FAQ — grounded in what we actually verified for each app; the data-storage
+    # answer is only shown for apps we could confirm (local HTML/JS apps where
+    # localStorage/indexedDB was found in the shipped assets), never guessed.
+    faq_items = [
+        ("واش هاذ التطبيق آمن؟",
+         "التطبيق ماشي من Google Play، راه تحميل مباشر (APK) موقّع من Construtech. تأكد دايما إنك حملتو من هاذ الصفحة بالذات قبل ما تثبتو."),
+    ]
+    if a.get("LOCAL_DATA"):
+        faq_items.append((
+            "وين تتخزن بياناتي؟",
+            "البيانات اللي تدخلها تتخزن محليا فهاتفك داخل التطبيق — ماكاين حتى سيرفر خارجي كيخزن معطياتك.",
+        ))
+    faq_items.append((
+        "كيفاش نعرف واش كاين تحديث جديد؟",
+        "كي يتحدث التطبيق، تبان ملاحظة خضراء تحتو فهاذ الصفحة لمدة أسبوع. تقدر ديما ترجع لهنا وتحمل آخر نسخة.",
+    ))
+    faq_html = "\n".join(
+        f'    <details><summary>{q}</summary><p>{ans}</p></details>'
+        for q, ans in faq_items
+    )
+    html = html.replace("__FAQ__", faq_html)
 
     if a["SHOTS"]:
         imgs = "\n".join(f'    <img src="../screenshots/{key}/{s}" alt="لقطة من {a["NAME"]}" loading="lazy">' for s in a["SHOTS"])

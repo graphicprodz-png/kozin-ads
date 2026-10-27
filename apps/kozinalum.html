@@ -47,6 +47,16 @@
     background:var(--install); color:#fff; font-size:12.5px; font-weight:600;
     padding:5px 12px; border-radius:999px; width:fit-content;
   }
+
+  .quickfacts{
+    max-width:800px; margin:0 auto; padding:2px 16px 16px;
+    display:flex; justify-content:center; gap:22px; flex-wrap:wrap;
+  }
+  .quickfacts .qf{display:flex; flex-direction:column; align-items:center; gap:3px; min-width:64px}
+  .quickfacts .qf .ic{font-size:17px}
+  .quickfacts .qf b{color:var(--text); font-size:13px; font-weight:700}
+  .quickfacts .qf span{color:var(--muted); font-size:11.5px}
+
   .hero-actions{max-width:800px; margin:0 auto; padding:14px 16px 8px; display:flex; justify-content:center; gap:10px; flex-wrap:wrap}
   .dl-btn{
     display:inline-flex; align-items:center; gap:8px; background:var(--install); color:#fff;
@@ -60,10 +70,10 @@
   }
   .pdf-btn:hover{border-color:var(--brand); color:var(--brand)}
 
-  .tagline-wrap{max-width:800px; margin:0 auto; padding:6px 16px 20px; text-align:center}
+  .tagline-wrap{max-width:800px; margin:0 auto; padding:6px 16px 10px; text-align:center}
   .tagline-wrap p{color:var(--muted); font-size:15px; margin:0 auto; max-width:560px}
 
-  .shots{max-width:800px; margin:0 auto; padding:0 0 26px}
+  .shots{max-width:800px; margin:0 auto; padding:10px 0 26px}
   .shots-row{display:flex; gap:12px; overflow-x:auto; padding:4px 16px 8px; scroll-snap-type:x proximity; justify-content:center}
   .shots-row img{
     height:360px; border-radius:16px; border:1px solid var(--line); scroll-snap-align:start; flex:0 0 auto;
@@ -76,8 +86,34 @@
   main{max-width:800px; margin:0 auto; padding:0 16px 60px}
   section{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px 24px; margin-bottom:16px}
   section h2{margin:0 0 14px; font-size:17px}
+  section > p.lead{margin:0 0 14px; color:var(--muted); font-size:13.5px}
+
+  .highlights{display:grid; grid-template-columns:repeat(auto-fit, minmax(190px,1fr)); gap:14px}
+  .hl-card{background:var(--bg); border:1px solid var(--line); border-radius:12px; padding:16px}
+  .hl-card .ic{font-size:26px; margin-bottom:8px; display:block}
+  .hl-card h3{margin:0 0 6px; font-size:14.5px}
+  .hl-card p{margin:0; color:var(--muted); font-size:13px}
+
+  .audience p{margin:0; font-size:14.5px; color:var(--text)}
+
   .chips{display:flex; flex-wrap:wrap; gap:8px}
   .chip{background:var(--bg); border:1px solid var(--line); border-radius:999px; padding:6px 13px; font-size:13.5px; color:var(--text)}
+
+  .infotable{width:100%; border-collapse:collapse}
+  .infotable tr{border-bottom:1px solid var(--line)}
+  .infotable tr:last-child{border-bottom:none}
+  .infotable td{padding:11px 4px; font-size:14px; vertical-align:top}
+  .infotable td:first-child{color:var(--muted); width:38%}
+  .infotable td:last-child{font-weight:600}
+
+  .faq details{border-bottom:1px solid var(--line); padding:12px 0}
+  .faq details:last-child{border-bottom:none}
+  .faq summary{cursor:pointer; font-weight:600; font-size:14.5px; list-style:none; display:flex; justify-content:space-between; align-items:center; gap:10px}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:'+'; font-size:19px; color:var(--muted); flex:0 0 auto}
+  .faq details[open] summary::after{content:'−'}
+  .faq p{margin:10px 0 0; color:var(--muted); font-size:13.5px}
+
   ol{margin:0; padding-right:20px}
   li{margin-bottom:9px; font-size:14.5px}
   .note{margin-top:14px; font-size:13px; color:var(--muted); border-top:1px dashed var(--line); padding-top:12px}
@@ -98,6 +134,13 @@
 
 <div class="tagline-wrap"><p>حساب قياسات وتسعير مطابخ الألمنيوم — أبواب، كيسونات، فواصل ورفوف.</p></div>
 
+<div class="quickfacts">
+  <div class="qf"><span class="ic">📦</span><b>372 كيلو</b><span>الحجم</span></div>
+  <div class="qf"><span class="ic">🤖</span><b>7.0+</b><span>Android</span></div>
+  <div class="qf"><span class="ic">🌐</span><b>الإنترنت</b><span>الأذونات</span></div>
+  <div class="qf"><span class="ic">🏷️</span><b>Construtech</b><span>المطور</span></div>
+</div>
+
 <div class="hero-actions">
   <a class="dl-btn" href="../apks/KozinAlum.apk" download>⬇ تحميل APK</a>
   <a class="pdf-btn" href="../guides/kozinalum-guide.pdf" download>📄 دليل الاستخدام (PDF)</a>
@@ -111,6 +154,20 @@
 </div>
 
 <main>
+  <section>
+    <h2>ليش Kozinalum</h2>
+    <div class="highlights">
+      <div class="hl-card"><span class="ic">📐</span><h3>حساب دقيق للقياسات</h3><p>تدخل العرض والارتفاع والعمق، والتطبيق يحسبلك تفاصيل القطعة (أبواب، كيسونات) بالمليمتر.</p></div>
+      <div class="hl-card"><span class="ic">🎨</span><h3>تخصيص كامل</h3><p>تختار لون البروفيل ونوع الحشوة، وتزيد فواصل ورفوف حسب التصميم اللي حاب فيه.</p></div>
+      <div class="hl-card"><span class="ic">⚡</span><h3>نتيجة فورية</h3><p>عرض داخلي للقطعة وكل الاقتراحات يبانو أوتوماتيكيا، بلا ما تحتاج تحسب بروحك.</p></div>
+    </div>
+  </section>
+
+  <section class="audience">
+    <h2>لمن هذا التطبيق</h2>
+    <p>التطبيق موجه لحرفيي وصُنّاع الألمنيوم في الجزائر اللي خدمتهم تصنيع مطابخ الألمنيوم — سواء ورشة صغيرة أو مؤسسة، باش يسهل عليهم حساب القياسات والتسعير بسرعة ودقة بلا ما يحتاجو آلة حاسبة أو ورقة وقلم.</p>
+  </section>
+
   <section>
     <h2>التطبيق فيه</h2>
     <div class="chips">
@@ -131,6 +188,24 @@
       <li>اختار لون البروفيل ونوع الحشوة (دفتين عاديتين أو رافعتين...).</li>
       <li>شوف الاقتراحات والعرض الداخلي اللي كيحسبهم التطبيق أوتوماتيكيا.</li>
     </ol>
+  </section>
+
+  <section>
+    <h2>معلومات التطبيق</h2>
+    <table class="infotable">
+      <tr><td>الحجم</td><td>372 كيلو</td></tr>
+      <tr><td>يتطلب</td><td>Android 7.0 أو أحدث</td></tr>
+      <tr><td>الأذونات</td><td>الإنترنت فقط</td></tr>
+      <tr><td>المطور</td><td>Construtech</td></tr>
+      <tr><td>النسخة الحالية</td><td>v2.66</td></tr>
+    </table>
+  </section>
+
+  <section class="faq">
+    <h2>أسئلة شائعة</h2>
+    <details><summary>واش هاذ التطبيق آمن؟</summary><p>التطبيق ماشي من Google Play، راه تحميل مباشر (APK) موقّع من Construtech. تأكد دايما إنك حملتو من هاذ الصفحة بالذات قبل ما تثبتو.</p></details>
+    <details><summary>وين تتخزن بياناتي؟</summary><p>البيانات اللي تدخلها تتخزن محليا فهاتفك داخل التطبيق — ماكاين حتى سيرفر خارجي كيخزن معطياتك.</p></details>
+    <details><summary>كيفاش نعرف واش كاين تحديث جديد؟</summary><p>كي يتحدث التطبيق، تبان ملاحظة خضراء تحتو فهاذ الصفحة لمدة أسبوع. تقدر ديما ترجع لهنا وتحمل آخر نسخة.</p></details>
   </section>
 
   <section>
