@@ -21,8 +21,8 @@ def human_size(path):
     n = os.path.getsize(path)
     mb = n / (1024 * 1024)
     if mb >= 1:
-        return f"{mb:.1f} ميغا"
-    return f"{n // 1024} كيلو"
+        return f"{mb:.1f} ميغابايت"
+    return f"{n // 1024} كيلوبايت"
 
 TPL = '''<!doctype html>
 <html lang="ar" dir="rtl">
@@ -168,7 +168,7 @@ TPL = '''<!doctype html>
     <h1>__NAME__</h1>
     <p class="dev">Construtech</p>
     <p class="meta-row"><span>__VERSION__</span><span class="dot"></span><span>Android</span><span class="dot"></span><span>APK مباشر</span></p>
-    <p class="updated-badge" id="updatedBadge" data-updated="__UPDATED__">🆕 تم تحديث التطبيق مؤخرا</p>
+    <p class="updated-badge" id="updatedBadge" data-updated="__UPDATED__">🆕 تم تحديث التطبيق مؤخرًا</p>
   </div>
 </div>
 
@@ -185,7 +185,7 @@ TPL = '''<!doctype html>
   <a class="dl-btn" id="dlBtn" href="../apks/__APK__" download>⬇ تحميل وتثبيت</a>
   <a class="pdf-btn" href="../guides/__KEY__-guide.pdf" download>📄 دليل الاستخدام (PDF)</a>
 </div>
-<p class="dl-hint">كي تضغط، يبدا تحميل ملف APK — بعدها خطوات التثبيت تبان لك وحدها تحت 👇</p>
+<p class="dl-hint">عند الضغط، يبدأ تحميل ملف APK — وبعدها تظهر خطوات التثبيت تلقائيًا في الأسفل 👇</p>
 
 <div class="shots">
 __SHOTS__
@@ -193,26 +193,26 @@ __SHOTS__
 
 <main>
   <section>
-    <h2>ليش __NAME__</h2>
+    <h2>لماذا __NAME__</h2>
     <div class="highlights">
 __HIGHLIGHTS__
     </div>
   </section>
 
   <section class="audience">
-    <h2>لمن هذا التطبيق</h2>
+    <h2>الفئة المستهدفة</h2>
     <p>__AUDIENCE__</p>
   </section>
 
   <section>
-    <h2>التطبيق فيه</h2>
+    <h2>ما يقدّمه التطبيق</h2>
     <div class="chips">
 __CHIPS__
     </div>
   </section>
 
   <section>
-    <h2>كيفاش تبدا تخدم بيه</h2>
+    <h2>كيف تبدأ باستخدامه</h2>
     <ol>
 __USAGE__
     </ol>
@@ -224,7 +224,7 @@ __USAGE__
       <tr><td>الحجم</td><td>__SIZE__</td></tr>
       <tr><td>يتطلب</td><td>__MIN_ANDROID__</td></tr>
       <tr><td>الأذونات</td><td>__PERMISSIONS__</td></tr>
-      <tr><td>المطور</td><td>Construtech</td></tr>
+      <tr><td>المطوّر</td><td>Construtech</td></tr>
       <tr><td>النسخة الحالية</td><td>__VERSION__</td></tr>
     </table>
   </section>
@@ -235,17 +235,17 @@ __FAQ__
   </section>
 
   <section class="install-steps" id="installSteps">
-    <h2>كيفاش تنصبو (خارج المتجر)</h2>
+    <h2>طريقة التثبيت (خارج المتجر)</h2>
     <ol>
-      <li>حمل ملف <b>APK</b> من الزر فوق.</li>
-      <li>إلى بان لك تنبيه "التثبيت من مصادر غير معروفة" — روح لـ <b>الإعدادات</b> واسمح بذلك لمتصفحك (مرة واحدة فقط).</li>
-      <li>رجع للملف الـ APK اللي حملتو وافتحو، ثم اضغط <b>تثبيت</b>.</li>
-      <li>بعد التثبيت نقدر تحيد السماح نتاع "مصادر غير معروفة" إلى حبيت.</li>
+      <li>حمّل ملف <b>APK</b> من الزر أعلاه.</li>
+      <li>إذا ظهر تنبيه "التثبيت من مصادر غير معروفة" — توجّه إلى <b>الإعدادات</b> واسمح بذلك لمتصفحك (مرة واحدة فقط).</li>
+      <li>عد إلى ملف الـ APK الذي حمّلته وافتحه، ثم اضغط <b>تثبيت</b>.</li>
+      <li>بعد التثبيت، يمكنك إلغاء السماح بـ"مصادر غير معروفة" إن رغبت.</li>
     </ol>
-    <div class="note">ملاحظة: هاذ التطبيق ماشي من Google Play — تحميل مباشر (APK). تأكد دايما من المصدر قبل ما تثبت أي تطبيق على هاتفك.__EXTRA_NOTE__</div>
+    <div class="note">ملاحظة: هذا التطبيق غير متوفر على Google Play — فهو تحميل مباشر (APK). تأكد دائمًا من مصدر الملف قبل تثبيت أي تطبيق على هاتفك.__EXTRA_NOTE__</div>
     <div class="qr-box">
-      <img src="../qrcodes/__KEY__.png" alt="QR كود لتحميل __NAME__ مباشرة" loading="lazy">
-      <div class="qt"><b>📷 سكان للتثبيت المباشر</b><span>صوّر الكود بكاميرا هاتفك — يبدا تحميل __NAME__ __VERSION__ فالوقت.</span></div>
+      <img src="../qrcodes/__KEY__.png" alt="رمز QR لتحميل __NAME__ مباشرة" loading="lazy">
+      <div class="qt"><b>📷 امسح للتثبيت المباشر</b><span>صوّر الرمز بكاميرا هاتفك — يبدأ تحميل __NAME__ __VERSION__ فورًا.</span></div>
     </div>
   </section>
 </main>
@@ -315,17 +315,17 @@ for key, a in applications.items():
     # answer is only shown for apps we could confirm (local HTML/JS apps where
     # localStorage/indexedDB was found in the shipped assets), never guessed.
     faq_items = [
-        ("واش هاذ التطبيق آمن؟",
-         "التطبيق ماشي من Google Play، راه تحميل مباشر (APK) موقّع من Construtech. تأكد دايما إنك حملتو من هاذ الصفحة بالذات قبل ما تثبتو."),
+        ("هل هذا التطبيق آمن؟",
+         "التطبيق غير متوفر على Google Play، وهو تحميل مباشر (APK) موقَّع من Construtech. تأكد دائمًا من أنك حمّلته من هذه الصفحة بالذات قبل تثبيته."),
     ]
     if a.get("LOCAL_DATA"):
         faq_items.append((
-            "وين تتخزن بياناتي؟",
-            "البيانات اللي تدخلها تتخزن محليا فهاتفك داخل التطبيق — ماكاين حتى سيرفر خارجي كيخزن معطياتك.",
+            "أين تُخزَّن بياناتي؟",
+            "البيانات التي تُدخلها تُخزَّن محليًا في هاتفك داخل التطبيق — لا يوجد أي خادم خارجي يخزّن معطياتك.",
         ))
     faq_items.append((
-        "كيفاش نعرف واش كاين تحديث جديد؟",
-        "كي يتحدث التطبيق، تبان ملاحظة خضراء تحتو فهاذ الصفحة لمدة أسبوع. تقدر ديما ترجع لهنا وتحمل آخر نسخة.",
+        "كيف أعرف إذا صدر تحديث جديد؟",
+        "عند صدور تحديث للتطبيق، تظهر ملاحظة خضراء تحت هذه الصفحة لمدة أسبوع. يمكنك دائمًا العودة إلى هنا لتحميل آخر نسخة.",
     ))
     faq_html = "\n".join(
         f'    <details><summary>{q}</summary><p>{ans}</p></details>'
@@ -338,8 +338,8 @@ for key, a in applications.items():
         shots_html = f'  <div class="shots-row">\n{imgs}\n  </div>'
         extra_note = ""
     else:
-        shots_html = '  <p class="shots-empty">ما قدرناش نجيبو لقطات شاشة لهاذ التطبيق — محتواه مخزن بصيغة ما تتقراش مباشرة من برا.</p>'
-        extra_note = " ماقدرناش نعرضو لقطات شاشة حقيقية لهاذ التطبيق بالضبط (راجع الملاحظة فوق)."
+        shots_html = '  <p class="shots-empty">تعذّر علينا عرض لقطات شاشة لهذا التطبيق — محتواه مخزَّن بصيغة لا يمكن قراءتها مباشرة من الخارج.</p>'
+        extra_note = " لم نتمكن من عرض لقطات شاشة حقيقية لهذا التطبيق بالتحديد (راجع الملاحظة أعلاه)."
     html = html.replace("__SHOTS__", shots_html)
     html = html.replace("__EXTRA_NOTE__", extra_note)
 

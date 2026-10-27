@@ -158,9 +158,11 @@ h2.sec .en{font-size:10.5px;font-weight:400;color:var(--muted)}
 
 .no-shots{background:var(--bg);border-radius:14px;padding:22px;text-align:center;color:var(--muted);font-size:11.5px;line-height:1.85}
 .contact-grid{display:flex;gap:12px;margin-top:10px}
-.contact-card{flex:1;background:var(--bg);border-radius:12px;padding:14px;text-align:center;border:1px solid var(--line)}
-.contact-card .ic{font-size:20px;margin-bottom:6px}
-.contact-card b{display:block;font-size:12px}
+.contact-grid{flex-wrap:wrap}
+.contact-card{flex:1 1 28%;min-width:28%;background:var(--bg);border-radius:12px;padding:12px 8px;text-align:center;border:1px solid var(--line)}
+.contact-card .ic{font-size:18px;margin-bottom:5px}
+.contact-card b{display:block;font-size:10.5px;word-break:break-word}
+.contact-card .en{display:block;font-size:8.5px;color:var(--muted);margin-top:4px;direction:rtl;text-align:center}
 .qr-box{display:flex;align-items:center;gap:16px;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-top:12px}
 .qr-box img{width:76px;height:76px;border-radius:9px;background:#fff;border:1px solid var(--line);flex:0 0 auto}
 .qr-box .qt{font-size:11px;line-height:1.7}
@@ -275,11 +277,12 @@ def render_section_page(a, sec, idx, pageno, cont=False):
     t_ar, t_en = bi(sec.get("title", {}))
     intro_ar, intro_en = bi(sec.get("intro", {}))
     steps_html = []
-    for s in sec.get("_steps_chunk", []):
+    start_n = sec.get("_step_start_num", 1)
+    for i, s in enumerate(sec.get("_steps_chunk", [])):
         s_ar, s_en = bi(s.get("text", {}))
         shot = s.get("screenshot")
         shot_html = f'<div class="shot"><img src="{ROOT_URL}/screenshots/{a["_key"]}/guide/{shot}"></div>' if shot else ""
-        steps_html.append(f'<div class="step"><div class="num"></div><div class="body"><p>{s_ar}</p><p class="en">{s_en}</p></div>{shot_html}</div>')
+        steps_html.append(f'<div class="step"><div class="num">{start_n + i}</div><div class="body"><p>{s_ar}</p><p class="en">{s_en}</p></div>{shot_html}</div>')
     tip_html = ""
     tip = sec.get("tip")
     if tip and not cont:
@@ -374,8 +377,8 @@ def render_install_page(a, pageno):
         ('بعد التثبيت، يمكنك إلغاء السماح بـ "مصادر غير معروفة" إن رغبت.', 'After installing, you can turn the "unknown sources" permission back off if you like.'),
     ]
     steps_html = "\n".join(
-        f'<div class="step"><div class="num"></div><div class="body"><p>{ar}</p><p class="en">{en}</p></div></div>'
-        for ar, en in steps
+        f'<div class="step"><div class="num">{i+1}</div><div class="body"><p>{ar}</p><p class="en">{en}</p></div></div>'
+        for i, (ar, en) in enumerate(steps)
     )
     return f'''<section class="page pad">
       {page_header(name, logo, "طريقة تثبيت التطبيق", "Installing the app", version)}
@@ -392,16 +395,41 @@ def render_install_page(a, pageno):
       {page_footer(name, version, pageno)}
     </section>'''
 
+CONTACT_LABELS = {
+    "developer": ("المطوّر", "Developer", "🏷️"),
+    "phone": ("الهاتف", "Phone", "📞"),
+    "whatsapp": ("واتساب", "WhatsApp", "💬"),
+    "email": ("البريد الإلكتروني", "Email", "✉️"),
+    "rip": ("الحساب البريدي (RIP)", "Bank account (RIP)", "🏦"),
+    "rip_account_name": ("اسم صاحب الحساب", "Account holder", "👤"),
+}
+
 def render_closing_page(a, content, pageno):
     name, logo, version = a["NAME"], a["LOGO"], a["VERSION"]
     contact = content.get("real_contact_info_found_in_app")
     contact_html = ""
-    if contact:
-        if isinstance(contact, dict):
-            cards = "".join(f'<div class="contact-card"><div class="ic">📞</div><b>{esc(str(v))}</b></div>' for v in contact.values())
-        else:
-            cards = f'<div class="contact-card"><div class="ic">📞</div><b>{esc(str(contact))}</b></div>'
-        contact_html = f'<h2 class="sec">للتواصل والدعم<span class="en">Contact &amp; support</span></h2><div class="sec-rule"></div><div class="contact-grid">{cards}</div>'
+    plans_html = ""
+    if contact and isinstance(contact, dict):
+        cards = []
+        for k, v in contact.items():
+            if k in ("note", "note_ar", "note_en", "subscription_plans_dzd", "payment_methods") or not v:
+                continue
+            lbl_ar, lbl_en, ic = CONTACT_LABELS.get(k, (k, k, "ℹ️"))
+            cards.append(f'<div class="contact-card"><div class="ic">{ic}</div><b>{esc(str(v))}</b><span class="en">{lbl_ar} / {lbl_en}</span></div>')
+        if cards:
+            contact_html = f'<h2 class="sec">للتواصل والدعم<span class="en">Contact &amp; support</span></h2><div class="sec-rule"></div><div class="contact-grid">{"".join(cards)}</div>'
+        plans = contact.get("subscription_plans_dzd")
+        if plans:
+            PLAN_LABELS = {
+                "3_months": "3 أشهر", "6_months": "6 أشهر", "12_months": "12 شهرًا",
+                "lifetime": "مدى الحياة", "1_month": "شهر واحد",
+            }
+            def plan_label(k):
+                return PLAN_LABELS.get(k, k.replace("_", " "))
+            rows = "".join(f'<tr><td>{esc(plan_label(p))}</td><td>{esc(str(price))} دج</td></tr>' for p, price in plans.items())
+            plans_html = f'<h2 class="sec" style="margin-top:16px">خطط الاشتراك<span class="en">Subscription plans</span></h2><div class="sec-rule"></div><table class="ftable"><tr><th>المدة</th><th>السعر</th></tr>{rows}</table>'
+    elif contact:
+        contact_html = f'<h2 class="sec">للتواصل والدعم<span class="en">Contact &amp; support</span></h2><div class="sec-rule"></div><div class="contact-grid"><div class="contact-card"><div class="ic">📞</div><b>{esc(str(contact))}</b></div></div>'
     return f'''<section class="page pad">
       {page_header(name, logo, "شكرًا لاستخدامك التطبيق", "Thank you for using the app", version)}
       <h2 class="sec">خلاصة<span class="en">Wrap-up</span></h2>
@@ -409,6 +437,7 @@ def render_closing_page(a, content, pageno):
       <div class="audience-box"><p>نتمنى أن يكون هذا الدليل قد غطّى كل ما يلزمك لاستخدام {name} بثقة وفعالية. راجع هذا الدليل كلما احتجت إلى تذكّر خطوة معينة.</p>
       <p class="en">We hope this guide has covered everything you need to use {name} confidently and efficiently. Come back to it any time you need a reminder of a particular step.</p></div>
       {contact_html}
+      {plans_html}
       {page_footer(name, version, pageno)}
     </section>'''
 
@@ -434,6 +463,7 @@ def build_one(key):
         for i, sc in enumerate(step_chunks):
             s2 = dict(sec)
             s2["_steps_chunk"] = sc
+            s2["_step_start_num"] = i * 3 + 1
             section_pages_meta.append((s2, i > 0))
 
     feature_rows = content.get("feature_table", [])
