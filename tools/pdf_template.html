@@ -6,57 +6,241 @@
   @font-face{font-family:'GE SS Two';font-weight:300;font-style:normal;unicode-range:U+0020-002F,U+003A-10FFFF;src:url('__ROOT__/fonts/GESSTwo-Light.otf') format('opentype')}
   @font-face{font-family:'GE SS Two';font-weight:500;font-style:normal;unicode-range:U+0020-002F,U+003A-10FFFF;src:url('__ROOT__/fonts/GESSTwo-Medium.otf') format('opentype')}
   @font-face{font-family:'GE SS Two';font-weight:700;font-style:normal;unicode-range:U+0020-002F,U+003A-10FFFF;src:url('__ROOT__/fonts/GESSTwo-Bold.otf') format('opentype')}
+  :root{
+    --primary:__PRIMARY__; --accent:__ACCENT__;
+    --ink:#1a1d23; --muted:#5b6370; --line:#e6e8ec; --bg:#f7f8fa;
+  }
   *{box-sizing:border-box}
-  body{margin:0; font-family:'GE SS Two','Segoe UI',Tahoma,Arial,sans-serif; color:#1a1d23; font-weight:300}
-  .page{padding:36px 42px}
-  .head{display:flex; align-items:center; gap:16px; border-bottom:3px solid #1a56db; padding-bottom:18px; margin-bottom:24px}
-  .head img{width:64px; height:64px; border-radius:16px}
-  .head h1{margin:0; font-size:24px; font-weight:700}
-  .head .sub{margin:2px 0 0; color:#5b6370; font-size:13px}
-  h2{font-size:16px; font-weight:700; color:#1a56db; margin:26px 0 10px; border-right:4px solid #1a56db; padding-right:10px}
-  p.tagline{font-size:14px; color:#333; margin:0 0 6px; font-weight:500}
-  ul{margin:0; padding-right:20px}
-  li{margin-bottom:7px; font-size:13px; line-height:1.6}
-  ol{margin:0; padding-right:20px; counter-reset:item}
-  ol li{margin-bottom:10px; font-size:13px; line-height:1.6}
-  .footer{margin-top:40px; padding-top:14px; border-top:1px solid #e6e8ec; font-size:11px; color:#9aa3b2; display:flex; justify-content:space-between}
-  .badge{display:inline-block; background:#eef2ff; color:#1a56db; font-size:11px; padding:3px 10px; border-radius:999px; margin-inline-start:8px; font-weight:600}
+  html,body{margin:0; padding:0}
+  body{font-family:'GE SS Two','Segoe UI',Tahoma,Arial,sans-serif; color:var(--ink); font-weight:300}
+  .en{font-family:'Segoe UI',Arial,sans-serif; direction:ltr; text-align:left; unicode-bidi:isolate}
+  .page{width:210mm; height:297mm; position:relative; overflow:hidden; page-break-after:always}
+  .page:last-child{page-break-after:auto}
+  .pad{padding:16mm 16mm 20mm}
+
+  /* ---------- COVER ---------- */
+  .cover{
+    background:linear-gradient(145deg, var(--primary) 0%, var(--accent) 100%);
+    color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; position:relative;
+  }
+  .cover .deco{position:absolute; inset:0; opacity:.12; background-image:
+      radial-gradient(circle at 12% 18%, #fff 0, transparent 22%),
+      radial-gradient(circle at 88% 82%, #fff 0, transparent 26%),
+      radial-gradient(circle at 85% 12%, #fff 0, transparent 14%);
+  }
+  .cover .icon-wrap{
+    width:150px; height:150px; border-radius:36px; background:#fff; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 20px 60px rgba(0,0,0,.35); margin-bottom:34px; position:relative; z-index:1;
+  }
+  .cover .icon-wrap img{width:112px; height:112px; border-radius:24px}
+  .cover .kicker{letter-spacing:4px; font-size:12px; opacity:.85; margin:0 0 10px; position:relative; z-index:1; font-weight:600}
+  .cover h1{font-size:46px; font-weight:700; margin:0 0 6px; position:relative; z-index:1}
+  .cover h1 .en{font-size:20px; font-weight:400; opacity:.85; margin-top:4px; display:block; text-align:center}
+  .cover .guide-title{font-size:20px; font-weight:700; margin:22px 0 4px; position:relative; z-index:1}
+  .cover .guide-title .en{display:block; font-size:13px; font-weight:400; opacity:.8; text-align:center; margin-top:4px}
+  .cover .tagline{max-width:120mm; font-size:13.5px; line-height:1.9; opacity:.92; margin:18px 0 0; position:relative; z-index:1}
+  .cover .tagline .en{display:block; font-size:11.5px; opacity:.85; margin-top:8px; text-align:center}
+  .cover .ver-pill{
+    margin-top:30px; display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,.15);
+    border:1px solid rgba(255,255,255,.35); padding:8px 20px; border-radius:999px; font-size:13px; font-weight:600;
+    position:relative; z-index:1; backdrop-filter:blur(2px);
+  }
+  .cover .brand{position:absolute; bottom:16mm; right:0; left:0; text-align:center; font-size:12px; opacity:.85; letter-spacing:2px; z-index:1}
+
+  /* ---------- CONTENT HEADER / FOOTER ---------- */
+  .ph{display:flex; align-items:center; gap:12px; border-bottom:2px solid var(--primary); padding-bottom:14px; margin-bottom:22px}
+  .ph img{width:40px; height:40px; border-radius:10px}
+  .ph .t{font-size:17px; font-weight:700; color:var(--primary)}
+  .ph .t .en{font-size:10.5px; font-weight:400; color:var(--muted); margin-top:1px}
+  .ph .pill{margin-inline-start:auto; background:var(--bg); border:1px solid var(--line); font-size:11px; color:var(--muted); padding:4px 12px; border-radius:999px}
+  .pf{position:absolute; bottom:10mm; left:16mm; right:16mm; display:flex; justify-content:space-between; align-items:center; font-size:9.5px; color:var(--muted); border-top:1px solid var(--line); padding-top:8px}
+  .pf .en{font-size:9px}
+
+  h2.sec{font-size:17px; font-weight:700; color:var(--primary); margin:0 0 4px; display:flex; align-items:baseline; gap:10px}
+  h2.sec .en{font-size:11px; font-weight:400; color:var(--muted)}
+  .sec-rule{height:3px; width:48px; background:var(--accent); border-radius:3px; margin:6px 0 20px}
+
+  /* ---------- OVERVIEW PAGE ---------- */
+  .audience-box{background:var(--bg); border-radius:14px; padding:18px 20px; margin-bottom:26px; border-inline-start:4px solid var(--accent)}
+  .audience-box p{margin:0; font-size:13px; line-height:1.9}
+  .audience-box p.en{margin-top:10px; font-size:11.5px; color:var(--muted); line-height:1.8; padding-top:10px; border-top:1px dashed var(--line)}
+
+  .hl-grid{display:flex; gap:14px}
+  .hl-card{flex:1; background:#fff; border:1px solid var(--line); border-radius:14px; padding:16px; text-align:center}
+  .hl-card .ic{
+    width:46px; height:46px; border-radius:50%; background:var(--bg); color:var(--primary);
+    display:flex; align-items:center; justify-content:center; font-size:21px; margin:0 auto 10px;
+    border:2px solid var(--accent);
+  }
+  .hl-card h3{margin:0 0 3px; font-size:13px}
+  .hl-card h3 .en{display:block; font-size:9.5px; font-weight:400; color:var(--accent); margin-top:1px}
+  .hl-card p{margin:0; font-size:10.5px; color:var(--muted); line-height:1.6}
+  .hl-card p.en{margin-top:6px; font-style:normal}
+
+  .facts-strip{display:flex; justify-content:space-between; gap:10px; margin-top:26px}
+  .fact{flex:1; background:var(--primary); color:#fff; border-radius:12px; padding:12px 8px; text-align:center}
+  .fact b{display:block; font-size:13px}
+  .fact span{display:block; font-size:9px; opacity:.85; margin-top:4px}
+  .fact span.ar{font-family:'GE SS Two','Segoe UI',Tahoma,Arial,sans-serif}
+  .fact span.en{display:block; font-family:'Segoe UI',Arial,sans-serif; direction:ltr; margin-top:1px}
+
+  /* ---------- SCREENSHOTS ---------- */
+  .shots-grid{display:flex; gap:18px; justify-content:center; align-items:flex-start; flex-wrap:wrap; margin-top:10px}
+  .shot{text-align:center}
+  .shot .frame{
+    width:62mm; border:6px solid var(--ink); border-radius:20px; overflow:hidden; box-shadow:0 14px 34px rgba(0,0,0,.22);
+  }
+  .shot .frame img{width:100%; display:block}
+  .shot .cap{font-size:10px; color:var(--muted); margin-top:8px}
+  .shot .cap .en{font-size:9px}
+  .no-shots{background:var(--bg); border-radius:14px; padding:26px; text-align:center; color:var(--muted); font-size:12.5px; line-height:1.9}
+
+  /* ---------- FEATURES ---------- */
+  .feat-list{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+  .feat-row{display:flex; align-items:flex-start; gap:10px; background:#fff; border:1px solid var(--line); border-radius:10px; padding:10px 12px}
+  .feat-row .chk{
+    width:22px; height:22px; border-radius:50%; background:var(--accent); color:#fff; flex:0 0 auto;
+    display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700;
+  }
+  .feat-row .tx{font-size:11.5px; line-height:1.5}
+  .feat-row .tx .en{font-size:9.5px; color:var(--muted); margin-top:3px}
+
+  /* ---------- STEPS ---------- */
+  .steps{counter-reset:stepnum}
+  .step{display:flex; gap:16px; align-items:flex-start; margin-bottom:22px}
+  .step .num{
+    counter-increment:stepnum; width:34px; height:34px; border-radius:50%; flex:0 0 auto;
+    background:linear-gradient(145deg, var(--primary), var(--accent)); color:#fff; display:flex; align-items:center;
+    justify-content:center; font-size:14px; font-weight:700;
+  }
+  .step .num::before{content:counter(stepnum)}
+  .step .body{padding-top:4px}
+  .step .body p{margin:0; font-size:13px; line-height:1.6}
+  .step .body p.en{margin-top:4px; font-size:11px; color:var(--muted)}
+
+  .note-box{margin-top:16px; background:var(--bg); border-radius:12px; padding:14px 16px; font-size:11px; color:var(--muted); line-height:1.8}
+  .note-box .en{margin-top:6px; font-size:10px}
 </style>
 </head>
 <body>
-<div class="page">
-  <div class="head">
+
+<!-- PAGE 1: COVER -->
+<section class="page cover">
+  <div class="deco"></div>
+  <p class="kicker">CONSTRUTECH</p>
+  <div class="icon-wrap"><img src="__ROOT__/logos/__LOGO__"></div>
+  <h1>__NAME__</h1>
+  <p class="guide-title">دليل الاستخدام الكامل<span class="en">Complete User Guide</span></p>
+  <p class="tagline">__TAGLINE__<span class="en">__TAGLINE_EN__</span></p>
+  <div class="ver-pill">📦 __VERSION__</div>
+  <div class="brand">CONSTRUTECH · __YEAR__</div>
+</section>
+
+<!-- PAGE 2: OVERVIEW -->
+<section class="page pad">
+  <div class="ph">
     <img src="__ROOT__/logos/__LOGO__">
-    <div>
-      <h1>__NAME__ <span class="badge">__VERSION__</span></h1>
-      <p class="sub">دليل الاستخدام — Construtech</p>
-    </div>
+    <div class="t">__NAME__ — نظرة عامة<div class="en">Overview</div></div>
+    <div class="pill">__VERSION__</div>
   </div>
 
-  <p class="tagline">__TAGLINE__</p>
+  <h2 class="sec">لمن هذا التطبيق<span class="en">Who it's for</span></h2>
+  <div class="sec-rule"></div>
+  <div class="audience-box">
+    <p>__AUDIENCE__</p>
+    <p class="en">__AUDIENCE_EN__</p>
+  </div>
 
-  <h2>المزايا</h2>
-  <ul>
+  <h2 class="sec">ليش __NAME__<span class="en">Why __NAME__</span></h2>
+  <div class="sec-rule"></div>
+  <div class="hl-grid">
+__HIGHLIGHTS__
+  </div>
+
+  <div class="facts-strip">
+__FACTS__
+  </div>
+
+  <div class="pf"><span>Construtech <span class="en">© __YEAR__</span></span><span>__NAME__ __VERSION__ — 2</span></div>
+</section>
+
+<!-- PAGE 3: SCREENSHOTS -->
+<section class="page pad">
+  <div class="ph">
+    <img src="__ROOT__/logos/__LOGO__">
+    <div class="t">لقطات من التطبيق<div class="en">Screenshots</div></div>
+    <div class="pill">__VERSION__</div>
+  </div>
+  <h2 class="sec">شوف التطبيق<span class="en">See the app</span></h2>
+  <div class="sec-rule"></div>
+__SHOTS__
+  <div class="pf"><span>Construtech <span class="en">© __YEAR__</span></span><span>__NAME__ __VERSION__ — 3</span></div>
+</section>
+
+<!-- PAGE 4: FEATURES -->
+<section class="page pad">
+  <div class="ph">
+    <img src="__ROOT__/logos/__LOGO__">
+    <div class="t">التطبيق فيه<div class="en">What's inside</div></div>
+    <div class="pill">__VERSION__</div>
+  </div>
+  <h2 class="sec">كل المزايا<span class="en">All features</span></h2>
+  <div class="sec-rule"></div>
+  <div class="feat-list">
 __FEATURES__
-  </ul>
-
-  <h2>كيفاش تبدا تخدم بالتطبيق</h2>
-  <ol>
-__USAGE__
-  </ol>
-
-  <h2>كيفاش تنصب التطبيق (خارج المتجر)</h2>
-  <ol>
-    <li>حمل ملف APK من صفحة التطبيق.</li>
-    <li>إلى بان لك تنبيه "التثبيت من مصادر غير معروفة" — روح لـ الإعدادات واسمح بذلك لمتصفحك (مرة واحدة فقط).</li>
-    <li>رجع للملف الـ APK اللي حملتو وافتحو، ثم اضغط تثبيت.</li>
-    <li>بعد التثبيت نقدر تحيد السماح نتاع "مصادر غير معروفة" إلى حبيت.</li>
-  </ol>
-
-  <div class="footer">
-    <span>Construtech</span>
-    <span>__NAME__ __VERSION__</span>
   </div>
-</div>
+  <div class="pf"><span>Construtech <span class="en">© __YEAR__</span></span><span>__NAME__ __VERSION__ — 4</span></div>
+</section>
+
+<!-- PAGE 5: USAGE -->
+<section class="page pad">
+  <div class="ph">
+    <img src="__ROOT__/logos/__LOGO__">
+    <div class="t">كيفاش تبدا تخدم بالتطبيق<div class="en">Getting started</div></div>
+    <div class="pill">__VERSION__</div>
+  </div>
+  <h2 class="sec">خطوة بخطوة<span class="en">Step by step</span></h2>
+  <div class="sec-rule"></div>
+  <div class="steps">
+__USAGE__
+  </div>
+  <div class="pf"><span>Construtech <span class="en">© __YEAR__</span></span><span>__NAME__ __VERSION__ — 5</span></div>
+</section>
+
+<!-- PAGE 6: INSTALL -->
+<section class="page pad">
+  <div class="ph">
+    <img src="__ROOT__/logos/__LOGO__">
+    <div class="t">كيفاش تنصب التطبيق<div class="en">Installing the app</div></div>
+    <div class="pill">__VERSION__</div>
+  </div>
+  <h2 class="sec">التنصيب (خارج المتجر)<span class="en">Install (outside the store)</span></h2>
+  <div class="sec-rule"></div>
+  <div class="steps">
+    <div class="step"><div class="num"></div><div class="body">
+      <p>حمل ملف APK من صفحة التطبيق.</p>
+      <p class="en en-full en">Download the APK file from the app's page.</p>
+    </div></div>
+    <div class="step"><div class="num"></div><div class="body">
+      <p>إلى بان لك تنبيه "التثبيت من مصادر غير معروفة" — روح لـ الإعدادات واسمح بذلك لمتصفحك (مرة واحدة فقط).</p>
+      <p class="en">If you see an "install from unknown sources" warning, go to Settings and allow it for your browser (just once).</p>
+    </div></div>
+    <div class="step"><div class="num"></div><div class="body">
+      <p>رجع للملف الـ APK اللي حملتو وافتحو، ثم اضغط تثبيت.</p>
+      <p class="en">Go back to the downloaded APK file, open it, then tap Install.</p>
+    </div></div>
+    <div class="step"><div class="num"></div><div class="body">
+      <p>بعد التثبيت نقدر تحيد السماح نتاع "مصادر غير معروفة" إلى حبيت.</p>
+      <p class="en">After installing, you can turn the "unknown sources" permission back off if you like.</p>
+    </div></div>
+  </div>
+  <div class="note-box">
+    ملاحظة: هاذ التطبيق ماشي من Google Play — تحميل مباشر (APK). تأكد دايما من المصدر قبل ما تثبت أي تطبيق على هاتفك.
+    <div class="en">Note: this app isn't from Google Play — it's a direct APK download. Always make sure of the source before installing any app on your phone.</div>
+  </div>
+  <div class="pf"><span>Construtech <span class="en">© __YEAR__</span></span><span>__NAME__ __VERSION__ — 6</span></div>
+</section>
+
 </body>
 </html>
