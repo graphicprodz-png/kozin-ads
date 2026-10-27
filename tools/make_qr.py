@@ -24,9 +24,16 @@ class QRcode(ctypes.Structure):
 QR_ECLEVEL_Q = 2  # ~25% error correction, good for print
 QR_MODE_8 = 2
 
-def encode_matrix(text):
+def encode_matrix(text, version=6):
+    # Force a fixed minimum QR version (6 = 41x41 modules) across all codes
+    # instead of auto-sizing (0). Auto-sizing picks the smallest version that
+    # fits the text, so a 2-3 char shorter URL can drop to a smaller version
+    # (e.g. 37x37) — with a fixed-size logo badge overlay, that smaller
+    # version loses proportionally more modules to the logo and can become
+    # undecodable even at ECLEVEL_Q. A fixed version keeps logo coverage
+    # consistent and safely decodable across every app's URL.
     LIB.QRcode_encodeString.restype = ctypes.POINTER(QRcode)
-    qr_ptr = LIB.QRcode_encodeString(text.encode("utf-8"), 0, QR_ECLEVEL_Q, QR_MODE_8, 1)
+    qr_ptr = LIB.QRcode_encodeString(text.encode("utf-8"), version, QR_ECLEVEL_Q, QR_MODE_8, 1)
     if not qr_ptr:
         raise RuntimeError("QR encode failed")
     qr = qr_ptr.contents
