@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face{font-family:'GE SS Two';font-weight:300;font-style:normal;unicode-range:U+0020-002F,U+003A-10FFFF;src:url('__ROOT__/fonts/GESSTwo-Light.otf') format('opentype')}
+  @font-face{font-family:'GE SS Two';font-weight:500;font-style:normal;unicode-range:U+0020-002F,U+003A-10FFFF;src:url('__ROOT__/fonts/GESSTwo-Medium.otf') format('opentype')}
+  @font-face{font-family:'GE SS Two';font-weight:700;font-style:normal;unicode-range:U+0020-002F,U+003A-10FFFF;src:url('__ROOT__/fonts/GESSTwo-Bold.otf') format('opentype')}
+  *{box-sizing:border-box}
+  body{margin:0; font-family:'GE SS Two','Segoe UI',Tahoma,Arial,sans-serif; color:#1a1d23; font-weight:300}
+  .page{padding:36px 42px}
+  .head{display:flex; align-items:center; gap:16px; border-bottom:3px solid #1a56db; padding-bottom:18px; margin-bottom:24px}
+  .head img{width:64px; height:64px; border-radius:16px}
+  .head h1{margin:0; font-size:24px; font-weight:700}
+  .head .sub{margin:2px 0 0; color:#5b6370; font-size:13px}
+  h2{font-size:16px; font-weight:700; color:#1a56db; margin:26px 0 10px; border-right:4px solid #1a56db; padding-right:10px}
+  p.tagline{font-size:14px; color:#333; margin:0 0 6px; font-weight:500}
+  ul{margin:0; padding-right:20px}
+  li{margin-bottom:7px; font-size:13px; line-height:1.6}
+  ol{margin:0; padding-right:20px; counter-reset:item}
+  ol li{margin-bottom:10px; font-size:13px; line-height:1.6}
+  .footer{margin-top:40px; padding-top:14px; border-top:1px solid #e6e8ec; font-size:11px; color:#9aa3b2; display:flex; justify-content:space-between}
+  .badge{display:inline-block; background:#eef2ff; color:#1a56db; font-size:11px; padding:3px 10px; border-radius:999px; margin-inline-start:8px; font-weight:600}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="head">
+    <img src="__ROOT__/logos/__LOGO__">
+    <div>
+      <h1>__NAME__ <span class="badge">__VERSION__</span></h1>
+      <p class="sub">دليل الاستخدام — Construtech</p>
+    </div>
+  </div>
+
+  <p class="tagline">__TAGLINE__</p>
+
+  <h2>المزايا</h2>
+  <ul>
+__FEATURES__
+  </ul>
+
+  <h2>كيفاش تبدا تخدم بالتطبيق</h2>
+  <ol>
+__USAGE__
+  </ol>
+
+  <h2>كيفاش تنصب التطبيق (خارج المتجر)</h2>
+  <ol>
+    <li>حمل ملف APK من صفحة التطبيق.</li>
+    <li>إلى بان لك تنبيه "التثبيت من مصادر غير معروفة" — روح لـ الإعدادات واسمح بذلك لمتصفحك (مرة واحدة فقط).</li>
+    <li>رجع للملف الـ APK اللي حملتو وافتحو، ثم اضغط تثبيت.</li>
+    <li>بعد التثبيت نقدر تحيد السماح نتاع "مصادر غير معروفة" إلى حبيت.</li>
+  </ol>
+
+  <div class="footer">
+    <span>Construtech</span>
+    <span>__NAME__ __VERSION__</span>
+  </div>
+</div>
+</body>
+</html>

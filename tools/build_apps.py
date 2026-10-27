@@ -1,0 +1,174 @@
+import sys, os
+sys.path.insert(0, os.path.dirname(__file__))
+from app_data import applications
+
+TPL = '''<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>__NAME__ __VERSION__ — تحميل وتعريف</title>
+<meta name="description" content="__NAME__ — __TAGLINE__">
+<style>
+  :root{
+    --bg:#f6f7f9; --card:#ffffff; --text:#1a1d23; --muted:#5b6370;
+    --line:#e6e8ec; --brand:#1a56db; --brand-dark:#123f9e;
+    --install:#0f9d58; --install-dark:#0b8043;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0f1115; --card:#181b21; --text:#eef0f3; --muted:#9aa3b2;
+      --line:#262a33; --brand:#4d8dff; --brand-dark:#6ea2ff;
+      --install:#2fb36c; --install-dark:#3fc97f;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0f1115; --card:#181b21; --text:#eef0f3; --muted:#9aa3b2;
+    --line:#262a33; --brand:#4d8dff; --brand-dark:#6ea2ff;
+    --install:#2fb36c; --install-dark:#3fc97f;
+  }
+  @font-face{font-family:'GE SS Two';font-weight:300;font-style:normal;font-display:swap;unicode-range:U+0020-002F,U+003A-10FFFF;src:url('../fonts/GESSTwo-Light.otf') format('opentype')}
+  @font-face{font-family:'GE SS Two';font-weight:500;font-style:normal;font-display:swap;unicode-range:U+0020-002F,U+003A-10FFFF;src:url('../fonts/GESSTwo-Medium.otf') format('opentype')}
+  @font-face{font-family:'GE SS Two';font-weight:700;font-style:normal;font-display:swap;unicode-range:U+0020-002F,U+003A-10FFFF;src:url('../fonts/GESSTwo-Bold.otf') format('opentype')}
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--bg); color:var(--text); font-family:'GE SS Two','Segoe UI',Tahoma,Arial,sans-serif; line-height:1.7}
+
+  .hero{
+    max-width:800px; margin:0 auto; padding:34px 16px 20px;
+    display:flex; flex-direction:row-reverse; align-items:flex-start; justify-content:center; gap:20px; text-align:right;
+  }
+  .hero img.icon{
+    width:112px; height:112px; border-radius:24px; border:1px solid var(--line); flex:0 0 auto;
+    box-shadow:0 2px 10px rgba(0,0,0,.08);
+  }
+  .hero .info{padding-top:2px}
+  .hero h1{margin:0 0 6px; font-size:25px; line-height:1.3}
+  .hero .dev{color:var(--brand); font-size:14px; margin:0 0 8px; font-weight:600}
+  .hero .meta-row{display:flex; gap:10px; align-items:center; color:var(--muted); font-size:12.5px; margin:0}
+  .hero .meta-row .dot{width:3px; height:3px; border-radius:50%; background:var(--muted)}
+  .hero-actions{max-width:800px; margin:0 auto; padding:14px 16px 8px; display:flex; justify-content:center; gap:10px; flex-wrap:wrap}
+  .dl-btn{
+    display:inline-flex; align-items:center; gap:8px; background:var(--install); color:#fff;
+    text-decoration:none; padding:13px 30px; border-radius:24px; font-size:15px; font-weight:700;
+  }
+  .dl-btn:hover{background:var(--install-dark)}
+  .pdf-btn{
+    display:inline-flex; align-items:center; gap:8px; background:var(--card); color:var(--text);
+    text-decoration:none; padding:13px 22px; border-radius:24px; font-size:15px; font-weight:600;
+    border:1px solid var(--line);
+  }
+  .pdf-btn:hover{border-color:var(--brand); color:var(--brand)}
+
+  .tagline-wrap{max-width:800px; margin:0 auto; padding:6px 16px 20px; text-align:center}
+  .tagline-wrap p{color:var(--muted); font-size:15px; margin:0 auto; max-width:560px}
+
+  .shots{max-width:800px; margin:0 auto; padding:0 0 26px}
+  .shots-row{display:flex; gap:12px; overflow-x:auto; padding:4px 16px 8px; scroll-snap-type:x proximity; justify-content:center}
+  .shots-row img{
+    height:360px; border-radius:16px; border:1px solid var(--line); scroll-snap-align:start; flex:0 0 auto;
+    background:var(--card);
+  }
+  .shots-empty{
+    max-width:800px; margin:0 auto 10px; padding:14px 16px; color:var(--muted); font-size:13px;
+  }
+
+  main{max-width:800px; margin:0 auto; padding:0 16px 60px}
+  section{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px 24px; margin-bottom:16px}
+  section h2{margin:0 0 14px; font-size:17px}
+  .chips{display:flex; flex-wrap:wrap; gap:8px}
+  .chip{background:var(--bg); border:1px solid var(--line); border-radius:999px; padding:6px 13px; font-size:13.5px; color:var(--text)}
+  ol{margin:0; padding-right:20px}
+  li{margin-bottom:9px; font-size:14.5px}
+  .note{margin-top:14px; font-size:13px; color:var(--muted); border-top:1px dashed var(--line); padding-top:12px}
+  footer{text-align:center; padding:24px 16px; color:var(--muted); font-size:12.5px}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <img class="icon" src="../logos/__LOGO__" alt="شعار __NAME__">
+  <div class="info">
+    <h1>__NAME__</h1>
+    <p class="dev">Construtech</p>
+    <p class="meta-row"><span>__VERSION__</span><span class="dot"></span><span>Android</span><span class="dot"></span><span>APK مباشر</span></p>
+  </div>
+</div>
+
+<div class="tagline-wrap"><p>__TAGLINE__</p></div>
+
+<div class="hero-actions">
+  <a class="dl-btn" href="../apks/__APK__" download>⬇ تحميل APK</a>
+  <a class="pdf-btn" href="../guides/__KEY__-guide.pdf" download>📄 دليل الاستخدام (PDF)</a>
+</div>
+
+<div class="shots">
+__SHOTS__
+</div>
+
+<main>
+  <section>
+    <h2>التطبيق فيه</h2>
+    <div class="chips">
+__CHIPS__
+    </div>
+  </section>
+
+  <section>
+    <h2>كيفاش تبدا تخدم بيه</h2>
+    <ol>
+__USAGE__
+    </ol>
+  </section>
+
+  <section>
+    <h2>كيفاش تنصبو (خارج المتجر)</h2>
+    <ol>
+      <li>حمل ملف <b>APK</b> من الزر فوق.</li>
+      <li>إلى بان لك تنبيه "التثبيت من مصادر غير معروفة" — روح لـ <b>الإعدادات</b> واسمح بذلك لمتصفحك (مرة واحدة فقط).</li>
+      <li>رجع للملف الـ APK اللي حملتو وافتحو، ثم اضغط <b>تثبيت</b>.</li>
+      <li>بعد التثبيت نقدر تحيد السماح نتاع "مصادر غير معروفة" إلى حبيت.</li>
+    </ol>
+    <div class="note">ملاحظة: هاذ التطبيق ماشي من Google Play — تحميل مباشر (APK). تأكد دايما من المصدر قبل ما تثبت أي تطبيق على هاتفك.__EXTRA_NOTE__</div>
+  </section>
+</main>
+
+<footer>__NAME__ — Construtech © <span id="y"></span></footer>
+<script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html>
+'''
+
+REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+OUT = os.path.join(REPO_ROOT, 'apps')
+os.makedirs(OUT, exist_ok=True)
+
+ONLY_KEYS = set(sys.argv[1:]) or None  # optional: regenerate only specific app keys
+
+for key, a in applications.items():
+    if ONLY_KEYS and key not in ONLY_KEYS:
+        continue
+    html = TPL
+    html = html.replace("__NAME__", a["NAME"])
+    html = html.replace("__VERSION__", a["VERSION"])
+    html = html.replace("__LOGO__", a["LOGO"])
+    html = html.replace("__APK__", a["APK"])
+    html = html.replace("__KEY__", key)
+    html = html.replace("__TAGLINE__", a["TAGLINE"])
+    chips = "\n".join(f'      <div class="chip">{c}</div>' for c in a["FEATURES"])
+    html = html.replace("__CHIPS__", chips)
+    usage = "\n".join(f"      <li>{u}</li>" for u in a["USAGE"])
+    html = html.replace("__USAGE__", usage)
+
+    if a["SHOTS"]:
+        imgs = "\n".join(f'    <img src="../screenshots/{key}/{s}" alt="لقطة من {a["NAME"]}" loading="lazy">' for s in a["SHOTS"])
+        shots_html = f'  <div class="shots-row">\n{imgs}\n  </div>'
+        extra_note = ""
+    else:
+        shots_html = '  <p class="shots-empty">ما قدرناش نجيبو لقطات شاشة لهاذ التطبيق — محتواه مخزن بصيغة ما تتقراش مباشرة من برا.</p>'
+        extra_note = " ماقدرناش نعرضو لقطات شاشة حقيقية لهاذ التطبيق بالضبط (راجع الملاحظة فوق)."
+    html = html.replace("__SHOTS__", shots_html)
+    html = html.replace("__EXTRA_NOTE__", extra_note)
+
+    with open(f"{OUT}/{key}.html", "w", encoding="utf-8") as f:
+        f.write(html)
+    print("wrote", key)
