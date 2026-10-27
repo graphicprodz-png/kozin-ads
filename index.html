@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>تطبيقات Kozin — تحميل مباشر</title>
+<meta name="description" content="صفحة تحميل تطبيقات Kozin — Kozinalum, Windoor, Rclean, Plafonpro, Windoorgulf">
+<style>
+  :root{
+    --bg:#f6f7f9; --card:#ffffff; --text:#1a1d23; --muted:#5b6370;
+    --line:#e6e8ec; --brand:#1a56db; --brand-dark:#123f9e;
+    --soon-bg:#fff4e5; --soon-text:#8a5300; --soon-line:#ffd9a3;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0f1115; --card:#181b21; --text:#eef0f3; --muted:#9aa3b2;
+      --line:#262a33; --brand:#4d8dff; --brand-dark:#6ea2ff;
+      --soon-bg:#2a2210; --soon-text:#ffcf8a; --soon-line:#5a4218;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0f1115; --card:#181b21; --text:#eef0f3; --muted:#9aa3b2;
+    --line:#262a33; --brand:#4d8dff; --brand-dark:#6ea2ff;
+    --soon-bg:#2a2210; --soon-text:#ffcf8a; --soon-line:#5a4218;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:'Segoe UI',Tahoma,Arial,sans-serif;
+    line-height:1.6;
+  }
+  header{
+    text-align:center; padding:48px 16px 28px;
+    border-bottom:1px solid var(--line);
+    background:var(--card);
+  }
+  header .logo{font-size:40px; margin-bottom:8px}
+  header h1{margin:0 0 6px; font-size:26px}
+  header p{margin:0; color:var(--muted); font-size:15px}
+  main{max-width:920px; margin:0 auto; padding:32px 16px 60px}
+  .grid{
+    display:grid; gap:16px;
+    grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+  }
+  .app-card{
+    background:var(--card); border:1px solid var(--line); border-radius:14px;
+    padding:20px; display:flex; flex-direction:column; gap:10px;
+  }
+  .app-top{display:flex; align-items:center; gap:12px}
+  .app-icon{
+    width:48px; height:48px; border-radius:12px; flex:0 0 auto;
+    display:flex; align-items:center; justify-content:center;
+    font-size:22px; color:#fff; font-weight:700;
+  }
+  .app-name{font-size:17px; font-weight:700; margin:0}
+  .app-version{color:var(--muted); font-size:13px; margin:2px 0 0}
+  .app-desc{color:var(--muted); font-size:13.5px; margin:0; flex:1}
+  .dl-btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    background:var(--brand); color:#fff; text-decoration:none;
+    padding:10px 14px; border-radius:10px; font-size:14px; font-weight:600;
+    border:none; cursor:pointer;
+  }
+  .dl-btn:hover{background:var(--brand-dark)}
+  .dl-btn[data-soon="1"]{
+    background:var(--soon-bg); color:var(--soon-text);
+    border:1px solid var(--soon-line); cursor:default;
+  }
+  section.guide{
+    margin-top:40px; background:var(--card); border:1px solid var(--line);
+    border-radius:14px; padding:22px 24px;
+  }
+  section.guide h2{margin:0 0 12px; font-size:18px}
+  section.guide ol{margin:0; padding-right:20px; color:var(--text)}
+  section.guide li{margin-bottom:8px; font-size:14.5px}
+  section.guide .note{
+    margin-top:14px; font-size:13px; color:var(--muted);
+    border-top:1px dashed var(--line); padding-top:12px;
+  }
+  footer{
+    text-align:center; padding:24px 16px; color:var(--muted); font-size:12.5px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">📦</div>
+  <h1>تطبيقات Kozin</h1>
+  <p>تحميل مباشر لتطبيقات Android — خارج المتجر</p>
+</header>
+
+<main>
+  <div class="grid" id="appsGrid"></div>
+
+  <section class="guide">
+    <h2>كيفاش تنصب تطبيق APK من خارج المتجر</h2>
+    <ol>
+      <li>حمل ملف <b>APK</b> من الزر فوق.</li>
+      <li>إلى بان لك تنبيه "التثبيت من مصادر غير معروفة" — روح لـ <b>الإعدادات</b> واسمح بذلك لمتصفحك (مرة واحدة فقط).</li>
+      <li>رجع للملف الـ APK اللي حملتو وافتحو، ثم اضغط <b>تثبيت</b>.</li>
+      <li>بعد التثبيت نقدر تحيد السماح نتاع "مصادر غير معروفة" إلى حبيت.</li>
+    </ol>
+    <div class="note">
+      ملاحظة: التطبيقات فهاذ الصفحة ماشي من Google Play — راهم تحميل مباشر (APK). تأكد دايما من المصدر قبل ما تثبت أي تطبيق على هاتفك.
+    </div>
+  </section>
+</main>
+
+<footer>
+  Kozin © <span id="y"></span> — جميع الحقوق محفوظة
+</footer>
+
+<script>
+  document.getElementById('y').textContent = new Date().getFullYear();
+
+  // كل تطبيق مربوط بملف APK الحقيقي الموجود فهاذ الريبو (مجلد apks/)
+  const APPS = [
+    {name:"Kozinalum",   version:"v2.66", color:"#1a56db", initial:"KA", desc:"حساب و تسعير الألمنيوم للمطابخ والواجهات.", apk:"apks/KozinAlum.apk"},
+    {name:"Windoor",     version:"v2.54", color:"#0e9f6e", initial:"WD", desc:"حساب و تصنيع النوافذ والأبواب الألمنيوم.", apk:"apks/Windoor.apk"},
+    {name:"Rclean",      version:"v1.38", color:"#e02424", initial:"RC", desc:"تسيير خدمات التنظيف والمهام اليومية.", apk:"apks/RClean.apk"},
+    {name:"Plafonpro",   version:"v1.43", color:"#7e3af2", initial:"PP", desc:"حساب أسقف الجبس (Plafond) والديكور.", apk:"apks/PlafonPro.apk"},
+    {name:"Windoorgulf", version:"v4.1",  color:"#d97706", initial:"WG", desc:"نسخة Windoor المخصصة لدول الخليج.", apk:"apks/WindoorGulf.apk"},
+  ];
+
+  const grid = document.getElementById('appsGrid');
+  grid.innerHTML = APPS.map(a => `
+    <div class="app-card">
+      <div class="app-top">
+        <div class="app-icon" style="background:${a.color}">${a.initial}</div>
+        <div>
+          <p class="app-name">${a.name}</p>
+          <p class="app-version">${a.version}</p>
+        </div>
+      </div>
+      <p class="app-desc">${a.desc}</p>
+      ${a.apk
+        ? `<a class="dl-btn" href="${a.apk}" download>⬇ تحميل APK</a>`
+        : `<button class="dl-btn" data-soon="1" disabled>قريباً</button>`
+      }
+    </div>
+  `).join('');
+</script>
+
+</body>
+</html>
