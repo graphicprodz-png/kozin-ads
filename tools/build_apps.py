@@ -95,6 +95,14 @@ TPL = '''<!doctype html>
     border:1px solid var(--line);
   }
   .pdf-btn:hover{border-color:var(--brand); color:var(--brand)}
+  .dl-hint{max-width:800px; margin:0 auto; padding:0 16px; text-align:center; color:var(--muted); font-size:12px}
+
+  @keyframes pulseGlow{
+    0%{box-shadow:0 0 0 0 rgba(15,157,88,.45)}
+    70%{box-shadow:0 0 0 14px rgba(15,157,88,0)}
+    100%{box-shadow:0 0 0 0 rgba(15,157,88,0)}
+  }
+  section.install-steps.pulse{animation:pulseGlow 1.4s ease-out 2; border-color:var(--install)}
 
   .tagline-wrap{max-width:800px; margin:0 auto; padding:6px 16px 10px; text-align:center}
   .tagline-wrap p{color:var(--muted); font-size:15px; margin:0 auto; max-width:560px}
@@ -168,9 +176,10 @@ TPL = '''<!doctype html>
 </div>
 
 <div class="hero-actions">
-  <a class="dl-btn" href="../apks/__APK__" download>⬇ تحميل APK</a>
+  <a class="dl-btn" id="dlBtn" href="../apks/__APK__" download>⬇ تحميل وتثبيت</a>
   <a class="pdf-btn" href="../guides/__KEY__-guide.pdf" download>📄 دليل الاستخدام (PDF)</a>
 </div>
+<p class="dl-hint">كي تضغط، يبدا تحميل ملف APK — بعدها خطوات التثبيت تبان لك وحدها تحت 👇</p>
 
 <div class="shots">
 __SHOTS__
@@ -219,7 +228,7 @@ __USAGE__
 __FAQ__
   </section>
 
-  <section>
+  <section class="install-steps" id="installSteps">
     <h2>كيفاش تنصبو (خارج المتجر)</h2>
     <ol>
       <li>حمل ملف <b>APK</b> من الزر فوق.</li>
@@ -242,6 +251,18 @@ __FAQ__
     if(isNaN(updated.getTime())) return;
     var days = (Date.now() - updated.getTime()) / 86400000;
     if(days >= 0 && days <= 7) el.style.display = 'inline-flex';
+  })();
+  (function(){
+    var dl = document.getElementById('dlBtn');
+    var steps = document.getElementById('installSteps');
+    if(!dl || !steps) return;
+    dl.addEventListener('click', function(){
+      setTimeout(function(){
+        steps.scrollIntoView({behavior:'smooth', block:'start'});
+        steps.classList.add('pulse');
+        setTimeout(function(){ steps.classList.remove('pulse'); }, 3000);
+      }, 450);
+    });
   })();
 </script>
 </body>

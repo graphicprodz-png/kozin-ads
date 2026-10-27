@@ -96,6 +96,12 @@
   footer{
     text-align:center; padding:24px 16px; color:var(--muted); font-size:12.5px;
   }
+  @keyframes pulseGlow{
+    0%{box-shadow:0 0 0 0 rgba(26,86,219,.35)}
+    70%{box-shadow:0 0 0 14px rgba(26,86,219,0)}
+    100%{box-shadow:0 0 0 0 rgba(26,86,219,0)}
+  }
+  section.guide.pulse{animation:pulseGlow 1.4s ease-out 2; border-color:var(--brand)}
 </style>
 </head>
 <body>
@@ -109,7 +115,7 @@
 <main>
   <div class="grid" id="appsGrid"></div>
 
-  <section class="guide">
+  <section class="guide" id="guideSection">
     <h2>كيفاش تنصب تطبيق APK من خارج المتجر</h2>
     <ol>
       <li>حمل ملف <b>APK</b> من الزر فوق.</li>
@@ -163,12 +169,26 @@
       <div class="btn-row">
         <a class="info-btn" href="${a.page}">ℹ️ التفاصيل</a>
         ${a.apk
-          ? `<a class="dl-btn" href="${a.apk}" download>⬇ تحميل</a>`
+          ? `<a class="dl-btn js-dl" href="${a.apk}" download>⬇ تحميل وتثبيت</a>`
           : `<button class="dl-btn" data-soon="1" disabled>قريباً</button>`
         }
       </div>
     </div>
   `).join('');
+
+  (function(){
+    const guide = document.getElementById('guideSection');
+    if(!guide) return;
+    grid.addEventListener('click', function(e){
+      const btn = e.target.closest('.js-dl');
+      if(!btn) return;
+      setTimeout(function(){
+        guide.scrollIntoView({behavior:'smooth', block:'start'});
+        guide.classList.add('pulse');
+        setTimeout(function(){ guide.classList.remove('pulse'); }, 3000);
+      }, 450);
+    });
+  })();
 </script>
 
 </body>
