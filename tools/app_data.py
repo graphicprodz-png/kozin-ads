@@ -41,7 +41,7 @@ applications = {
     SHOTS=["1.png"],
   ),
   "rclean": dict(
-    NAME="Rclean", VERSION="v1.38", LOGO="rclean.png", APK="RClean.apk",
+    NAME="Rclean", VERSION="v1.39", LOGO="rclean.png", APK="RClean.apk",
     TAGLINE="تسيير الفوترة، التصنيع، وشراء المواد الأولية للمنتجات الجاهزة.",
     AUDIENCE="التطبيق موجه للمؤسسات الصغيرة اللي خدمتها تصنيع وبيع منتجات جاهزة — تحتاج تسيير فوترة، مخزون مواد أولية، ومتابعة ديون الزبائن والموردين فمكان واحد.",
     HIGHLIGHTS=[
