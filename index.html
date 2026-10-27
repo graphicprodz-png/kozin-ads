@@ -49,8 +49,7 @@
   .app-top{display:flex; align-items:center; gap:12px}
   .app-icon{
     width:48px; height:48px; border-radius:12px; flex:0 0 auto;
-    display:flex; align-items:center; justify-content:center;
-    font-size:22px; color:#fff; font-weight:700;
+    object-fit:cover; border:1px solid var(--line);
   }
   .app-name{font-size:17px; font-weight:700; margin:0}
   .app-version{color:var(--muted); font-size:13px; margin:2px 0 0}
@@ -114,20 +113,20 @@
 <script>
   document.getElementById('y').textContent = new Date().getFullYear();
 
-  // كل تطبيق مربوط بملف APK الحقيقي الموجود فهاذ الريبو (مجلد apks/)
+  // كل تطبيق مربوط بملف APK الحقيقي + أيقونته الأصلية (نفس الشعار اللي ظاهر فالهاتف)
   const APPS = [
-    {name:"Kozinalum",   version:"v2.66", color:"#1a56db", initial:"KA", desc:"حساب و تسعير الألمنيوم للمطابخ والواجهات.", apk:"apks/KozinAlum.apk"},
-    {name:"Windoor",     version:"v2.54", color:"#0e9f6e", initial:"WD", desc:"حساب و تصنيع النوافذ والأبواب الألمنيوم.", apk:"apks/Windoor.apk"},
-    {name:"Rclean",      version:"v1.38", color:"#e02424", initial:"RC", desc:"تسيير خدمات التنظيف والمهام اليومية.", apk:"apks/RClean.apk"},
-    {name:"Plafonpro",   version:"v1.43", color:"#7e3af2", initial:"PP", desc:"حساب أسقف الجبس (Plafond) والديكور.", apk:"apks/PlafonPro.apk"},
-    {name:"Windoorgulf", version:"v4.1",  color:"#d97706", initial:"WG", desc:"نسخة Windoor المخصصة لدول الخليج.", apk:"apks/WindoorGulf.apk"},
+    {name:"Kozinalum",   version:"v2.66", logo:"logos/kozinalum.png",   desc:"حساب و تسعير الألمنيوم للمطابخ والواجهات.", apk:"apks/KozinAlum.apk"},
+    {name:"Windoor",     version:"v2.54", logo:"logos/windoor.png",     desc:"حساب و تصنيع النوافذ والأبواب الألمنيوم.", apk:"apks/Windoor.apk"},
+    {name:"Rclean",      version:"v1.38", logo:"logos/rclean.png",      desc:"تسيير خدمات التنظيف والمهام اليومية.", apk:"apks/RClean.apk"},
+    {name:"Plafonpro",   version:"v1.43", logo:"logos/plafonpro.png",   desc:"حساب أسقف الجبس (Plafond) والديكور.", apk:"apks/PlafonPro.apk"},
+    {name:"Windoorgulf", version:"v4.1",  logo:"logos/windoorgulf.png", desc:"نسخة Windoor المخصصة لدول الخليج.", apk:"apks/WindoorGulf.apk"},
   ];
 
   const grid = document.getElementById('appsGrid');
   grid.innerHTML = APPS.map(a => `
     <div class="app-card">
       <div class="app-top">
-        <div class="app-icon" style="background:${a.color}">${a.initial}</div>
+        <img class="app-icon" src="${a.logo}" alt="شعار ${a.name}" loading="lazy">
         <div>
           <p class="app-name">${a.name}</p>
           <p class="app-version">${a.version}</p>
