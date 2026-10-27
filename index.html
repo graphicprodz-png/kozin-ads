@@ -65,6 +65,15 @@
     background:var(--soon-bg); color:var(--soon-text);
     border:1px solid var(--soon-line); cursor:default;
   }
+  .btn-row{display:flex; gap:8px}
+  .btn-row .dl-btn{flex:1}
+  .info-btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    background:var(--bg); color:var(--text); text-decoration:none;
+    padding:10px 14px; border-radius:10px; font-size:14px; font-weight:600;
+    border:1px solid var(--line); flex:1;
+  }
+  .info-btn:hover{border-color:var(--brand); color:var(--brand)}
   section.guide{
     margin-top:40px; background:var(--card); border:1px solid var(--line);
     border-radius:14px; padding:22px 24px;
@@ -115,11 +124,11 @@
 
   // كل تطبيق مربوط بملف APK الحقيقي + أيقونته الأصلية (نفس الشعار اللي ظاهر فالهاتف)
   const APPS = [
-    {name:"Kozinalum",   version:"v2.66", logo:"logos/kozinalum.png",   desc:"حساب و تسعير الألمنيوم للمطابخ والواجهات.", apk:"apks/KozinAlum.apk"},
-    {name:"Windoor",     version:"v2.54", logo:"logos/windoor.png",     desc:"حساب و تصنيع النوافذ والأبواب الألمنيوم.", apk:"apks/Windoor.apk"},
-    {name:"Rclean",      version:"v1.38", logo:"logos/rclean.png",      desc:"تسيير خدمات التنظيف والمهام اليومية.", apk:"apks/RClean.apk"},
-    {name:"Plafonpro",   version:"v1.43", logo:"logos/plafonpro.png",   desc:"حساب أسقف الجبس (Plafond) والديكور.", apk:"apks/PlafonPro.apk"},
-    {name:"Windoorgulf", version:"v4.1",  logo:"logos/windoorgulf.png", desc:"نسخة Windoor المخصصة لدول الخليج.", apk:"apks/WindoorGulf.apk"},
+    {name:"Kozinalum",   version:"v2.66", logo:"logos/kozinalum.png",   desc:"حساب قياسات وتسعير مطابخ الألمنيوم.", apk:"apks/KozinAlum.apk", page:"apps/kozinalum.html"},
+    {name:"Windoor",     version:"v2.54", logo:"logos/windoor.png",     desc:"تسعير وتصنيع النوافذ والأبواب الألمنيوم.", apk:"apks/Windoor.apk", page:"apps/windoor.html"},
+    {name:"Rclean",      version:"v1.38", logo:"logos/rclean.png",      desc:"فوترة وتصنيع وشراء مواد أولية للمنتجات.", apk:"apks/RClean.apk", page:"apps/rclean.html"},
+    {name:"Plafonpro",   version:"v1.43", logo:"logos/plafonpro.png",   desc:"حساب وتسعير أسقف الجبس (Plafond).", apk:"apks/PlafonPro.apk", page:"apps/plafonpro.html"},
+    {name:"Windoorgulf", version:"v4.1",  logo:"logos/windoorgulf.png", desc:"نسخة Windoor المخصصة لدول الخليج.", apk:"apks/WindoorGulf.apk", page:"apps/windoorgulf.html"},
   ];
 
   const grid = document.getElementById('appsGrid');
@@ -133,10 +142,13 @@
         </div>
       </div>
       <p class="app-desc">${a.desc}</p>
-      ${a.apk
-        ? `<a class="dl-btn" href="${a.apk}" download>⬇ تحميل APK</a>`
-        : `<button class="dl-btn" data-soon="1" disabled>قريباً</button>`
-      }
+      <div class="btn-row">
+        <a class="info-btn" href="${a.page}">ℹ️ التفاصيل</a>
+        ${a.apk
+          ? `<a class="dl-btn" href="${a.apk}" download>⬇ تحميل</a>`
+          : `<button class="dl-btn" data-soon="1" disabled>قريباً</button>`
+        }
+      </div>
     </div>
   `).join('');
 </script>
