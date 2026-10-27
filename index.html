@@ -57,6 +57,11 @@
   .app-name{font-size:17px; font-weight:700; margin:0}
   .app-version{color:var(--muted); font-size:13px; margin:2px 0 0}
   .app-desc{color:var(--muted); font-size:13.5px; margin:0; flex:1}
+  .updated-badge{
+    display:none; align-items:center; gap:6px; width:fit-content;
+    background:#0f9d58; color:#fff; font-size:12px; font-weight:600;
+    padding:4px 11px; border-radius:999px; margin:0;
+  }
   .dl-btn{
     display:inline-flex; align-items:center; justify-content:center; gap:8px;
     background:var(--brand); color:#fff; text-decoration:none;
@@ -126,13 +131,22 @@
   document.getElementById('y').textContent = new Date().getFullYear();
 
   // كل تطبيق مربوط بملف APK الحقيقي + أيقونته الأصلية (نفس الشعار اللي ظاهر فالهاتف)
+  // updated: تاريخ آخر تحديث حقيقي (YYYY-MM-DD) — كيتزاد أوتوماتيكيا من tools/update_app.py، والبادج كيختفي وحدو بعد أسبوع
   const APPS = [
-    {name:"Kozinalum",   version:"v2.66", logo:"logos/kozinalum.png",   desc:"حساب قياسات وتسعير مطابخ الألمنيوم.", apk:"apks/KozinAlum.apk", page:"apps/kozinalum.html"},
-    {name:"Windoor",     version:"v2.54", logo:"logos/windoor.png",     desc:"تسعير وتصنيع النوافذ والأبواب الألمنيوم.", apk:"apks/Windoor.apk", page:"apps/windoor.html"},
-    {name:"Rclean",      version:"v1.38", logo:"logos/rclean.png",      desc:"فوترة وتصنيع وشراء مواد أولية للمنتجات.", apk:"apks/RClean.apk", page:"apps/rclean.html"},
-    {name:"Plafonpro",   version:"v1.43", logo:"logos/plafonpro.png",   desc:"حساب وتسعير أسقف الجبس (Plafond).", apk:"apks/PlafonPro.apk", page:"apps/plafonpro.html"},
-    {name:"Windoorgulf", version:"v4.1",  logo:"logos/windoorgulf.png", desc:"نسخة Windoor المخصصة لدول الخليج.", apk:"apks/WindoorGulf.apk", page:"apps/windoorgulf.html"},
+    {name:"Kozinalum",   version:"v2.66", logo:"logos/kozinalum.png",   desc:"حساب قياسات وتسعير مطابخ الألمنيوم.", apk:"apks/KozinAlum.apk", page:"apps/kozinalum.html", updated:""},
+    {name:"Windoor",     version:"v2.54", logo:"logos/windoor.png",     desc:"تسعير وتصنيع النوافذ والأبواب الألمنيوم.", apk:"apks/Windoor.apk", page:"apps/windoor.html", updated:""},
+    {name:"Rclean",      version:"v1.38", logo:"logos/rclean.png",      desc:"فوترة وتصنيع وشراء مواد أولية للمنتجات.", apk:"apks/RClean.apk", page:"apps/rclean.html", updated:""},
+    {name:"Plafonpro",   version:"v1.43", logo:"logos/plafonpro.png",   desc:"حساب وتسعير أسقف الجبس (Plafond).", apk:"apks/PlafonPro.apk", page:"apps/plafonpro.html", updated:"2026-10-27"},
+    {name:"Windoorgulf", version:"v4.1",  logo:"logos/windoorgulf.png", desc:"نسخة Windoor المخصصة لدول الخليج.", apk:"apks/WindoorGulf.apk", page:"apps/windoorgulf.html", updated:""},
   ];
+
+  function recentlyUpdated(dateStr){
+    if(!dateStr) return false;
+    const d = new Date(dateStr + 'T00:00:00');
+    if(isNaN(d.getTime())) return false;
+    const days = (Date.now() - d.getTime()) / 86400000;
+    return days >= 0 && days <= 7;
+  }
 
   const grid = document.getElementById('appsGrid');
   grid.innerHTML = APPS.map(a => `
@@ -145,6 +159,7 @@
         </div>
       </div>
       <p class="app-desc">${a.desc}</p>
+      ${recentlyUpdated(a.updated) ? `<p class="updated-badge" style="display:inline-flex">🆕 تم تحديث التطبيق مؤخرا</p>` : ``}
       <div class="btn-row">
         <a class="info-btn" href="${a.page}">ℹ️ التفاصيل</a>
         ${a.apk

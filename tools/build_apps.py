@@ -1,6 +1,9 @@
-import sys, os
+import sys, os, json
 sys.path.insert(0, os.path.dirname(__file__))
 from app_data import applications
+
+UPDATES_PATH = os.path.join(os.path.dirname(__file__), 'updates.json')
+updates = json.load(open(UPDATES_PATH, encoding='utf-8')) if os.path.isfile(UPDATES_PATH) else {}
 
 TPL = '''<!doctype html>
 <html lang="ar" dir="rtl">
@@ -46,6 +49,11 @@ TPL = '''<!doctype html>
   .hero .dev{color:var(--brand); font-size:14px; margin:0 0 8px; font-weight:600}
   .hero .meta-row{display:flex; gap:10px; align-items:center; color:var(--muted); font-size:12.5px; margin:0}
   .hero .meta-row .dot{width:3px; height:3px; border-radius:50%; background:var(--muted)}
+  .updated-badge{
+    display:none; align-items:center; gap:6px; margin:10px 0 0;
+    background:var(--install); color:#fff; font-size:12.5px; font-weight:600;
+    padding:5px 12px; border-radius:999px; width:fit-content;
+  }
   .hero-actions{max-width:800px; margin:0 auto; padding:14px 16px 8px; display:flex; justify-content:center; gap:10px; flex-wrap:wrap}
   .dl-btn{
     display:inline-flex; align-items:center; gap:8px; background:var(--install); color:#fff;
@@ -91,6 +99,7 @@ TPL = '''<!doctype html>
     <h1>__NAME__</h1>
     <p class="dev">Construtech</p>
     <p class="meta-row"><span>__VERSION__</span><span class="dot"></span><span>Android</span><span class="dot"></span><span>APK مباشر</span></p>
+    <p class="updated-badge" id="updatedBadge" data-updated="__UPDATED__">🆕 تم تحديث التطبيق مؤخرا</p>
   </div>
 </div>
 
@@ -133,7 +142,18 @@ __USAGE__
 </main>
 
 <footer>__NAME__ — Construtech © <span id="y"></span></footer>
-<script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+<script>
+  document.getElementById('y').textContent = new Date().getFullYear();
+  (function(){
+    var el = document.getElementById('updatedBadge');
+    var d = el && el.getAttribute('data-updated');
+    if(!d) return;
+    var updated = new Date(d + 'T00:00:00');
+    if(isNaN(updated.getTime())) return;
+    var days = (Date.now() - updated.getTime()) / 86400000;
+    if(days >= 0 && days <= 7) el.style.display = 'inline-flex';
+  })();
+</script>
 </body>
 </html>
 '''
@@ -154,6 +174,7 @@ for key, a in applications.items():
     html = html.replace("__APK__", a["APK"])
     html = html.replace("__KEY__", key)
     html = html.replace("__TAGLINE__", a["TAGLINE"])
+    html = html.replace("__UPDATED__", updates.get(key, ""))
     chips = "\n".join(f'      <div class="chip">{c}</div>' for c in a["FEATURES"])
     html = html.replace("__CHIPS__", chips)
     usage = "\n".join(f"      <li>{u}</li>" for u in a["USAGE"])
