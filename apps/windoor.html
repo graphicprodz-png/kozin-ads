@@ -25,12 +25,9 @@
   @font-face{font-family:'GE SS Two';font-weight:700;font-style:normal;font-display:swap;unicode-range:U+0020-002F,U+003A-10FFFF;src:url('../fonts/GESSTwo-Bold.otf') format('opentype')}
   *{box-sizing:border-box}
   body{margin:0; background:var(--bg); color:var(--text); font-family:'GE SS Two','Segoe UI',Tahoma,Arial,sans-serif; line-height:1.7}
-  .topbar{max-width:800px; margin:0 auto; padding:16px 16px 0}
-  .back{color:var(--muted); text-decoration:none; font-size:13.5px}
-  .back:hover{color:var(--brand)}
 
   .hero{
-    max-width:800px; margin:0 auto; padding:22px 16px 26px;
+    max-width:800px; margin:0 auto; padding:30px 16px 26px;
     display:flex; align-items:center; gap:18px; text-align:right;
   }
   .hero img.icon{width:84px; height:84px; border-radius:20px; border:1px solid var(--line); flex:0 0 auto}
@@ -75,8 +72,6 @@
 </style>
 </head>
 <body>
-
-<div class="topbar"><a class="back" href="../index.html">← رجوع لكل التطبيقات</a></div>
 
 <div class="hero">
   <img class="icon" src="../logos/windoor.png" alt="شعار Windoor">
@@ -136,7 +131,7 @@
   </section>
 </main>
 
-<footer>Kozin © <span id="y"></span></footer>
+<footer>Windoor — Construtech © <span id="y"></span></footer>
 <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
 </body>
 </html>
