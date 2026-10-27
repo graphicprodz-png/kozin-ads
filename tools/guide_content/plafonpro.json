@@ -1,0 +1,147 @@
+{
+  "app_key": "plafonpro",
+  "overview": {
+    "ar": "بلافون برو (PlafonPro) تطبيق جوال يُعِدُّه فريق Construtech خصيصًا لمحترفي تركيب الأسقف المستعارة (الفو بلافو) في الجزائر، ويعمل بلغتين PVC (اللامبري) وPlaco (البلاكوبلاتر BA13). يتيح التطبيق رسم شكل السقف الفعلي لكل غرفة — مستطيلًا، أو على شكل حرف L أو U أو T، أو بفتحات وأعمدة وأضلاع مائلة — ثم يحسب تلقائيًا أفضل طريقة لتوزيع الألواح وتقليل الهدر، ويُخرج قائمة كاملة بالمواد والكميات والأسعار وفق أسعار المحترف الخاصة به، مع مخطط قص مفصّل ومعاينة ثلاثية الأبعاد وعرض سعر جاهز للطباعة أو الإرسال للزبون.",
+    "en": "PlafonPro is a mobile app built by the Construtech team specifically for suspended-ceiling (Placo/PVC panel) installation professionals in Algeria. It supports both PVC (lambris) panels and Placo (BA13 plasterboard). The app lets you draw the real shape of each room's ceiling — a rectangle, L, U or T shape, with openings, columns or slanted edges — then automatically works out the most economical way to lay out and cut the panels, produces a full materials-and-cost breakdown using the installer's own prices, and generates a detailed cutting plan, a 3D preview, and a print-ready, shareable price quote."
+  },
+  "audience": {
+    "ar": "التطبيق موجّه لأصحاب ورشات ومقاولي تركيب أسقف الفو بلافو (PVC وPlaco) في الجزائر، الذين يحتاجون لتسعير سريع ودقيق أمام الزبون، وتقليل هدر الألواح والقضبان عند القص، وإصدار عروض أسعار احترافية بشعار المؤسسة واسمها.",
+    "en": "The app targets Algerian suspended-ceiling workshop owners and installation contractors (PVC and Placo) who need fast, accurate on-site pricing for clients, want to minimize panel and profile waste when cutting, and need to produce professional, branded price quotes."
+  },
+  "workflow_pipeline": [
+    {"icon": "🏠", "title": {"ar": "إنشاء مشروع جديد", "en": "Create a new project"}},
+    {"icon": "📐", "title": {"ar": "رسم شكل كل تركيب (غرفة)", "en": "Draw each room's ceiling shape"}},
+    {"icon": "🧱", "title": {"ar": "اختيار النوع: PVC أو Placo", "en": "Choose PVC or Placo"}},
+    {"icon": "⚙️", "title": {"ar": "حساب أرخص حل للقص والتوزيع", "en": "Calculate the cheapest cutting layout"}},
+    {"icon": "📋", "title": {"ar": "مراجعة مخطط القص والمعاينة 3D", "en": "Review the cutting plan and 3D preview"}},
+    {"icon": "🧾", "title": {"ar": "حفظ أو مشاركة عرض السعر PDF", "en": "Save or share the PDF quote"}}
+  ],
+  "sections": [
+    {
+      "title": {"ar": "إنشاء مشروع وإضافة التركيبات", "en": "Creating a project and adding installations"},
+      "intro": {"ar": "كل عمل في بلافون برو يبدأ بمشروع يحمل اسم الزبون أو الموقع، ويضم داخله تركيبًا واحدًا أو أكثر (كل غرفة أو فضاء هو «تركيب» مستقل له شكله الخاص).", "en": "Every job in PlafonPro starts as a project named after the client or site, and holds one or more installations — each room or space is a separate installation with its own ceiling shape."},
+      "steps": [
+        {"text": {"ar": "من الصفحة الرئيسية (المشاريع)، اضغط زر «مشروع جديد» وأدخل اسم المشروع واسم الزبون (اختياري).", "en": "From the home screen (Projects), tap \"New project\" and enter the project name and, optionally, the client's name."}, "screenshot": "02-new-project-filled.png"},
+        {"text": {"ar": "داخل المشروع، اضغط «إضافة تركيب جديد»، اختر اسمًا جاهزًا (غرفة معيشة، حمام، دوش، كوزينة، WC، غرفة نوم، رواق) أو اكتب اسمًا خاصًا، ثم اختر نوع البلافو: PVC أو Placo (بلاكوبلاتر BA13).", "en": "Inside the project, tap \"Add new installation\", pick a ready-made room name (living room, bathroom, shower, kitchen, WC, bedroom, hallway) or type a custom one, then choose the ceiling type: PVC or Placo (BA13 plasterboard)."}, "screenshot": "04-room-new-modal.png"},
+        {"text": {"ar": "يمكن إضافة عدة تركيبات لنفس المشروع؛ التركيبات التي تستعمل نفس نموذج اللوح تتقاسم فضلات القص فيما بينها لتقليل الهدر الإجمالي.", "en": "Several installations can be added to the same project; installations using the same panel model share cut-off leftovers between them to reduce overall waste."}, "screenshot": "12-project-one-room.png"}
+      ],
+      "tip": {"type": "tip", "ar": "اجمع التركيبات التي تستعمل نفس نوع ومقاس الألواح داخل مشروع واحد؛ التطبيق يقتسم الفضلات تلقائيًا بينها ويوفّر عليك تكلفة إضافية.", "en": "Group installations that use the same panel type and size inside one project; the app automatically shares leftover cut-offs between them, saving extra material cost."}
+    },
+    {
+      "title": {"ar": "رسم شكل السقف", "en": "Drawing the ceiling shape"},
+      "intro": {"ar": "محرر الشكل يسمح برسم سقف بأي هندسة حقيقية: مستطيل بسيط، أو أشكال حرف L وU وT، مع إمكانية إضافة فتحات وأعمدة وقطع زوايا وأضلاع مائلة لمطابقة الواقع تمامًا.", "en": "The shape editor lets you draw a ceiling with real-world geometry: a simple rectangle, or L, U and T shapes, with the ability to add openings, columns, corner cuts and slanted edges to match reality exactly."},
+      "steps": [
+        {"text": {"ar": "في شاشة «الشكل»، اضغط «شكل جاهز» لاختيار نموذج سريع (مستطيل، L، U أو T) وإدخال الطول والعرض وأبعاد الجزء المقتطع.", "en": "On the Shape screen, tap \"Ready-made shape\" to pick a quick template (rectangle, L, U or T) and enter the length, width and the cut-out part's dimensions."}, "screenshot": "06-shape-preset-L-form.png"},
+        {"text": {"ar": "بعد تطبيق الشكل الجاهز، يظهر مخطط السقف قابلًا للتعديل المباشر على اللوحة: تحريك الزوايا، تثبيت الزوايا على 90° أو تركها حرة، التراجع/الإعادة، إضافة نقاط أو فتحة/عمود، أو قطع زاوية أو ضلع مائل.", "en": "After applying the template, the ceiling outline appears editable directly on the canvas: drag corners, lock angles to 90° or leave them free, undo/redo, add points or an opening/column, or cut a corner or add a slanted edge."}, "screenshot": "07-shape-drawn-L.png"},
+        {"text": {"ar": "يعرض التطبيق أسفل اللوحة المساحة والمحيط المحسوبين فوريًا أثناء الرسم للتأكد من صحة الشكل.", "en": "Below the canvas the app shows the live-calculated area and perimeter while you draw, so you can verify the shape is correct."}, "screenshot": null}
+      ],
+      "tip": {"type": "note", "ar": "اختيار نوع البلافو (PVC أو Placo) ونموذج اللوح يتم من نفس شاشة الشكل، ويمكن ترك النموذج على «تلقائي» ليختار التطبيق الأرخص.", "en": "The ceiling type (PVC or Placo) and panel model are chosen on this same shape screen; leaving the model on \"Automatic\" lets the app pick the cheapest option."}
+    },
+    {
+      "title": {"ar": "حساب أفضل حل للقص وتوزيع الألواح", "en": "Calculating the best cutting solution"},
+      "intro": {"ar": "بمجرد أن يكون الشكل صالحًا، يضغط الحرفي على «احسب أحسن حل» ليقوم المحرك الحسابي للتطبيق بتجربة اتجاهات واحتمالات متعددة لتوزيع الألواح واختيار الأرخص وأقلها هدرًا.", "en": "Once the shape is valid, the installer taps \"Calculate best solution\" and the app's engine tries multiple panel directions and layouts to pick the cheapest one with the least waste."},
+      "steps": [
+        {"text": {"ar": "تعرض شاشة «النتيجة» أرخص حل تلقائيًا: مخطط توزيع الألواح على السقف، اسم اللوح المستعمل، اتجاه التركيب، عدد الألواح، نسبة الهدر، المساحة، وتكلفة المواد الإجمالية لهذا التركيب.", "en": "The Result screen automatically shows the cheapest solution: the panel-layout diagram on the ceiling, the panel model used, installation direction, panel count, waste percentage, area, and total material cost for this installation."}, "screenshot": "08-result-best-layout.png"},
+        {"text": {"ar": "أسفل النتيجة، جدول «المستهلكات» يفصّل كل بند (الألواح، القورج/الكورنيار المحيطي، الرنفور، كيت التعليق، الشوفات، الفيش وغيرها) مع الكمية والسعر والمجموع لكل بند.", "en": "Below the result, a Consumables table lists every line item (panels, perimeter profile / cornice, suspension bars, hanging kits, screws, anchors, etc.) with quantity, unit price and line total."}, "screenshot": null},
+        {"text": {"ar": "يعرض التطبيق أيضًا حلولًا بديلة أرخص فأرخص (حتى 6 حلول)، بحيث يمكن للحرفي اختيار اتجاه تركيب مختلف إن رغب في ذلك.", "en": "The app also lists alternative solutions ordered cheapest-first (up to 6 options), so the installer can pick a different installation direction if they prefer."}, "screenshot": null}
+      ],
+      "tip": {"type": "tip", "ar": "رسالة «وفّرت X دج بتقاسم الفضلات بين التركيبات» تظهر تلقائيًا عند إضافة أكثر من تركيب بنفس نموذج اللوح — هذا مؤشر مباشر على التوفير الحقيقي الذي يحققه التطبيق.", "en": "A \"You saved X DZD by sharing leftovers between installations\" message appears automatically once more than one installation uses the same panel model — a direct indicator of the real savings the app delivers."}
+    },
+    {
+      "title": {"ar": "مخطط القص والمعاينة ثلاثية الأبعاد", "en": "Cutting plan and 3D preview"},
+      "intro": {"ar": "لتنفيذ العمل في الورشة، يوفّر التطبيق مخطط قص دقيقًا لكل لوح أو قضيب، إضافة إلى معاينة ثلاثية الأبعاد تفاعلية للسقف المرسوم.", "en": "To execute the job in the workshop, the app provides a precise cutting plan for every panel or bar, plus an interactive 3D preview of the drawn ceiling."},
+      "steps": [
+        {"text": {"ar": "في تبويب «خطة القص»، يظهر مخطط توزيع كل لوح مرقّم فوق السقف، يليه مخطط القص من كل لوح أو قضيب خام بالأبعاد بالمتر، وجدول القورج والرنفور يوضح كيف تُقطع كل قضبان من الطول المتوفر.", "en": "On the \"Cutting plan\" tab, a numbered panel-layout diagram appears over the ceiling, followed by the actual cutting diagram for each raw panel or bar in metres, and a profile/suspension-bar table showing exactly how each stock-length bar is cut."}, "screenshot": "09-cutting-plan.png"},
+        {"text": {"ar": "في تبويب «3D»، يمكن تدوير السقف المرسوم بالإصبع ومعاينته من كل زاوية، مع أزرار لتكبير/تصغير العرض وإظهار أو إخفاء طبقة الألواح أو الرنفور أو القورج أو التيج.", "en": "On the \"3D\" tab, the drawn ceiling can be rotated by finger-drag and viewed from any angle, with buttons to zoom in/out and toggle visibility of the panel layer, suspension bars, profile or cornice (tige/trim)."}, "screenshot": "10-3d-preview.png"}
+      ],
+      "tip": {"type": "note", "ar": "الخطوط المتقطعة في المخططات تمثل حدود الألواح، والألوان المختلفة تطابق أرقام القطع في جدول القص لسهولة التتبع في الورشة.", "en": "Dashed lines in the diagrams mark panel boundaries, and the different colors match the piece numbers in the cutting table for easy tracking on the workshop floor."}
+    },
+    {
+      "title": {"ar": "إجمالي المشروع وعرض السعر PDF", "en": "Project total and PDF quote"},
+      "intro": {"ar": "شاشة «المجموع» تجمع تكلفة كل التركيبات في مشروع واحد، وتتيح حفظ عرض سعر PDF جاهز أو معاينته قبل الإرسال للزبون.", "en": "The \"Total\" screen rolls up the cost of every installation into one project, and lets you save a ready PDF quote or preview it before sending it to the client."},
+      "steps": [
+        {"text": {"ar": "تعرض الشاشة التكلفة الإجمالية للمشروع (مواد + يد عاملة + هامش الربح إن وجدا)، عدد التركيبات، المساحة الكلية، ومبلغ التوفير الناتج عن تقاسم الفضلات.", "en": "The screen shows the project's total cost (materials + labor + profit margin, if set), the number of installations, total area, and the amount saved from sharing leftover cut-offs."}, "screenshot": "11-project-total.png"},
+        {"text": {"ar": "أسفلها، جداول منفصلة لكل مادة (PVC وPlaco إن وُجدا معًا) تجمّع المواد المتكررة، مع مخطط توزيع الألواح ومخطط القص المشترك بين كل التركيبات التي تستعمل نفس النموذج.", "en": "Below that, separate tables per material (PVC and Placo, if both are used) consolidate repeated materials, with a shared panel-layout diagram and a shared cutting plan across every installation using the same panel model."}, "screenshot": "14-project-total-two-rooms.png"},
+        {"text": {"ar": "زر «معاينة PDF» يعرض عرض السعر الكامل: شعار واسم المؤسسة، تفاصيل الزبون، جدول التركيبات والمساحات، جدول المواد والكميات والأسعار، ثم صفحات مخطط كل تركيب على حدة.", "en": "The \"Preview PDF\" button shows the full quote: business logo and name, client details, a table of installations and areas, a materials/quantity/price table, then a separate layout page for each installation."}, "screenshot": "15-pdf-preview-quote.png"},
+        {"text": {"ar": "زر «حفظ PDF للمشروع» يحفظ الملف مباشرة على الهاتف لإرساله أو طباعته للزبون.", "en": "The \"Save PDF for project\" button saves the file directly to the phone for sending or printing to the client."}, "screenshot": null}
+      ],
+      "tip": {"type": "tip", "ar": "أضف شعار واسم وهاتف مؤسستك من الإعدادات قبل إصدار أول عرض سعر، فهذه البيانات تظهر تلقائيًا في رأس كل عرض PDF.", "en": "Add your business logo, name and phone number in Settings before issuing your first quote — these details appear automatically in the header of every PDF quote."}
+    },
+    {
+      "title": {"ar": "إدارة الأسعار والمقاسات", "en": "Managing prices and dimensions"},
+      "intro": {"ar": "تبويب «الأسعار» هو قلب دقة الحساب: فيه يضبط الحرفي أسعار كل مادة ومقاساتها بنفسه، وكل القيم قابلة للتعديل وتُحفظ تلقائيًا في الهاتف.", "en": "The \"Prices\" tab is the heart of calculation accuracy: here the installer sets the price and dimensions of every material themselves, and every value is editable and auto-saved on the phone."},
+      "steps": [
+        {"text": {"ar": "لمواد PVC: ألواح لامبري بعروض مختلفة (يمكن تفعيل/تعطيل كل نوع بمربع اختيار)، القورج (الكورنيش المحيطي)، والرنفور، كل منها بأطوال قضبان متعددة وسعر لكل طول.", "en": "For PVC: lambris panels in different widths (each type can be enabled/disabled with a checkbox), gorge (perimeter trim) and renfort (support bars), each available in several stock lengths with a price per length."}, "screenshot": "18-prices-materials.png"},
+        {"text": {"ar": "لمواد Placo: ألواح BA13 بمقاسات مختلفة، الكورنيار/القورج المحيطي، والرنفور (fourrure)، بنفس منطق الأطوال والأسعار.", "en": "For Placo: BA13 plasterboard panels in different sizes, the corniere/perimeter trim, and the renfort (fourrure/furring channel), using the same stock-length-and-price logic."}, "screenshot": "19-prices-stock-lengths.png"},
+        {"text": {"ar": "يمكن أيضًا إضافة أو حذف أطوال قضبان مخصصة لكل مادة، وضبط المستهلكات الأخرى (كيت التعليق، الشوفات، التيج، الفيش...).", "en": "Custom stock lengths can also be added or removed per material, and other consumables (hanging kits, screws, trim rods, anchors...) can be configured."}, "screenshot": null},
+        {"text": {"ar": "في أسفل الصفحة، إعدادات اليد العاملة والهامش: أجرة التركيب بالدينار لكل متر مربع، هامش الربح بالنسبة المئوية، وهامش القص بالسنتيمتر (ما يُفقد في كل عملية قص).", "en": "At the bottom of the page: labor and margin settings — installation labor rate in DZD per square meter, profit margin as a percentage, and the cutting kerf allowance in centimeters (what is lost on every cut)."}, "screenshot": "20-prices-labor-margin.png"}
+      ],
+      "tip": {"type": "warning", "ar": "تأكد من تحديث أسعار الألواح والمقاسات المتوفرة فعليًا لديك قبل حساب أي تركيب جديد؛ التطبيق يحسب دائمًا بناءً على آخر قيم محفوظة في هذا التبويب.", "en": "Make sure panel prices and the stock lengths you actually have in stock are up to date before calculating any new installation; the app always calculates using the last values saved in this tab."}
+    },
+    {
+      "title": {"ar": "الإعدادات: بيانات المؤسسة والنسخ الاحتياطي", "en": "Settings: business info and backup"},
+      "intro": {"ar": "تبويب «الإعدادات» يضم بيانات المؤسسة التي تظهر في عروض الأسعار، النسخ الاحتياطي، والترخيص وحول التطبيق.", "en": "The \"Settings\" tab holds the business details shown on price quotes, backup tools, and the licensing / about-the-app section."},
+      "steps": [
+        {"text": {"ar": "«بيانات المؤسسة»: شعار (قابل للرفع)، اسم المؤسسة، رقم الهاتف، والعنوان — كل هذه البيانات تظهر تلقائيًا في رأس كل عرض سعر PDF.", "en": "\"Business details\": an uploadable logo, business name, phone number and address — all shown automatically in the header of every PDF quote."}, "screenshot": "23-settings-company-info.png"},
+        {"text": {"ar": "«نسخة احتياطية»: زر «حفظ نسخة» يصدّر كل مشاريعك وأسعارك في ملف واحد، وزر «استعادة» يعيد تحميل نسخة سابقة — كل البيانات محفوظة محليًا داخل الهاتف فقط.", "en": "\"Backup\": the \"Save backup\" button exports all your projects and prices into one file, and \"Restore\" reloads a previous backup — all data is stored locally on the phone only."}, "screenshot": "21-settings-more.png"},
+        {"text": {"ar": "«الترخيص»: يمنح التطبيق تجربة مجانية مدتها 7 أيام بكل المزايا، ثم يتطلب اشتراكًا أو مفتاح تفعيل.", "en": "\"License\": the app grants a free 7-day trial with every feature unlocked, after which a subscription or an activation key is required."}, "screenshot": null},
+        {"text": {"ar": "«حول التطبيق» يعرض اسم التطبيق ووصفه ورقم الإصدار واسم المطوّر (By Construtech).", "en": "\"About the app\" shows the app name, a short description, the version number and the developer name (By Construtech)."}, "screenshot": null}
+      ],
+      "tip": {"type": "note", "ar": "كل المشاريع والأسعار محفوظة داخل هاتفك فقط؛ خذ نسخة احتياطية بانتظام خصوصًا قبل تغيير الهاتف.", "en": "All projects and prices are stored only on your phone; take a backup regularly, especially before switching devices."}
+    },
+    {
+      "title": {"ar": "التجربة المجانية والتفعيل والاشتراك", "en": "Free trial, activation and subscription"},
+      "intro": {"ar": "يعمل التطبيق بنظام تجربة مجانية مدتها 7 أيام بكل المزايا متاحة، ثم يُطلب من الحرفي الاشتراك أو إدخال مفتاح تفعيل يُرسَل له يدويًا من Construtech بعد الدفع.", "en": "The app runs on a 7-day free trial with every feature unlocked; afterwards the installer must subscribe or enter an activation key sent manually by Construtech after payment."},
+      "steps": [
+        {"text": {"ar": "من الإعدادات ← «حالة الترخيص/التفعيل» تظهر نافذة توضح الأيام المتبقية من التجربة، ورمز الجهاز الفريد (يُستعمل لإصدار مفتاح تفعيل)، وخانة للصق مفتاح التفعيل (يبدأ بـ PP1....).", "en": "From Settings → \"License status / Activation\", a window shows the remaining trial days, the device's unique ID code (used to issue an activation key), and a field to paste the activation key (starting with PP1....)."}, "screenshot": "22-license-activation.png"},
+        {"text": {"ar": "زر «اشترك / جدّد الاشتراك» يفتح شاشة اختيار الباقة: 3 أشهر (1500.00 دج)، 6 أشهر (2500.00 دج)، 12 شهرًا (4500.00 دج)، أو مدى الحياة (20000.00 دج).", "en": "The \"Subscribe / renew subscription\" button opens a plan-selection screen: 3 months (1,500.00 DZD), 6 months (2,500.00 DZD), 12 months (4,500.00 DZD), or lifetime (20,000.00 DZD)."}, "screenshot": "24-subscription-plans-payment.png"},
+        {"text": {"ar": "طرق الدفع المتاحة حاليًا: CCP أو بريدي موب (BaridiMob)؛ خيار بطاقة Visa/Mastercard معروض كـ«قريبًا». يمكن نسخ رقم RIP مباشرة من الزر الأخضر، أو فتح تطبيق بريدي موب مباشرة.", "en": "Currently available payment methods: CCP or BaridiMob; a Visa/Mastercard option is shown as \"coming soon\". The RIP account number can be copied directly via the green button, or BaridiMob can be opened directly."}, "screenshot": null},
+        {"text": {"ar": "بعد الدفع، يرسل الحرفي صورة وصل الدفع عبر واتساب أو البريد الإلكتروني (أزرار جاهزة في نفس الشاشة) إلى Construtech، ليتلقى مفتاح التفعيل بعد التحقق.", "en": "After paying, the installer sends a photo of the payment receipt via WhatsApp or email (ready-made buttons on the same screen) to Construtech, and receives the activation key after verification."}, "screenshot": null}
+      ],
+      "tip": {"type": "warning", "ar": "عند أول تشغيل للتطبيق وعند تفعيل أي مفتاح، يُرسل التطبيق اسمه ونسخته ورمز الجهاز وموديل الهاتف والمدينة التقريبية فقط، وذلك مذكور صراحة داخل شاشة التفعيل نفسها.", "en": "On the app's first run and whenever a key is activated, the app sends the app name, version, device ID, phone model and approximate city only — this is stated explicitly on the activation screen itself."}
+    }
+  ],
+  "material_comparison_table": [
+    {"aspect": {"ar": "اسم المادة ومقاساتها", "en": "Material name and sizes"}, "option_a": {"ar": "PVC (ألواح لامبري) — عدة عروض متاحة، يمكن تفعيل/تعطيل كل مقاس على حدة", "en": "PVC (lambris panels) — several widths available, each size can be individually enabled or disabled"}, "option_b": {"ar": "Placo (بلاكوبلاتر) — ألواح BA13 بمقاسات مختلفة (مثلًا 120×250 سم)", "en": "Placo (plasterboard) — BA13 panels in different sizes (e.g. 120×250 cm)"}},
+    {"aspect": {"ar": "القطعة المحيطية (الإطار)", "en": "Perimeter trim piece"}, "option_a": {"ar": "القورج (gorge)", "en": "Gorge (perimeter channel)"}, "option_b": {"ar": "الكورنيار / القورج المحيطي", "en": "Corniere / perimeter trim"}},
+    {"aspect": {"ar": "دعامة التعليق", "en": "Support/suspension bar"}, "option_a": {"ar": "الرنفور (renfort)", "en": "Renfort (support bar)"}, "option_b": {"ar": "الرنفور (fourrure) — قضيب التعليق المعدني", "en": "Renfort (fourrure) — metal furring/suspension channel"}},
+    {"aspect": {"ar": "طريقة تركيب الزوايا المتقطّعة", "en": "Cut-panel boundary handling"}, "option_a": {"ar": "خطوط متقطعة تمثل حدود الألواح؛ تيج (عصا 1م قابلة للقص) لتثبيت أطراف القورج/الكورنيز في الحائط", "en": "Dashed lines mark panel boundaries; a \"tige\" (1m cuttable rod) secures the gorge/trim edges to the wall"}, "option_b": {"ar": "نفس منطق الخطوط المتقطعة لحدود الألواح مع جدول قص خاص باللوح (BA13) وأبعاده بالمتر", "en": "Same dashed-boundary logic, with its own cutting table for the BA13 board and its dimensions in meters"}}
+  ],
+  "feature_table": [
+    {"feature": {"ar": "رسم سقف بأي هندسة", "en": "Draw ceilings with any geometry"}, "detail": {"ar": "مستطيل، L، U، T، مع فتحات/أعمدة، قطع زوايا، أضلاع مائلة، وتجويف مربع.", "en": "Rectangle, L, U, T shapes, plus openings/columns, corner cuts, slanted edges and square cavities."}},
+    {"feature": {"ar": "محرك تحسين القص", "en": "Cutting optimization engine"}, "detail": {"ar": "يختبر عدة اتجاهات لتوزيع الألواح ويقترح حتى 6 حلول مرتبة من الأرخص إلى الأغلى.", "en": "Tests multiple panel-laying directions and suggests up to 6 solutions ordered from cheapest to most expensive."}},
+    {"feature": {"ar": "تقاسم الفضلات بين التركيبات", "en": "Shared leftover cut-offs across installations"}, "detail": {"ar": "التركيبات التي تستعمل نفس نموذج اللوح داخل نفس المشروع تتقاسم بقايا القص تلقائيًا لتقليل التكلفة الكلية.", "en": "Installations using the same panel model within one project automatically share cut-off leftovers to cut overall cost."}},
+    {"feature": {"ar": "مخطط قص مفصّل", "en": "Detailed cutting diagrams"}, "detail": {"ar": "رسم بياني لكل لوح/قضيب يوضح أين تُقص كل قطعة، مع جدول نصي مرافق.", "en": "A diagram for every panel/bar showing exactly where each piece is cut from, with an accompanying text table."}},
+    {"feature": {"ar": "معاينة ثلاثية الأبعاد تفاعلية", "en": "Interactive 3D preview"}, "detail": {"ar": "تدوير وتكبير السقف المرسوم، مع إظهار/إخفاء طبقات الألواح والرنفور والقورج والتيج.", "en": "Rotate and zoom the drawn ceiling, with toggles to show/hide the panel, support-bar, trim and tige layers."}},
+    {"feature": {"ar": "أسعار ومقاسات قابلة للتخصيص الكامل", "en": "Fully customizable prices and dimensions"}, "detail": {"ar": "كل نوع لوح وطول قضيب وسعر يُضبط يدويًا من تبويب الأسعار، إضافة إلى أجرة اليد العاملة وهامش الربح وهامش القص.", "en": "Every panel type, bar length and price is set manually in the Prices tab, plus labor rate, profit margin and cutting kerf allowance."}},
+    {"feature": {"ar": "عروض أسعار PDF احترافية", "en": "Professional PDF quotes"}, "detail": {"ar": "عرض سعر قابل للمعاينة والحفظ، يضم شعار واسم المؤسسة، جدول المواد، وصفحة مخطط لكل تركيب.", "en": "A previewable, saveable price quote that includes the business logo/name, a materials table, and a layout page per installation."}},
+    {"feature": {"ar": "نسخ احتياطي واستعادة محلي", "en": "Local backup and restore"}, "detail": {"ar": "تصدير/استيراد كل المشاريع والأسعار كملف واحد؛ لا بيانات تُرسل إلى خوادم خارجية عدا بيانات التفعيل.", "en": "Export/import all projects and prices as one file; no data is sent to external servers except the activation data."}},
+    {"feature": {"ar": "تجربة مجانية 7 أيام + تفعيل بمفتاح", "en": "7-day free trial + key activation"}, "detail": {"ar": "كل الميزات مفتوحة خلال التجربة؛ بعدها اشتراك شهري/سنوي أو مدى الحياة عبر CCP أو بريدي موب.", "en": "All features unlocked during the trial; afterwards a monthly/annual or lifetime subscription via CCP or BaridiMob."}}
+  ],
+  "faq": [
+    {"q": {"ar": "هل يدعم التطبيق كلًا من PVC وPlaco؟", "en": "Does the app support both PVC and Placo?"}, "a": {"ar": "نعم، عند إنشاء كل تركيب يختار الحرفي نوع البلافو: PVC (ألواح لامبري) أو Placo (ألواح BA13)، ولكل نوع مواده ومقاساته وأسعاره الخاصة.", "en": "Yes. When creating each installation, the installer chooses the ceiling type: PVC (lambris panels) or Placo (BA13 boards), and each type has its own materials, sizes and prices."}},
+    {"q": {"ar": "كيف يحسب التطبيق أرخص طريقة للقص؟", "en": "How does the app calculate the cheapest cutting method?"}, "a": {"ar": "بعد رسم شكل السقف، يختبر محرك التطبيق عدة اتجاهات لتوزيع الألواح، ويختار تلقائيًا الاتجاه الذي يعطي أقل هدر وأقل تكلفة، مع عرض حلول بديلة إن رغب الحرفي في تغيير الاتجاه.", "en": "After the ceiling shape is drawn, the app's engine tests several panel-laying directions and automatically picks the one with the least waste and lowest cost, while also offering alternative solutions if the installer wants a different direction."}},
+    {"q": {"ar": "هل يمكن تعديل أسعار الألواح والمقاسات المتوفرة لدي؟", "en": "Can I edit the panel prices and sizes I actually have in stock?"}, "a": {"ar": "نعم، من تبويب «الأسعار» يمكن تعديل أو إضافة أو حذف كل نوع لوح وكل طول قضيب وسعره، بالإضافة إلى أجرة اليد العاملة وهامش الربح وهامش القص.", "en": "Yes, from the \"Prices\" tab you can edit, add or remove every panel type and every bar length and its price, as well as labor rate, profit margin and cutting kerf allowance."}},
+    {"q": {"ar": "كيف تُحفظ بياناتي ومشاريعي؟", "en": "How are my data and projects stored?"}, "a": {"ar": "كل المشاريع والأسعار محفوظة داخل هاتفك فقط. يوفّر التطبيق زر «حفظ نسخة» لتصدير كل بياناتك في ملف واحد، وزر «استعادة» لإعادة تحميلها لاحقًا أو على هاتف آخر.", "en": "All projects and prices are stored only on your phone. The app provides a \"Save backup\" button to export all your data into one file, and a \"Restore\" button to reload it later or on another phone."}},
+    {"q": {"ar": "ما مدة التجربة المجانية وكيف يتم التفعيل بعدها؟", "en": "How long is the free trial and how do I activate after it ends?"}, "a": {"ar": "التجربة المجانية مدتها 7 أيام بكل المزايا. بعدها يمكن الاشتراك (3 أشهر، 6 أشهر، 12 شهرًا، أو مدى الحياة) عبر CCP أو بريدي موب، ثم إرسال وصل الدفع عبر واتساب أو البريد الإلكتروني لـ Construtech للحصول على مفتاح تفعيل يُلصق في خانة التفعيل.", "en": "The free trial lasts 7 days with every feature unlocked. Afterward you can subscribe (3 months, 6 months, 12 months, or lifetime) via CCP or BaridiMob, then send the payment receipt via WhatsApp or email to Construtech to receive an activation key to paste into the activation field."}},
+    {"q": {"ar": "هل يظهر شعار واسم مؤسستي في عرض السعر؟", "en": "Does my business logo and name appear on the quote?"}, "a": {"ar": "نعم، من الإعدادات ← «بيانات المؤسسة» يمكن رفع شعار وإدخال اسم المؤسسة والهاتف والعنوان، وتظهر هذه المعلومات تلقائيًا في رأس كل عرض سعر PDF يُصدره التطبيق.", "en": "Yes. In Settings → \"Business details\" you can upload a logo and enter your business name, phone and address, and this information automatically appears in the header of every PDF quote the app produces."}},
+    {"q": {"ar": "ماذا يحدث عند إضافة عدة غرف بنفس نوع اللوح في مشروع واحد؟", "en": "What happens when I add several rooms with the same panel type in one project?"}, "a": {"ar": "يقوم التطبيق تلقائيًا بتجميع خطة القص لهذه التركيبات معًا، بحيث تُستعمل بقايا القص من تركيب في تركيب آخر، مما يقلل عدد الألواح والقضبان المشتراة ويُظهر مبلغ التوفير الناتج بوضوح.", "en": "The app automatically pools the cutting plan for these installations, so leftover cut-offs from one are reused in another, reducing the number of panels and bars needed to purchase and clearly showing the resulting savings."}},
+    {"q": {"ar": "هل يحتاج التطبيق إنترنت للعمل؟", "en": "Does the app need internet to work?"}, "a": {"ar": "الرسم والحساب والتسعير وإنشاء PDF كلها تعمل محليًا دون إنترنت. الإنترنت مطلوب فقط عند التحقق الدوري من حالة التفعيل أو عند تفعيل مفتاح جديد.", "en": "Drawing, calculation, pricing and PDF generation all work locally without internet. Internet is only needed for periodic license checks or when activating a new key."}}
+  ],
+  "real_contact_info_found_in_app": {
+    "developer": "Construtech",
+    "phone": "0783227698",
+    "whatsapp": "213783227698",
+    "email": "construtech.dz@gmail.com",
+    "rip": "00799999000764034965",
+    "rip_account_name": "Boucherit Toufik",
+    "subscription_plans_dzd": {
+      "3_months": 1500,
+      "6_months": 2500,
+      "12_months": 4500,
+      "lifetime": 20000
+    },
+    "payment_methods": ["CCP", "BaridiMob", "Visa/Mastercard (coming soon)"],
+    "note": "Exact values found hard-coded in the app's own source (index.html, license/payment logic around line 1149 and 1205-1217) and verified live in the app's activation and subscription-payment screens."
+  }
+}
