@@ -538,7 +538,7 @@ def build_one(key):
     pages_html.append(render_install_page(a, pageno_install))
     pages_html.append(render_closing_page(a, content, pageno_closing))
 
-    css = CSS.replace("__PRIMARY__", a["COLOR"]["primary"]).replace("__ACCENT__", a["COLOR"]["accent"])
+    css = CSS.replace("__PRIMARY__", a["COLOR"]["primary"]).replace("__ACCENT__", a["COLOR"]["accent"]).replace("__ROOT__", ROOT_URL)
     html = f'''<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><style>{css}</style></head><body>
 {"".join(pages_html)}
 </body></html>'''
