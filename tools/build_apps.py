@@ -152,6 +152,12 @@ TPL = '''<!doctype html>
   li{margin-bottom:9px; font-size:14.5px}
   .note{margin-top:14px; font-size:13px; color:var(--muted); border-top:1px dashed var(--line); padding-top:12px}
   footer{text-align:center; padding:24px 16px; color:var(--muted); font-size:12.5px}
+
+  .qr-box{display:flex; align-items:center; gap:18px; background:var(--bg); border:1px solid var(--line); border-radius:14px; padding:16px 18px; margin-top:16px}
+  .qr-box img{width:108px; height:108px; border-radius:10px; background:#fff; flex:0 0 auto; border:1px solid var(--line)}
+  .qr-box .qt{font-size:13.5px}
+  .qr-box .qt b{display:block; font-size:14.5px; margin-bottom:4px}
+  .qr-box .qt span{color:var(--muted); font-size:12.5px}
 </style>
 </head>
 <body>
@@ -237,6 +243,10 @@ __FAQ__
       <li>بعد التثبيت نقدر تحيد السماح نتاع "مصادر غير معروفة" إلى حبيت.</li>
     </ol>
     <div class="note">ملاحظة: هاذ التطبيق ماشي من Google Play — تحميل مباشر (APK). تأكد دايما من المصدر قبل ما تثبت أي تطبيق على هاتفك.__EXTRA_NOTE__</div>
+    <div class="qr-box">
+      <img src="../qrcodes/__KEY__.png" alt="QR كود لتحميل __NAME__ مباشرة" loading="lazy">
+      <div class="qt"><b>📷 سكان للتثبيت المباشر</b><span>صوّر الكود بكاميرا هاتفك — يبدا تحميل __NAME__ __VERSION__ فالوقت.</span></div>
+    </div>
   </section>
 </main>
 
