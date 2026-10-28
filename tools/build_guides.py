@@ -31,6 +31,7 @@ YEAR = str(datetime.date.today().year)
 # (by default the first 3 files, alphabetically, from screenshots/<key>/guide/).
 COVER_SHOTS = {
     "windoorgulf": ["wg6-quote.png", "wg8-roller3d.png", "wg9-arch-door.png"],
+    "windoor": ["w7-arch-door.png", "w8-roller3d.png", "w2-editor.png"],
 }
 MIN_ANDROID = "7.0+"
 PERMISSIONS_AR = "الإنترنت"
