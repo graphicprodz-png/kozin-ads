@@ -1,13 +1,19 @@
 """Export one or all apps' full download-page system (page + APK + PDF guide +
-screenshots + QR code) from kozin-ads into a titterisoft-website checkout,
-as a self-contained bundle under its public/ folder (served verbatim by
-Cloudflare Pages, same URL structure as kozin-ads: /apps/<key>.html,
-/apks/<APK>, /guides/<key>-guide.pdf, /screenshots/<key>/*, /qrcodes/<key>.png).
+screenshots + QR code) from kozin-ads into a titterisoft-website checkout.
 
-This is a faithful copy of build_apps.py's page template, with two
-differences: the QR code is re-rendered to point at the titterisoft domain
-instead of kozin-ads, and the @font-face rules point at titterisoft's own
-already-hosted GE SS Two webfonts instead of shipping a second otf copy.
+The page itself is written as a *content fragment* to
+<dest>/src/pages/apps/<key>.html, in titterisoft-website's own page format
+(a leading JSON meta comment + body). titterisoft's Node build
+(scripts/build.mjs) wraps it with the site's real, current header/nav/footer
+and site-wide <head> — so the app page always matches the rest of the site
+automatically, with zero duplicated header/footer markup here.
+
+Everything else (APK, PDF guide, screenshots, logo, QR code) is copied into
+<dest>/public/{apks,guides,screenshots,logos,qrcodes}/ as before, served
+verbatim by Cloudflare Pages at the same relative paths the page links to
+(../apks/<APK>, etc. — dist/apps/<key>.html sits at the same depth as
+dist/apks/, dist/guides/, ... either way). The QR code is re-rendered to
+point at the titterisoft domain instead of kozin-ads.
 
 Usage:
   python3 export_to_titterisoft.py --dest /path/to/titterisoft-website [--key windoor] [--base-url https://tettrisoft.pages.dev]
@@ -16,7 +22,7 @@ Requires: the app's current apk/guide/screenshots already present under
 kozin-ads's own apks/, guides/, screenshots/<key>/ (i.e. run update_app.py
 first when syncing a single app after a fresh build).
 """
-import argparse, ctypes, os, sys, shutil
+import argparse, ctypes, json, os, sys, shutil
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.abspath(os.path.join(HERE, '..'))
@@ -39,261 +45,135 @@ def human_size(path):
     return f"{n // 1024} كيلوبايت"
 
 
-# Same template as build_apps.py, except: fonts come from the main
-# titterisoft site's own webfonts (absolute path), not a duplicated ../fonts/.
-TPL = '''<!doctype html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>__NAME__ __VERSION__ — تحميل وتعريف</title>
-<meta name="description" content="__NAME__ — __TAGLINE__">
-<style>
-  :root{
-    --bg:#f6f7f9; --card:#ffffff; --text:#1a1d23; --muted:#5b6370;
-    --line:#e6e8ec; --brand:#1a56db; --brand-dark:#123f9e;
-    --install:#0f9d58; --install-dark:#0b8043;
-  }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      --bg:#0f1115; --card:#181b21; --text:#eef0f3; --muted:#9aa3b2;
-      --line:#262a33; --brand:#4d8dff; --brand-dark:#6ea2ff;
-      --install:#2fb36c; --install-dark:#3fc97f;
-    }
-  }
-  :root[data-theme="dark"]{
-    --bg:#0f1115; --card:#181b21; --text:#eef0f3; --muted:#9aa3b2;
-    --line:#262a33; --brand:#4d8dff; --brand-dark:#6ea2ff;
-    --install:#2fb36c; --install-dark:#3fc97f;
-  }
-  @font-face{font-family:'GE SS Two';font-weight:300;font-style:normal;font-display:swap;unicode-range:U+0020-002F,U+003A-10FFFF;src:url('/assets/fonts/ge-ss-two-light.woff') format('woff')}
-  @font-face{font-family:'GE SS Two';font-weight:500;font-style:normal;font-display:swap;unicode-range:U+0020-002F,U+003A-10FFFF;src:url('/assets/fonts/ge-ss-two-medium.woff') format('woff')}
-  @font-face{font-family:'GE SS Two';font-weight:700;font-style:normal;font-display:swap;unicode-range:U+0020-002F,U+003A-10FFFF;src:url('/assets/fonts/ge-ss-two-bold.woff') format('woff')}
-  *{box-sizing:border-box}
-  body{margin:0; background:var(--bg); color:var(--text); font-family:'GE SS Two','Segoe UI',Tahoma,Arial,sans-serif; line-height:1.7}
-
-  .hero{
-    max-width:800px; margin:0 auto; padding:34px 16px 20px;
-    display:flex; flex-direction:row-reverse; align-items:flex-start; justify-content:center; gap:20px; text-align:right;
-  }
-  .hero img.icon{
-    width:112px; height:112px; border-radius:24px; border:1px solid var(--line); flex:0 0 auto;
-    box-shadow:0 2px 10px rgba(0,0,0,.08);
-  }
-  .hero .info{padding-top:2px}
-  .hero h1{margin:0 0 6px; font-size:25px; line-height:1.3}
-  .hero .dev{color:var(--brand); font-size:14px; margin:0 0 8px; font-weight:600}
-  .hero .meta-row{display:flex; gap:10px; align-items:center; color:var(--muted); font-size:12.5px; margin:0}
-  .hero .meta-row .dot{width:3px; height:3px; border-radius:50%; background:var(--muted)}
-  .updated-badge{
-    display:none; align-items:center; gap:6px; margin:10px 0 0;
-    background:var(--install); color:#fff; font-size:12.5px; font-weight:600;
-    padding:5px 12px; border-radius:999px; width:fit-content;
-  }
-
-  .quickfacts{
-    max-width:800px; margin:0 auto; padding:2px 16px 16px;
-    display:flex; justify-content:center; gap:22px; flex-wrap:wrap;
-  }
-  .quickfacts .qf{display:flex; flex-direction:column; align-items:center; gap:3px; min-width:64px}
-  .quickfacts .qf .ic{font-size:17px}
-  .quickfacts .qf b{color:var(--text); font-size:13px; font-weight:700}
-  .quickfacts .qf span{color:var(--muted); font-size:11.5px}
-
-  .hero-actions{max-width:800px; margin:0 auto; padding:14px 16px 8px; display:flex; justify-content:center; gap:10px; flex-wrap:wrap}
-  .dl-btn{
-    display:inline-flex; align-items:center; gap:8px; background:var(--install); color:#fff;
-    text-decoration:none; padding:13px 30px; border-radius:24px; font-size:15px; font-weight:700;
-  }
-  .dl-btn:hover{background:var(--install-dark)}
-  .pdf-btn{
-    display:inline-flex; align-items:center; gap:8px; background:var(--card); color:var(--text);
-    text-decoration:none; padding:13px 22px; border-radius:24px; font-size:15px; font-weight:600;
-    border:1px solid var(--line);
-  }
-  .pdf-btn:hover{border-color:var(--brand); color:var(--brand)}
-  .dl-hint{max-width:800px; margin:0 auto; padding:0 16px; text-align:center; color:var(--muted); font-size:12px}
-
-  @keyframes pulseGlow{
-    0%{box-shadow:0 0 0 0 rgba(15,157,88,.45)}
-    70%{box-shadow:0 0 0 14px rgba(15,157,88,0)}
-    100%{box-shadow:0 0 0 0 rgba(15,157,88,0)}
-  }
-  section.install-steps.pulse{animation:pulseGlow 1.4s ease-out 2; border-color:var(--install)}
-
-  .tagline-wrap{max-width:800px; margin:0 auto; padding:6px 16px 10px; text-align:center}
-  .tagline-wrap p{color:var(--muted); font-size:15px; margin:0 auto; max-width:560px}
-
-  .shots{max-width:800px; margin:0 auto; padding:10px 0 26px}
-  .shots-row{display:flex; gap:12px; overflow-x:auto; padding:4px 16px 8px; scroll-snap-type:x proximity; justify-content:center}
-  .shots-row img{
-    height:360px; border-radius:16px; border:1px solid var(--line); scroll-snap-align:start; flex:0 0 auto;
-    background:var(--card);
-  }
-  .shots-empty{
-    max-width:800px; margin:0 auto 10px; padding:14px 16px; color:var(--muted); font-size:13px;
-  }
-
-  main{max-width:800px; margin:0 auto; padding:0 16px 60px}
-  section{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px 24px; margin-bottom:16px}
-  section h2{margin:0 0 14px; font-size:17px}
-  section > p.lead{margin:0 0 14px; color:var(--muted); font-size:13.5px}
-
-  .highlights{display:grid; grid-template-columns:repeat(auto-fit, minmax(190px,1fr)); gap:14px}
-  .hl-card{background:var(--bg); border:1px solid var(--line); border-radius:12px; padding:16px}
-  .hl-card .ic{font-size:26px; margin-bottom:8px; display:block}
-  .hl-card h3{margin:0 0 6px; font-size:14.5px}
-  .hl-card p{margin:0; color:var(--muted); font-size:13px}
-
-  .audience p{margin:0; font-size:14.5px; color:var(--text)}
-
-  .chips{display:flex; flex-wrap:wrap; gap:8px}
-  .chip{background:var(--bg); border:1px solid var(--line); border-radius:999px; padding:6px 13px; font-size:13.5px; color:var(--text)}
-
-  .infotable{width:100%; border-collapse:collapse}
-  .infotable tr{border-bottom:1px solid var(--line)}
-  .infotable tr:last-child{border-bottom:none}
-  .infotable td{padding:11px 4px; font-size:14px; vertical-align:top}
-  .infotable td:first-child{color:var(--muted); width:38%}
-  .infotable td:last-child{font-weight:600}
-
-  .faq details{border-bottom:1px solid var(--line); padding:12px 0}
-  .faq details:last-child{border-bottom:none}
-  .faq summary{cursor:pointer; font-weight:600; font-size:14.5px; list-style:none; display:flex; justify-content:space-between; align-items:center; gap:10px}
-  .faq summary::-webkit-details-marker{display:none}
-  .faq summary::after{content:'+'; font-size:19px; color:var(--muted); flex:0 0 auto}
-  .faq details[open] summary::after{content:'−'}
-  .faq p{margin:10px 0 0; color:var(--muted); font-size:13.5px}
-
-  ol{margin:0; padding-right:20px}
-  li{margin-bottom:9px; font-size:14.5px}
-  .note{margin-top:14px; font-size:13px; color:var(--muted); border-top:1px dashed var(--line); padding-top:12px}
-  footer{text-align:center; padding:24px 16px; color:var(--muted); font-size:12.5px}
-
-  .qr-box{display:flex; align-items:center; gap:18px; background:var(--bg); border:1px solid var(--line); border-radius:14px; padding:16px 18px; margin-top:16px}
-  .qr-box img{width:108px; height:108px; border-radius:10px; background:#fff; flex:0 0 auto; border:1px solid var(--line)}
-  .qr-box .qt{font-size:13.5px}
-  .qr-box .qt b{display:block; font-size:14.5px; margin-bottom:4px}
-  .qr-box .qt span{color:var(--muted); font-size:12.5px}
-</style>
-</head>
-<body>
-
-<div class="hero">
-  <img class="icon" src="../logos/__LOGO__" alt="شعار __NAME__">
-  <div class="info">
-    <h1>__NAME__</h1>
-    <p class="dev">Construtech</p>
-    <p class="meta-row"><span>__VERSION__</span><span class="dot"></span><span>Android</span><span class="dot"></span><span>APK مباشر</span></p>
-    <p class="updated-badge" id="updatedBadge" data-updated="__UPDATED__">🆕 تم تحديث التطبيق مؤخرًا</p>
+# Body-only fragment: titterisoft-website's build wraps this with the site's
+# real <head>/header/nav/footer (src/partials/layout.html), so it is always
+# visually identical to the rest of the site — no header/footer duplicated
+# here, no separate color/font system to keep in sync by hand.
+TPL = '''<section class="dark page-hero app-hero">
+  <div class="container">
+    <nav class="crumbs" aria-label="مسار التصفح"><a href="/">الرئيسية</a><span aria-hidden="true">/</span><a href="/projects">مشاريعنا وتطبيقاتنا</a><span aria-hidden="true">/</span><span>__NAME__</span></nav>
+    <span class="kicker kicker--line">__VERSION__ · Android · APK مباشر</span>
+    <div class="app-hero__row">
+      <img class="app-hero__icon" src="../logos/__LOGO__" alt="شعار __NAME__" width="88" height="88">
+      <div>
+        <h1>__NAME__</h1>
+        <p>__TAGLINE__</p>
+      </div>
+    </div>
+    <p class="app-updated" id="updatedBadge" data-updated="__UPDATED__">🆕 تم تحديث التطبيق مؤخرًا</p>
+    <div class="app-hero__actions">
+      <a class="btn btn--primary" id="dlBtn" href="../apks/__APK__" download>تحميل وتثبيت<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <a class="btn btn--ghost" href="../guides/__KEY__-guide.pdf" download>دليل الاستخدام (PDF)</a>
+    </div>
+    <p class="app-hero__hint">عند الضغط يبدأ تحميل ملف APK — وتظهر خطوات التثبيت تلقائيًا أسفل الصفحة.</p>
   </div>
-</div>
+</section>
 
-<div class="tagline-wrap"><p>__TAGLINE__</p></div>
+<section class="section section--tight">
+  <div class="container app-quickfacts">
+    <div class="app-qf"><svg class="icon" aria-hidden="true"><use href="#i-layers"/></svg><b>__SIZE__</b><span>الحجم</span></div>
+    <div class="app-qf"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg><b>7.0+</b><span>Android</span></div>
+    <div class="app-qf"><svg class="icon" aria-hidden="true"><use href="#i-web"/></svg><b>الإنترنت</b><span>الأذونات</span></div>
+    <div class="app-qf"><svg class="icon" aria-hidden="true"><use href="#i-award"/></svg><b>Construtech</b><span>المطوّر</span></div>
+  </div>
 
-<div class="quickfacts">
-  <div class="qf"><span class="ic">📦</span><b>__SIZE__</b><span>الحجم</span></div>
-  <div class="qf"><span class="ic">🤖</span><b>7.0+</b><span>Android</span></div>
-  <div class="qf"><span class="ic">🌐</span><b>الإنترنت</b><span>الأذونات</span></div>
-  <div class="qf"><span class="ic">🏷️</span><b>Construtech</b><span>المطور</span></div>
-</div>
-
-<div class="hero-actions">
-  <a class="dl-btn" id="dlBtn" href="../apks/__APK__" download>⬇ تحميل وتثبيت</a>
-  <a class="pdf-btn" href="../guides/__KEY__-guide.pdf" download>📄 دليل الاستخدام (PDF)</a>
-</div>
-<p class="dl-hint">عند الضغط، يبدأ تحميل ملف APK — وبعدها تظهر خطوات التثبيت تلقائيًا في الأسفل 👇</p>
-
-<div class="shots">
+  <div class="container app-shots">
 __SHOTS__
-</div>
+  </div>
+</section>
 
-<main>
-  <section>
-    <h2>لماذا __NAME__</h2>
-    <div class="highlights">
+<section class="section section--alt">
+  <div class="container">
+    <header class="section__head section__head--start reveal">
+      <span class="kicker">لماذا __NAME__</span>
+    </header>
+    <div class="app-highlights">
 __HIGHLIGHTS__
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="audience">
-    <h2>الفئة المستهدفة</h2>
-    <p>__AUDIENCE__</p>
-  </section>
-
-  <section>
-    <h2>ما يقدّمه التطبيق</h2>
-    <div class="chips">
+<section class="section section--tight">
+  <div class="container grid grid--2">
+    <article class="card reveal">
+      <h3>الفئة المستهدفة</h3>
+      <p>__AUDIENCE__</p>
+    </article>
+    <article class="card reveal">
+      <h3>ما يقدّمه التطبيق</h3>
+      <div class="app-chips">
 __CHIPS__
-    </div>
-  </section>
+      </div>
+    </article>
+  </div>
+</section>
 
-  <section>
-    <h2>كيف تبدأ باستخدامه</h2>
-    <ol>
+<section class="section section--alt">
+  <div class="container grid grid--2">
+    <article class="card reveal app-install">
+      <h3>كيف تبدأ باستخدامه</h3>
+      <ol>
 __USAGE__
-    </ol>
-  </section>
+      </ol>
+    </article>
+    <article class="card reveal">
+      <h3>معلومات التطبيق</h3>
+      <table class="app-table">
+        <tr><td>الحجم</td><td>__SIZE__</td></tr>
+        <tr><td>يتطلب</td><td>__MIN_ANDROID__</td></tr>
+        <tr><td>الأذونات</td><td>__PERMISSIONS__</td></tr>
+        <tr><td>المطوّر</td><td>Construtech</td></tr>
+        <tr><td>النسخة الحالية</td><td>__VERSION__</td></tr>
+      </table>
+    </article>
+  </div>
+</section>
 
-  <section>
-    <h2>معلومات التطبيق</h2>
-    <table class="infotable">
-      <tr><td>الحجم</td><td>__SIZE__</td></tr>
-      <tr><td>يتطلب</td><td>__MIN_ANDROID__</td></tr>
-      <tr><td>الأذونات</td><td>__PERMISSIONS__</td></tr>
-      <tr><td>المطوّر</td><td>Construtech</td></tr>
-      <tr><td>النسخة الحالية</td><td>__VERSION__</td></tr>
-    </table>
-  </section>
-
-  <section class="faq">
-    <h2>أسئلة شائعة</h2>
+<section class="section section--tight">
+  <div class="container grid grid--2">
+    <article class="card reveal app-faq">
+      <h3>أسئلة شائعة</h3>
 __FAQ__
-  </section>
+    </article>
+    <article class="card reveal app-install">
+      <h3>طريقة التثبيت (خارج المتجر)</h3>
+      <ol>
+        <li>حمّل ملف <b>APK</b> من الزر أعلاه.</li>
+        <li>إذا ظهر تنبيه "التثبيت من مصادر غير معروفة" — توجّه إلى <b>الإعدادات</b> واسمح بذلك لمتصفحك (مرة واحدة فقط).</li>
+        <li>عد إلى ملف الـ APK الذي حمّلته وافتحه، ثم اضغط <b>تثبيت</b>.</li>
+        <li>بعد التثبيت، يمكنك إلغاء السماح بـ"مصادر غير معروفة" إن رغبت.</li>
+      </ol>
+      <div class="note">ملاحظة: هذا التطبيق غير متوفر على Google Play — فهو تحميل مباشر (APK). تأكد دائمًا من مصدر الملف قبل تثبيت أي تطبيق على هاتفك.__EXTRA_NOTE__</div>
+      <div class="app-qr">
+        <img src="../qrcodes/__KEY__.png" alt="رمز QR لتحميل __NAME__ مباشرة" loading="lazy">
+        <div><b>📷 امسح للتثبيت المباشر</b><span>صوّر الرمز بكاميرا هاتفك — يبدأ تحميل __NAME__ __VERSION__ فورًا.</span></div>
+      </div>
+    </article>
+  </div>
+</section>
 
-  <section class="install-steps" id="installSteps">
-    <h2>طريقة التثبيت (خارج المتجر)</h2>
-    <ol>
-      <li>حمّل ملف <b>APK</b> من الزر أعلاه.</li>
-      <li>إذا ظهر تنبيه "التثبيت من مصادر غير معروفة" — توجّه إلى <b>الإعدادات</b> واسمح بذلك لمتصفحك (مرة واحدة فقط).</li>
-      <li>عد إلى ملف الـ APK الذي حمّلته وافتحه، ثم اضغط <b>تثبيت</b>.</li>
-      <li>بعد التثبيت، يمكنك إلغاء السماح بـ"مصادر غير معروفة" إن رغبت.</li>
-    </ol>
-    <div class="note">ملاحظة: هذا التطبيق غير متوفر على Google Play — فهو تحميل مباشر (APK). تأكد دائمًا من مصدر الملف قبل تثبيت أي تطبيق على هاتفك.__EXTRA_NOTE__</div>
-    <div class="qr-box">
-      <img src="../qrcodes/__KEY__.png" alt="رمز QR لتحميل __NAME__ مباشرة" loading="lazy">
-      <div class="qt"><b>📷 امسح للتثبيت المباشر</b><span>صوّر الرمز بكاميرا هاتفك — يبدأ تحميل __NAME__ __VERSION__ فورًا.</span></div>
-    </div>
-  </section>
-</main>
+{{cta}}
 
-<footer>__NAME__ — Construtech © <span id="y"></span></footer>
 <script>
-  document.getElementById('y').textContent = new Date().getFullYear();
-  (function(){
-    var el = document.getElementById('updatedBadge');
-    var d = el && el.getAttribute('data-updated');
-    if(!d) return;
-    var updated = new Date(d + 'T00:00:00');
-    if(isNaN(updated.getTime())) return;
-    var days = (Date.now() - updated.getTime()) / 86400000;
-    if(days >= 0 && days <= 7) el.style.display = 'inline-flex';
-  })();
-  (function(){
-    var dl = document.getElementById('dlBtn');
-    var steps = document.getElementById('installSteps');
-    if(!dl || !steps) return;
-    dl.addEventListener('click', function(){
-      setTimeout(function(){
-        steps.scrollIntoView({behavior:'smooth', block:'start'});
-        steps.classList.add('pulse');
-        setTimeout(function(){ steps.classList.remove('pulse'); }, 3000);
-      }, 450);
-    });
-  })();
+(function(){
+  var el = document.getElementById('updatedBadge');
+  var d = el && el.getAttribute('data-updated');
+  if(!d) return;
+  var updated = new Date(d + 'T00:00:00');
+  if(isNaN(updated.getTime())) return;
+  var days = (Date.now() - updated.getTime()) / 86400000;
+  if(days >= 0 && days <= 7) el.style.display = 'inline-flex';
+})();
+(function(){
+  var dl = document.getElementById('dlBtn');
+  if(!dl) return;
+  dl.addEventListener('click', function(){
+    var steps = document.querySelector('.app-install');
+    if(!steps) return;
+    setTimeout(function(){ steps.scrollIntoView({behavior:'smooth', block:'start'}); }, 450);
+  });
+})();
 </script>
-</body>
-</html>
 '''
 
 
@@ -343,9 +223,11 @@ def render_qr_png(text, out_path, color_hex, module_px, logo_path):
 def export_one(key, dest_root, base_url):
     a = applications[key]
     pub = os.path.join(dest_root, "public")
-    for sub in ("apps", "apks", "guides", "screenshots", "logos", "qrcodes"):
+    pages_dir = os.path.join(dest_root, "src", "pages", "apps")
+    for sub in ("apks", "guides", "screenshots", "logos", "qrcodes"):
         os.makedirs(os.path.join(pub, sub), exist_ok=True)
     os.makedirs(os.path.join(pub, "screenshots", key), exist_ok=True)
+    os.makedirs(pages_dir, exist_ok=True)
 
     # 1) APK
     src_apk = os.path.join(REPO_ROOT, "apks", a["APK"])
@@ -376,11 +258,10 @@ def export_one(key, dest_root, base_url):
                   color_hex=a["COLOR"]["primary"], module_px=10,
                   logo_path=os.path.join(pub, "logos", a["LOGO"]))
 
-    # 6) the page itself
+    # 6) the page content fragment
     updates_path = os.path.join(HERE, "updates.json")
     updated = ""
     if os.path.isfile(updates_path):
-        import json
         updated = json.load(open(updates_path, encoding="utf-8")).get(key, "")
 
     html = TPL
@@ -396,12 +277,12 @@ def export_one(key, dest_root, base_url):
     html = html.replace("__PERMISSIONS__", PERMISSIONS)
     html = html.replace("__SIZE__", human_size(dst_apk) or "—")
 
-    chips = "\n".join(f'      <div class="chip">{c}</div>' for c in a["FEATURES"])
+    chips = "\n".join(f'        <span class="chip">{c}</span>' for c in a["FEATURES"])
     html = html.replace("__CHIPS__", chips)
-    usage = "\n".join(f"      <li>{u}</li>" for u in a["USAGE"])
+    usage = "\n".join(f"        <li>{u}</li>" for u in a["USAGE"])
     html = html.replace("__USAGE__", usage)
     hl = "\n".join(
-        f'      <div class="hl-card"><span class="ic">{h["icon"]}</span><h3>{h["title"]}</h3><p>{h["desc"]}</p></div>'
+        f'      <article class="card reveal"><div class="card__icon"><span aria-hidden="true" style="font-size:26px">{h["icon"]}</span></div><h3>{h["title"]}</h3><p>{h["desc"]}</p></article>'
         for h in a["HIGHLIGHTS"]
     )
     html = html.replace("__HIGHLIGHTS__", hl)
@@ -417,24 +298,38 @@ def export_one(key, dest_root, base_url):
         ))
     faq_items.append((
         "كيف أعرف إذا صدر تحديث جديد؟",
-        "عند صدور تحديث للتطبيق، تظهر ملاحظة خضراء تحت هذه الصفحة لمدة أسبوع. يمكنك دائمًا العودة إلى هنا لتحميل آخر نسخة.",
+        "عند صدور تحديث للتطبيق، تظهر ملاحظة خضراء أعلى هذه الصفحة لمدة أسبوع. يمكنك دائمًا العودة إلى هنا لتحميل آخر نسخة.",
     ))
-    faq_html = "\n".join(f'    <details><summary>{q}</summary><p>{ans}</p></details>' for q, ans in faq_items)
+    faq_html = "\n".join(f'      <details><summary>{q}</summary><p>{ans}</p></details>' for q, ans in faq_items)
     html = html.replace("__FAQ__", faq_html)
 
     if a["SHOTS"]:
         imgs = "\n".join(f'    <img src="../screenshots/{key}/{s}" alt="لقطة من {a["NAME"]}" loading="lazy">' for s in a["SHOTS"])
-        shots_html = f'  <div class="shots-row">\n{imgs}\n  </div>'
+        shots_html = f'  <div class="app-shots__row">\n{imgs}\n  </div>'
         extra_note = ""
     else:
-        shots_html = '  <p class="shots-empty">تعذّر علينا عرض لقطات شاشة لهذا التطبيق — محتواه مخزَّن بصيغة لا يمكن قراءتها مباشرة من الخارج.</p>'
+        shots_html = '  <p class="app-shots__empty">تعذّر علينا عرض لقطات شاشة لهذا التطبيق — محتواه مخزَّن بصيغة لا يمكن قراءتها مباشرة من الخارج.</p>'
         extra_note = " لم نتمكن من عرض لقطات شاشة حقيقية لهذا التطبيق بالتحديد (راجع الملاحظة أعلاه)."
     html = html.replace("__SHOTS__", shots_html)
     html = html.replace("__EXTRA_NOTE__", extra_note)
 
-    with open(os.path.join(pub, "apps", f"{key}.html"), "w", encoding="utf-8") as f:
-        f.write(html)
-    print(f"exported {key} -> {dest_root}/public/apps/{key}.html")
+    meta = {
+        "key": f"app-{key}",
+        "title": f"{a['NAME']} {a['VERSION']} — تحميل وتعريف",
+        "description": f"{a['NAME']} — {a['TAGLINE']}",
+    }
+    page = f"<!-- {json.dumps(meta, ensure_ascii=False)} -->\n{html}"
+
+    with open(os.path.join(pages_dir, f"{key}.html"), "w", encoding="utf-8") as f:
+        f.write(page)
+    print(f"exported {key} -> {dest_root}/src/pages/apps/{key}.html")
+
+    # Clean up the old (pre-redesign) standalone page if still present from
+    # an earlier export, so there's only ever one copy of each app page.
+    old_page = os.path.join(pub, "apps", f"{key}.html")
+    if os.path.isfile(old_page):
+        os.remove(old_page)
+        print(f"removed stale {old_page}")
 
 
 def main():
