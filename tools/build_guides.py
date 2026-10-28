@@ -26,6 +26,12 @@ os.makedirs(HTML_OUT, exist_ok=True)
 os.makedirs(PDF_OUT, exist_ok=True)
 
 YEAR = str(datetime.date.today().year)
+
+# Optional override of which 3 screenshots appear on an app's PDF cover
+# (by default the first 3 files, alphabetically, from screenshots/<key>/guide/).
+COVER_SHOTS = {
+    "windoorgulf": ["wg6-quote.png", "wg8-roller3d.png", "wg9-arch-door.png"],
+}
 MIN_ANDROID = "7.0+"
 PERMISSIONS_AR = "الإنترنت"
 PERMISSIONS_EN = "Internet"
@@ -516,7 +522,8 @@ def build_one(key):
     p += 1
 
     pages_html = []
-    pages_html.append(render_cover(a, content, shots_dir, shots))
+    cover_shots = COVER_SHOTS.get(key, shots)
+    pages_html.append(render_cover(a, content, shots_dir, cover_shots))
     pages_html.append(render_toc(a, toc_entries))
     pages_html.append(render_overview(a, content, pageno_overview))
     pages_html.append(render_pipeline(a, content, pageno_pipeline))
