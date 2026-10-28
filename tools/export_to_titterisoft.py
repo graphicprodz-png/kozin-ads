@@ -50,35 +50,52 @@ def human_size(path):
 # visually identical to the rest of the site — no header/footer duplicated
 # here, no separate color/font system to keep in sync by hand.
 TPL = '''<section class="dark page-hero app-hero">
-  <div class="container">
-    <nav class="crumbs" aria-label="مسار التصفح"><a href="/">الرئيسية</a><span aria-hidden="true">/</span><a href="/projects">مشاريعنا وتطبيقاتنا</a><span aria-hidden="true">/</span><span>__NAME__</span></nav>
-    <span class="kicker kicker--line">__VERSION__ · Android · APK مباشر</span>
-    <div class="app-hero__row">
-      <img class="app-hero__icon" src="../logos/__LOGO__" alt="شعار __NAME__" width="88" height="88">
-      <div>
-        <h1>__NAME__</h1>
-        <p>__TAGLINE__</p>
+  <div class="container app-hero__grid">
+    <div>
+      <nav class="crumbs" aria-label="مسار التصفح"><a href="/">الرئيسية</a><span aria-hidden="true">/</span><a href="/projects">مشاريعنا وتطبيقاتنا</a><span aria-hidden="true">/</span><span>__NAME__</span></nav>
+      <div class="app-hero__badges">
+        <span class="app-badge"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>تطبيق أندرويد</span>
+        <span class="app-badge app-badge--ver">__VERSION__</span>
+      </div>
+      <div class="app-hero__row">
+        <img class="app-hero__icon" src="../logos/__LOGO__" alt="شعار __NAME__" width="84" height="84">
+        <div>
+          <h1>__NAME__</h1>
+          <p>__TAGLINE__</p>
+        </div>
+      </div>
+      <p class="app-updated" id="updatedBadge" data-updated="__UPDATED__">🆕 تم تحديث التطبيق مؤخرًا</p>
+      <div class="app-pills">
+__PILLS__
+      </div>
+      <div class="app-hero__actions">
+        <a class="btn btn--primary" id="dlBtn" href="../apks/__APK__" download>تحميل التطبيق APK<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn--ghost" href="../guides/__KEY__-guide.pdf" download>دليل الاستخدام</a>
+      </div>
+      <p class="app-hero__hint">عند الضغط يبدأ تحميل ملف APK — وتظهر خطوات التثبيت تلقائيًا أسفل الصفحة.</p>
+      <div class="app-meta">
+        <span>الحجم: __SIZE__</span><span class="dot"></span>
+        <span>يتطلب: __MIN_ANDROID__</span>__META_UPDATED__
       </div>
     </div>
-    <p class="app-updated" id="updatedBadge" data-updated="__UPDATED__">🆕 تم تحديث التطبيق مؤخرًا</p>
-    <div class="app-hero__actions">
-      <a class="btn btn--primary" id="dlBtn" href="../apks/__APK__" download>تحميل وتثبيت<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      <a class="btn btn--ghost" href="../guides/__KEY__-guide.pdf" download>دليل الاستخدام (PDF)</a>
+__PHONES_BLOCK__
+  </div>
+</section>
+
+<section class="app-feature-strip-wrap">
+  <div class="container">
+    <div class="app-feature-strip">
+__FEATURE_STRIP__
     </div>
-    <p class="app-hero__hint">عند الضغط يبدأ تحميل ملف APK — وتظهر خطوات التثبيت تلقائيًا أسفل الصفحة.</p>
   </div>
 </section>
 
 <section class="section section--tight">
-  <div class="container app-quickfacts">
-    <div class="app-qf"><svg class="icon" aria-hidden="true"><use href="#i-layers"/></svg><b>__SIZE__</b><span>الحجم</span></div>
-    <div class="app-qf"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg><b>7.0+</b><span>Android</span></div>
-    <div class="app-qf"><svg class="icon" aria-hidden="true"><use href="#i-web"/></svg><b>الإنترنت</b><span>الأذونات</span></div>
-    <div class="app-qf"><svg class="icon" aria-hidden="true"><use href="#i-award"/></svg><b>TitteriSoft</b><span>المطوّر</span></div>
-  </div>
-
   <div class="container app-shots">
+__SHOTS_NAV__
+    <div class="app-shots__row" id="shotsRow">
 __SHOTS__
+    </div>
   </div>
 </section>
 
@@ -112,18 +129,18 @@ __CHIPS__
   <div class="container grid grid--2">
     <article class="card reveal app-install">
       <h3>كيف تبدأ باستخدامه</h3>
-      <ol>
+      <div class="app-steps">
 __USAGE__
-      </ol>
+      </div>
     </article>
     <article class="card reveal">
       <h3>معلومات التطبيق</h3>
       <table class="app-table">
-        <tr><td>الحجم</td><td>__SIZE__</td></tr>
-        <tr><td>يتطلب</td><td>__MIN_ANDROID__</td></tr>
-        <tr><td>الأذونات</td><td>__PERMISSIONS__</td></tr>
-        <tr><td>المطوّر</td><td>TitteriSoft</td></tr>
-        <tr><td>النسخة الحالية</td><td>__VERSION__</td></tr>
+        <tr><td><svg class="icon" aria-hidden="true"><use href="#i-layers"/></svg>الحجم</td><td>__SIZE__</td></tr>
+        <tr><td><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>يتطلب</td><td>__MIN_ANDROID__</td></tr>
+        <tr><td><svg class="icon" aria-hidden="true"><use href="#i-web"/></svg>الأذونات</td><td>__PERMISSIONS__</td></tr>
+        <tr><td><svg class="icon" aria-hidden="true"><use href="#i-award"/></svg>المطوّر</td><td>TitteriSoft</td></tr>
+        <tr><td><svg class="icon" aria-hidden="true"><use href="#i-rocket"/></svg>النسخة الحالية</td><td>__VERSION__</td></tr>
       </table>
     </article>
   </div>
@@ -137,12 +154,12 @@ __FAQ__
     </article>
     <article class="card reveal app-install">
       <h3>طريقة التثبيت (خارج المتجر)</h3>
-      <ol>
-        <li>حمّل ملف <b>APK</b> من الزر أعلاه.</li>
-        <li>إذا ظهر تنبيه "التثبيت من مصادر غير معروفة" — توجّه إلى <b>الإعدادات</b> واسمح بذلك لمتصفحك (مرة واحدة فقط).</li>
-        <li>عد إلى ملف الـ APK الذي حمّلته وافتحه، ثم اضغط <b>تثبيت</b>.</li>
-        <li>بعد التثبيت، يمكنك إلغاء السماح بـ"مصادر غير معروفة" إن رغبت.</li>
-      </ol>
+      <div class="app-steps">
+        <div class="app-step"><span class="app-step__num">1</span><p>حمّل ملف <b>APK</b> من الزر أعلاه.</p></div>
+        <div class="app-step"><span class="app-step__num">2</span><p>إذا ظهر تنبيه "التثبيت من مصادر غير معروفة" — توجّه إلى <b>الإعدادات</b> واسمح بذلك لمتصفحك (مرة واحدة فقط).</p></div>
+        <div class="app-step"><span class="app-step__num">3</span><p>عد إلى ملف الـ APK الذي حمّلته وافتحه، ثم اضغط <b>تثبيت</b>.</p></div>
+        <div class="app-step"><span class="app-step__num">4</span><p>بعد التثبيت، يمكنك إلغاء السماح بـ"مصادر غير معروفة" إن رغبت.</p></div>
+      </div>
       <div class="note">ملاحظة: هذا التطبيق غير متوفر على Google Play — فهو تحميل مباشر (APK). تأكد دائمًا من مصدر الملف قبل تثبيت أي تطبيق على هاتفك.__EXTRA_NOTE__</div>
       <div class="app-qr">
         <img src="../qrcodes/__KEY__.png" alt="رمز QR لتحميل __NAME__ مباشرة" loading="lazy">
@@ -171,6 +188,17 @@ __FAQ__
     var steps = document.querySelector('.app-install');
     if(!steps) return;
     setTimeout(function(){ steps.scrollIntoView({behavior:'smooth', block:'start'}); }, 450);
+  });
+})();
+(function(){
+  var row = document.getElementById('shotsRow');
+  if(!row) return;
+  document.querySelectorAll('.app-shots__nav').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var dir = btn.classList.contains('app-shots__nav--prev') ? -1 : 1;
+      var amount = Math.round(row.clientWidth * .8) * dir;
+      row.scrollBy({left: (document.dir === 'rtl' ? -amount : amount), behavior: 'smooth'});
+    });
   });
 })();
 </script>
@@ -279,13 +307,37 @@ def export_one(key, dest_root, base_url):
 
     chips = "\n".join(f'        <span class="chip">{c}</span>' for c in a["FEATURES"])
     html = html.replace("__CHIPS__", chips)
-    usage = "\n".join(f"        <li>{u}</li>" for u in a["USAGE"])
+    usage = "\n".join(
+        f'        <div class="app-step"><span class="app-step__num">{i}</span><p>{u}</p></div>'
+        for i, u in enumerate(a["USAGE"], 1)
+    )
     html = html.replace("__USAGE__", usage)
     hl = "\n".join(
         f'      <article class="card reveal"><div class="card__icon"><span aria-hidden="true" style="font-size:26px">{h["icon"]}</span></div><h3>{h["title"]}</h3><p>{h["desc"]}</p></article>'
         for h in a["HIGHLIGHTS"]
     )
     html = html.replace("__HIGHLIGHTS__", hl)
+
+    # Quick pills (hero) — icon + short title only, from the same HIGHLIGHTS.
+    pills = "\n".join(
+        f'        <span class="app-pill"><span aria-hidden="true">{h["icon"]}</span>{h["title"]}</span>'
+        for h in a["HIGHLIGHTS"][:3]
+    )
+    html = html.replace("__PILLS__", pills)
+
+    # Feature strip (below hero) — same HIGHLIGHTS, richer cards with a short
+    # (truncated) description and a cycling accent color, echoing the hero
+    # pills at a glance-able reading depth before the fuller "لماذا" section.
+    def _truncate(s, n=58):
+        return s if len(s) <= n else s[:n].rsplit(' ', 1)[0] + '…'
+
+    strip = "\n".join(
+        f'      <div class="app-feature"><div class="app-feature__icon c{i % 4}">'
+        f'<span aria-hidden="true" style="font-size:20px">{h["icon"]}</span></div>'
+        f'<div><h4>{h["title"]}</h4><p>{_truncate(h["desc"])}</p></div></div>'
+        for i, h in enumerate(a["HIGHLIGHTS"])
+    )
+    html = html.replace("__FEATURE_STRIP__", strip)
 
     faq_items = [
         ("هل هذا التطبيق آمن؟",
@@ -303,15 +355,49 @@ def export_one(key, dest_root, base_url):
     faq_html = "\n".join(f'      <details><summary>{q}</summary><p>{ans}</p></details>' for q, ans in faq_items)
     html = html.replace("__FAQ__", faq_html)
 
+    NAV_PREV = ('<button type="button" class="app-shots__nav app-shots__nav--prev" aria-label="السابق">'
+                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>')
+    NAV_NEXT = ('<button type="button" class="app-shots__nav app-shots__nav--next" aria-label="التالي">'
+                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>')
     if a["SHOTS"]:
-        imgs = "\n".join(f'    <img src="../screenshots/{key}/{s}" alt="لقطة من {a["NAME"]}" loading="lazy">' for s in a["SHOTS"])
-        shots_html = f'  <div class="app-shots__row">\n{imgs}\n  </div>'
+        shots_html = "\n".join(f'      <img src="../screenshots/{key}/{s}" alt="لقطة من {a["NAME"]}" loading="lazy">' for s in a["SHOTS"])
+        shots_nav = f"    {NAV_PREV}\n    {NAV_NEXT}" if len(a["SHOTS"]) > 1 else ""
         extra_note = ""
     else:
-        shots_html = '  <p class="app-shots__empty">تعذّر علينا عرض لقطات شاشة لهذا التطبيق — محتواه مخزَّن بصيغة لا يمكن قراءتها مباشرة من الخارج.</p>'
+        shots_html = '      <p class="app-shots__empty">تعذّر علينا عرض لقطات شاشة لهذا التطبيق — محتواه مخزَّن بصيغة لا يمكن قراءتها مباشرة من الخارج.</p>'
+        shots_nav = ""
         extra_note = " لم نتمكن من عرض لقطات شاشة حقيقية لهذا التطبيق بالتحديد (راجع الملاحظة أعلاه)."
     html = html.replace("__SHOTS__", shots_html)
+    html = html.replace("__SHOTS_NAV__", shots_nav)
     html = html.replace("__EXTRA_NOTE__", extra_note)
+
+    # Hero phone mockups — the first 1-2 real screenshots, framed. Omitted
+    # entirely (not just hidden) when there are none, so no empty box is left.
+    shots_for_phones = a["SHOTS"][:2]
+    if shots_for_phones:
+        frames = []
+        if len(shots_for_phones) > 1:
+            frames.append(f'      <div class="app-phone app-phone--back"><img src="../screenshots/{key}/{shots_for_phones[1]}" alt="" loading="lazy"></div>')
+        frames.append(f'      <div class="app-phone app-phone--front"><img src="../screenshots/{key}/{shots_for_phones[0]}" alt="لقطة من {a["NAME"]}" loading="lazy"></div>')
+        phones_block = '    <div class="app-phones">\n' + "\n".join(frames) + '\n    </div>'
+    else:
+        phones_block = ""
+    html = html.replace("__PHONES_BLOCK__", phones_block)
+
+    # Meta line's optional "last updated" item, from the same updates.json
+    # date used for the green badge — a real recorded date, never guessed.
+    if updated:
+        _AR_MONTHS = ["", "جانفي", "فيفري", "مارس", "أفريل", "ماي", "جوان", "جويلية", "أوت", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"]
+        try:
+            import datetime as _dt
+            _d = _dt.date.fromisoformat(updated)
+            updated_human = f"{_d.day} {_AR_MONTHS[_d.month]} {_d.year}"
+        except Exception:
+            updated_human = updated
+        meta_updated = f'<span class="dot"></span><span>آخر تحديث: {updated_human}</span>'
+    else:
+        meta_updated = ""
+    html = html.replace("__META_UPDATED__", meta_updated)
 
     meta = {
         "key": f"app-{key}",
