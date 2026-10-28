@@ -67,7 +67,7 @@ applications = {
       "Fill in the glass specs, configuration, number of sashes, and measurements (width × height).",
       "Save — the app calculates the details and price for you.",
     ],
-    SHOTS=["1.png"],
+    SHOTS=["w1-splash.png","w2-editor.png","w3-trapezoid.png","w4-diagonal.png","w5-sliding.png","w6-summary.png","w7-arch-door.png"],
   ),
   "rclean": dict(
     NAME="Rclean", VERSION="v1.39", LOGO="rclean.png", APK="RClean.apk",
@@ -167,6 +167,6 @@ applications = {
       "Fill in the profile type, glass, configuration and measurements.",
       "Save to calculate the price.",
     ],
-    SHOTS=[],
+    SHOTS=["wg1-projects.png","wg2-3d.png","wg3-arch-price.png","wg4-lcut-price.png","wg5-sliding-price.png","wg6-quote.png","wg7-door3d.png"],
   ),
 }
