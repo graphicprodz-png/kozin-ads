@@ -55,7 +55,7 @@ TPL = '''<section class="dark page-hero app-hero">
       <nav class="crumbs" aria-label="مسار التصفح"><a href="/">الرئيسية</a><span aria-hidden="true">/</span><a href="/projects">مشاريعنا وتطبيقاتنا</a><span aria-hidden="true">/</span><span>__NAME__</span></nav>
       <div class="app-hero__badges">
         <span class="app-badge"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>تطبيق أندرويد</span>
-        <span class="app-badge app-badge--ver">__VERSION__</span>
+        <span class="app-badge app-badge--ver" dir="ltr">__VERSION__</span>
       </div>
       <div class="app-hero__row">
         <img class="app-hero__icon" src="../logos/__LOGO__" alt="شعار __NAME__" width="84" height="84">
@@ -65,8 +65,8 @@ TPL = '''<section class="dark page-hero app-hero">
         </div>
       </div>
       <p class="app-updated" id="updatedBadge" data-updated="__UPDATED__">🆕 تم تحديث التطبيق مؤخرًا</p>
-      <div class="app-pills">
-__PILLS__
+      <div class="app-mini-feats">
+__MINI_FEATS__
       </div>
       <div class="app-hero__actions">
         <a class="btn btn--primary" id="dlBtn" href="../apks/__APK__" download>تحميل التطبيق APK<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
@@ -95,17 +95,6 @@ __FEATURE_STRIP__
 __SHOTS_NAV__
     <div class="app-shots__row" id="shotsRow">
 __SHOTS__
-    </div>
-  </div>
-</section>
-
-<section class="section section--alt">
-  <div class="container">
-    <header class="section__head section__head--start reveal">
-      <span class="kicker">لماذا __NAME__</span>
-    </header>
-    <div class="app-highlights">
-__HIGHLIGHTS__
     </div>
   </div>
 </section>
@@ -140,7 +129,7 @@ __USAGE__
         <tr><td><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>يتطلب</td><td>__MIN_ANDROID__</td></tr>
         <tr><td><svg class="icon" aria-hidden="true"><use href="#i-web"/></svg>الأذونات</td><td>__PERMISSIONS__</td></tr>
         <tr><td><svg class="icon" aria-hidden="true"><use href="#i-award"/></svg>المطوّر</td><td>TitteriSoft</td></tr>
-        <tr><td><svg class="icon" aria-hidden="true"><use href="#i-rocket"/></svg>النسخة الحالية</td><td>__VERSION__</td></tr>
+        <tr><td><svg class="icon" aria-hidden="true"><use href="#i-rocket"/></svg>النسخة الحالية</td><td dir="ltr">__VERSION__</td></tr>
       </table>
     </article>
   </div>
@@ -148,11 +137,22 @@ __USAGE__
 
 <section class="section section--tight">
   <div class="container grid grid--2">
+    <article class="reveal">
+      <h3 style="margin-bottom:18px">مميزات __NAME__</h3>
+      <div class="app-feat-grid">
+__FEAT_GRID__
+      </div>
+    </article>
     <article class="card reveal app-faq">
       <h3>أسئلة شائعة</h3>
 __FAQ__
     </article>
-    <article class="card reveal app-install">
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="container">
+    <article class="card reveal app-install" style="max-width:760px;margin-inline:auto">
       <h3>طريقة التثبيت (خارج المتجر)</h3>
       <div class="app-steps">
         <div class="app-step"><span class="app-step__num">1</span><p>حمّل ملف <b>APK</b> من الزر أعلاه.</p></div>
@@ -163,7 +163,7 @@ __FAQ__
       <div class="note">ملاحظة: هذا التطبيق غير متوفر على Google Play — فهو تحميل مباشر (APK). تأكد دائمًا من مصدر الملف قبل تثبيت أي تطبيق على هاتفك.__EXTRA_NOTE__</div>
       <div class="app-qr">
         <img src="../qrcodes/__KEY__.png" alt="رمز QR لتحميل __NAME__ مباشرة" loading="lazy">
-        <div><b>📷 امسح للتثبيت المباشر</b><span>صوّر الرمز بكاميرا هاتفك — يبدأ تحميل __NAME__ __VERSION__ فورًا.</span></div>
+        <div><b>📷 امسح للتثبيت المباشر</b><span>صوّر الرمز بكاميرا هاتفك — يبدأ تحميل __NAME__ <bdi dir="ltr">__VERSION__</bdi> فورًا.</span></div>
       </div>
     </article>
   </div>
@@ -303,7 +303,8 @@ def export_one(key, dest_root, base_url):
     html = html.replace("__UPDATED__", updated)
     html = html.replace("__MIN_ANDROID__", MIN_ANDROID)
     html = html.replace("__PERMISSIONS__", PERMISSIONS)
-    html = html.replace("__SIZE__", human_size(dst_apk) or "—")
+    size_str = human_size(dst_apk) or "—"
+    html = html.replace("__SIZE__", size_str)
 
     chips = "\n".join(f'        <span class="chip">{c}</span>' for c in a["FEATURES"])
     html = html.replace("__CHIPS__", chips)
@@ -312,18 +313,29 @@ def export_one(key, dest_root, base_url):
         for i, u in enumerate(a["USAGE"], 1)
     )
     html = html.replace("__USAGE__", usage)
-    hl = "\n".join(
-        f'      <article class="card reveal"><div class="card__icon"><span aria-hidden="true" style="font-size:26px">{h["icon"]}</span></div><h3>{h["title"]}</h3><p>{h["desc"]}</p></article>'
-        for h in a["HIGHLIGHTS"]
-    )
-    html = html.replace("__HIGHLIGHTS__", hl)
+    # Hero mini-feats — icon + title + short caption, from the first 3
+    # HIGHLIGHTS, styled as colored-icon rows (matches the approved mockup).
+    # Caption is the real HIGHLIGHTS description, truncated — never invented.
+    def _truncate(s, n=58):
+        return s if len(s) <= n else s[:n].rsplit(' ', 1)[0] + '…'
 
-    # Quick pills (hero) — icon + short title only, from the same HIGHLIGHTS.
-    pills = "\n".join(
-        f'        <span class="app-pill"><span aria-hidden="true">{h["icon"]}</span>{h["title"]}</span>'
-        for h in a["HIGHLIGHTS"][:3]
+    mini_feats = "\n".join(
+        f'        <div class="app-mini-feat"><span class="app-mini-feat__icon c{i}" aria-hidden="true">'
+        f'<span style="font-size:17px">{h["icon"]}</span></span><div><b>{h["title"]}</b>'
+        f'<span>{_truncate(h["desc"], 28)}</span></div></div>'
+        for i, h in enumerate(a["HIGHLIGHTS"][:3])
     )
-    html = html.replace("__PILLS__", pills)
+    html = html.replace("__MINI_FEATS__", mini_feats)
+
+    # Compact 2x2 "مميزات" grid (replaces the old full-width "لماذا" section),
+    # same HIGHLIGHTS data, cycling accent colors — paired with the FAQ.
+    feat_grid = "\n".join(
+        f'        <div class="app-feat-card"><div class="app-feat-card__icon c{i % 4}">'
+        f'<span aria-hidden="true" style="font-size:18px">{h["icon"]}</span></div>'
+        f'<h4>{h["title"]}</h4><p>{h["desc"]}</p></div>'
+        for i, h in enumerate(a["HIGHLIGHTS"])
+    )
+    html = html.replace("__FEAT_GRID__", feat_grid)
 
     # Feature strip (below hero) — same HIGHLIGHTS, richer cards with a short
     # (truncated) description and a cycling accent color, echoing the hero
@@ -379,6 +391,14 @@ def export_one(key, dest_root, base_url):
         if len(shots_for_phones) > 1:
             frames.append(f'      <div class="app-phone app-phone--back"><img src="../screenshots/{key}/{shots_for_phones[1]}" alt="" loading="lazy"></div>')
         frames.append(f'      <div class="app-phone app-phone--front"><img src="../screenshots/{key}/{shots_for_phones[0]}" alt="لقطة من {a["NAME"]}" loading="lazy"></div>')
+        # Floating caption card — the app's first (and most representative)
+        # real HIGHLIGHTS entry, not an invented tagline.
+        first_hl = a["HIGHLIGHTS"][0] if a.get("HIGHLIGHTS") else None
+        if first_hl:
+            frames.append(
+                '      <div class="app-float-card"><span class="app-float-card__icon" aria-hidden="true">'
+                f'<span style="font-size:16px">{first_hl["icon"]}</span></span><span>{first_hl["title"]}</span></div>'
+            )
         phones_block = '    <div class="app-phones">\n' + "\n".join(frames) + '\n    </div>'
     else:
         phones_block = ""
