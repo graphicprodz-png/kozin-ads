@@ -74,7 +74,7 @@ TPL = '''<section class="dark page-hero app-hero">
     <div class="app-qf"><svg class="icon" aria-hidden="true"><use href="#i-layers"/></svg><b>__SIZE__</b><span>الحجم</span></div>
     <div class="app-qf"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg><b>7.0+</b><span>Android</span></div>
     <div class="app-qf"><svg class="icon" aria-hidden="true"><use href="#i-web"/></svg><b>الإنترنت</b><span>الأذونات</span></div>
-    <div class="app-qf"><svg class="icon" aria-hidden="true"><use href="#i-award"/></svg><b>Construtech</b><span>المطوّر</span></div>
+    <div class="app-qf"><svg class="icon" aria-hidden="true"><use href="#i-award"/></svg><b>TitteriSoft</b><span>المطوّر</span></div>
   </div>
 
   <div class="container app-shots">
@@ -122,7 +122,7 @@ __USAGE__
         <tr><td>الحجم</td><td>__SIZE__</td></tr>
         <tr><td>يتطلب</td><td>__MIN_ANDROID__</td></tr>
         <tr><td>الأذونات</td><td>__PERMISSIONS__</td></tr>
-        <tr><td>المطوّر</td><td>Construtech</td></tr>
+        <tr><td>المطوّر</td><td>TitteriSoft</td></tr>
         <tr><td>النسخة الحالية</td><td>__VERSION__</td></tr>
       </table>
     </article>
@@ -289,7 +289,7 @@ def export_one(key, dest_root, base_url):
 
     faq_items = [
         ("هل هذا التطبيق آمن؟",
-         "التطبيق غير متوفر على Google Play، وهو تحميل مباشر (APK) موقَّع من Construtech. تأكد دائمًا من أنك حمّلته من هذه الصفحة بالذات قبل تثبيته."),
+         "التطبيق غير متوفر على Google Play، وهو تحميل مباشر (APK) موقَّع من TitteriSoft. تأكد دائمًا من أنك حمّلته من هذه الصفحة بالذات قبل تثبيته."),
     ]
     if a.get("LOCAL_DATA"):
         faq_items.append((
