@@ -395,14 +395,6 @@ def export_one(key, dest_root, base_url):
         if len(shots_for_phones) > 1:
             frames.append(f'      <div class="app-phone app-phone--back"><img src="../screenshots/{key}/{shots_for_phones[1]}" alt="" loading="lazy"></div>')
         frames.append(f'      <div class="app-phone app-phone--front"><img src="../screenshots/{key}/{shots_for_phones[0]}" alt="لقطة من {a["NAME"]}" loading="lazy"></div>')
-        # Floating caption card — the app's first (and most representative)
-        # real HIGHLIGHTS entry, not an invented tagline.
-        first_hl = a["HIGHLIGHTS"][0] if a.get("HIGHLIGHTS") else None
-        if first_hl:
-            frames.append(
-                '      <div class="app-float-card"><span class="app-float-card__icon" aria-hidden="true">'
-                f'<span style="font-size:16px">{first_hl["icon"]}</span></span><span>{first_hl["title"]}</span></div>'
-            )
         phones_block = '    <div class="app-phones">\n' + "\n".join(frames) + '\n    </div>'
     else:
         phones_block = ""
