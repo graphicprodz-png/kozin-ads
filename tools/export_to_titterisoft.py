@@ -51,7 +51,7 @@ def human_size(path):
 # here, no separate color/font system to keep in sync by hand.
 TPL = '''<section class="dark page-hero app-hero">
   <div class="container app-hero__grid">
-    <div>
+    <div class="app-hero__lede">
       <nav class="crumbs" aria-label="مسار التصفح"><a href="/">الرئيسية</a><span aria-hidden="true">/</span><a href="/projects">مشاريعنا وتطبيقاتنا</a><span aria-hidden="true">/</span><span>__NAME__</span></nav>
       <div class="app-hero__badges">
         <span class="app-badge"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>تطبيق أندرويد</span>
@@ -72,13 +72,15 @@ __MINI_FEATS__
         <a class="btn btn--primary" id="dlBtn" href="../apks/__APK__" download>تحميل التطبيق APK<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         <a class="btn btn--ghost" href="../guides/__KEY__-guide.pdf" download>دليل الاستخدام</a>
       </div>
+    </div>
+__PHONES_BLOCK__
+    <div class="app-hero__foot">
       <p class="app-hero__hint">عند الضغط يبدأ تحميل ملف APK — وتظهر خطوات التثبيت تلقائيًا أسفل الصفحة.</p>
       <div class="app-meta">
         <span>الحجم: __SIZE__</span><span class="dot"></span>
         <span>يتطلب: __MIN_ANDROID__</span>__META_UPDATED__
       </div>
     </div>
-__PHONES_BLOCK__
   </div>
 </section>
 
