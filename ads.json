@@ -11,7 +11,7 @@
       "id": "amvlgodzw1",
       "slot": 1,
       "order": 1,
-      "active": true,
+      "active": false,
       "apps": [
         "windoor"
       ],
@@ -24,7 +24,7 @@
       "id": "amvlgpgtd2",
       "slot": 1,
       "order": 2,
-      "active": true,
+      "active": false,
       "apps": [
         "windoor"
       ],
@@ -37,7 +37,7 @@
       "id": "amvlgq4so3",
       "slot": 1,
       "order": 3,
-      "active": true,
+      "active": false,
       "apps": [
         "windoor"
       ],
@@ -50,7 +50,7 @@
       "id": "amvlgqtfn4",
       "slot": 1,
       "order": 4,
-      "active": true,
+      "active": false,
       "apps": [
         "windoor"
       ],
