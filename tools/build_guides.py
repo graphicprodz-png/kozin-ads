@@ -67,22 +67,44 @@ body{font-family:'GE SS Two','Segoe UI',Tahoma,Arial,sans-serif;color:var(--ink)
 .pad{padding:16mm 16mm 22mm}
 
 /* COVER */
-.cover{background:linear-gradient(150deg,var(--primary) 0%,var(--accent) 115%);color:#fff;align-items:center;justify-content:center;text-align:center;position:relative}
-.cover .deco{position:absolute;inset:0;opacity:.14;background-image:radial-gradient(circle at 10% 15%,#fff 0,transparent 22%),radial-gradient(circle at 90% 85%,#fff 0,transparent 26%),radial-gradient(circle at 85% 10%,#fff 0,transparent 14%)}
-.cover .kicker{letter-spacing:4px;font-size:12px;opacity:.88;margin:0 0 26px;font-weight:600;position:relative;z-index:1}
-.phones{display:flex;align-items:flex-end;justify-content:center;gap:-10px;position:relative;z-index:1;margin-bottom:30px}
-.phone{width:46mm;border:5px solid #11131a;border-radius:16px;overflow:hidden;box-shadow:0 18px 44px rgba(0,0,0,.4);background:#000}
+.cover{background:
+    radial-gradient(70mm 70mm at 88% 92%, color-mix(in srgb, var(--accent) 55%, transparent) 0%, transparent 70%),
+    radial-gradient(60mm 60mm at 8% 6%, rgba(255,255,255,.16) 0%, transparent 65%),
+    linear-gradient(150deg,#0b2d52 0%,var(--primary) 55%,color-mix(in srgb, var(--primary) 45%, var(--accent)) 100%);
+    color:#fff;align-items:center;justify-content:center;text-align:center;position:relative}
+.cover .deco{position:absolute;inset:0;opacity:.5;z-index:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.055) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.055) 1px,transparent 1px);
+    background-size:14mm 14mm;
+    -webkit-mask-image:radial-gradient(130mm 100mm at 50% 38%, #000 0%, transparent 72%);
+    mask-image:radial-gradient(130mm 100mm at 50% 38%, #000 0%, transparent 72%)}
+.cover .icon-badge{position:relative;z-index:1;width:30mm;height:30mm;border-radius:8mm;margin:0 auto 10mm;
+    background:linear-gradient(155deg,rgba(255,255,255,.22),rgba(255,255,255,.04));
+    border:1px solid rgba(255,255,255,.38);box-shadow:0 14px 34px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.3);
+    display:flex;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
+.cover .icon-badge img{width:21mm;height:21mm;border-radius:5mm;box-shadow:0 6px 16px rgba(0,0,0,.3)}
+.cover .kicker{letter-spacing:5px;font-size:12px;opacity:.92;margin:0 0 28px;font-weight:700;position:relative;z-index:1}
+.phones{display:flex;align-items:flex-end;justify-content:center;gap:-10px;position:relative;z-index:1;margin-bottom:32px;filter:drop-shadow(0 25px 40px rgba(0,0,0,.35))}
+.phone{width:46mm;border:5px solid #11131a;border-radius:16px;overflow:hidden;box-shadow:0 0 0 1.5px rgba(255,255,255,.25),0 18px 44px rgba(0,0,0,.4);background:#000}
 .phone img{width:100%;display:block}
-.phone.side{width:36mm;opacity:.82;transform:translateY(8mm)}
+.phone.side{width:36mm;opacity:.86;transform:translateY(8mm)}
 .phone.side.l{margin-inline-end:-10mm}
 .phone.side.r{margin-inline-start:-10mm}
-.cover h1{font-size:44px;font-weight:700;margin:0 0 4px;position:relative;z-index:1}
-.cover .guide-title{font-size:19px;font-weight:700;margin:16px 0 4px;position:relative;z-index:1}
+.cover h1{font-size:46px;font-weight:700;margin:0 0 6px;position:relative;z-index:1;letter-spacing:.5px;
+    text-shadow:0 8px 28px rgba(0,0,0,.25)}
+.cover .title-rule{width:54px;height:3px;margin:0 auto;border-radius:3px;position:relative;z-index:1;
+    background:linear-gradient(90deg,transparent,var(--accent),transparent)}
+.cover .guide-title{font-size:19px;font-weight:700;margin:18px 0 4px;position:relative;z-index:1}
 .cover .guide-title .en{display:block;font-size:12.5px;font-weight:400;opacity:.85;text-align:center;margin-top:3px}
-.cover .tagline{max-width:125mm;font-size:12.5px;line-height:1.85;opacity:.92;margin:14px 0 0;position:relative;z-index:1}
+.cover .tagline{max-width:125mm;font-size:12.5px;line-height:1.85;opacity:.94;margin:14px 0 0;position:relative;z-index:1}
 .cover .tagline .en{display:block;font-size:11px;opacity:.85;margin-top:7px;text-align:center}
-.cover .ver-pill{margin-top:24px;display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.4);padding:7px 18px;border-radius:999px;font-size:12.5px;font-weight:600;position:relative;z-index:1}
-.cover .brand{position:absolute;bottom:14mm;right:0;left:0;text-align:center;font-size:11.5px;opacity:.88;letter-spacing:2px;z-index:1}
+.cover .ver-pill{margin-top:26px;display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.14);
+    border:1px solid rgba(255,255,255,.42);padding:7px 20px;border-radius:999px;font-size:12.5px;font-weight:600;
+    position:relative;z-index:1;box-shadow:0 8px 18px rgba(0,0,0,.2)}
+.cover .brand{position:absolute;bottom:14mm;right:0;left:0;text-align:center;font-size:11.5px;opacity:.9;
+    letter-spacing:2.5px;z-index:1;display:flex;align-items:center;justify-content:center;gap:10px}
+.cover .brand::before,.cover .brand::after{content:"";width:16px;height:1px;background:rgba(255,255,255,.45)}
 
 /* HEADER / FOOTER */
 .ph{display:flex;align-items:center;gap:12px;border-bottom:2px solid var(--primary);padding-bottom:13px;margin-bottom:18px}
@@ -127,15 +149,15 @@ h2.sec .en{font-size:10.5px;font-weight:400;color:var(--muted)}
 .pl-arrow{font-size:20px;color:var(--accent);margin:0 -2px 30px}
 
 /* SECTION STEPS w/ screenshots */
-.step{display:flex;gap:14px;align-items:flex-start;margin-bottom:16px}
-.step .num{width:30px;height:30px;border-radius:50%;flex:0 0 auto;background:linear-gradient(145deg,var(--primary),var(--accent));color:#fff;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:700}
+.step{display:flex;gap:14px;align-items:flex-start;margin-bottom:9px}
+.step .num{width:28px;height:28px;border-radius:50%;flex:0 0 auto;background:linear-gradient(145deg,var(--primary),var(--accent));color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
 .step .body{flex:1;padding-top:2px}
-.step .body p{margin:0;font-size:12px;line-height:1.7}
-.step .body p.en{margin-top:4px;font-size:10px;color:var(--muted)}
-.step .shot{flex:0 0 auto;width:30mm;border:4px solid var(--ink);border-radius:13px;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.18)}
+.step .body p{margin:0;font-size:11.5px;line-height:1.62}
+.step .body p.en{margin-top:4px;font-size:9.5px;color:var(--muted)}
+.step .shot{flex:0 0 auto;width:22mm;border:3px solid var(--ink);border-radius:12px;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.18)}
 .step .shot img{width:100%;display:block}
 
-.tip-box{margin-top:10px;border-radius:12px;padding:12px 15px;font-size:11px;line-height:1.75;display:flex;gap:10px;align-items:flex-start}
+.tip-box{margin-top:8px;border-radius:12px;padding:10px 14px;font-size:10.5px;line-height:1.6;display:flex;gap:10px;align-items:flex-start}
 .tip-box .ic{font-size:16px}
 .tip-box .en{margin-top:5px;font-size:9.5px;opacity:.9}
 .tip-note{background:#eaf2fb;border:1px solid #cfe2f6;color:#1a4a73}
@@ -205,11 +227,15 @@ def render_cover(a, content, shots_dir, shots):
           <div class="phone"><img src="{ROOT_URL}/screenshots/{a['_key']}/guide/{s1}"></div>
           <div class="phone side r"><img src="{ROOT_URL}/screenshots/{a['_key']}/guide/{s2}"></div>
         </div>'''
+    logo_path = os.path.join(REPO_ROOT, 'logos', logo)
+    icon_html = f'<div class="icon-badge"><img src="file://{logo_path}"></div>' if os.path.exists(logo_path) else ''
     return f'''<section class="page cover">
       <div class="deco"></div>
+      {icon_html}
       <p class="kicker">{CURRENT_DEV.upper()}</p>
       {phones}
       <h1>{name}</h1>
+      <div class="title-rule"></div>
       <p class="guide-title">دليل الاستخدام الشامل<span class="en">Complete User Guide</span></p>
       <p class="tagline">{tagline_ar}<span class="en">{tagline_en}</span></p>
       <div class="ver-pill">📦 {version}</div>
