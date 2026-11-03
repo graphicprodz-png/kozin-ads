@@ -107,6 +107,11 @@ TPL = '''<!doctype html>
   .tagline-wrap{max-width:800px; margin:0 auto; padding:6px 16px 10px; text-align:center}
   .tagline-wrap p{color:var(--muted); font-size:15px; margin:0 auto; max-width:560px}
 
+  .video-section{max-width:800px; margin:0 auto; padding:4px 16px 22px}
+  .video-section h2{margin:0 0 12px; font-size:17px; text-align:center}
+  .video-wrap{border-radius:16px; overflow:hidden; border:1px solid var(--line); background:#000; box-shadow:0 2px 14px rgba(0,0,0,.1)}
+  .video-wrap video{display:block; width:100%; height:auto; max-height:460px; background:#000}
+
   .shots{max-width:800px; margin:0 auto; padding:10px 0 26px}
   .shots-row{display:flex; gap:12px; overflow-x:auto; padding:4px 16px 8px; scroll-snap-type:x proximity; justify-content:center}
   .shots-row img{
@@ -187,6 +192,7 @@ TPL = '''<!doctype html>
 </div>
 <p class="dl-hint">عند الضغط، يبدأ تحميل ملف APK — وبعدها تظهر خطوات التثبيت تلقائيًا في الأسفل 👇</p>
 
+__VIDEO__
 <div class="shots">
 __SHOTS__
 </div>
@@ -345,6 +351,24 @@ for key, a in applications.items():
         extra_note = " لم نتمكن من عرض لقطات شاشة حقيقية لهذا التطبيق بالتحديد (راجع الملاحظة أعلاه)."
     html = html.replace("__SHOTS__", shots_html)
     html = html.replace("__EXTRA_NOTE__", extra_note)
+
+    video_file = a.get("VIDEO_FILE")
+    if video_file and os.path.isfile(os.path.join(REPO_ROOT, "videos", video_file)):
+        poster = a.get("VIDEO_POSTER")
+        poster_attr = f' poster="../videos/{poster}"' if poster else ""
+        video_html = (
+            '<div class="video-section">\n'
+            f'  <h2>فيديو تعريفي بـ{a["NAME"]}</h2>\n'
+            '  <div class="video-wrap">\n'
+            f'    <video controls preload="metadata"{poster_attr}>\n'
+            f'      <source src="../videos/{video_file}" type="video/mp4">\n'
+            '    </video>\n'
+            '  </div>\n'
+            '</div>'
+        )
+    else:
+        video_html = ""
+    html = html.replace("__VIDEO__", video_html)
 
     with open(f"{OUT}/{key}.html", "w", encoding="utf-8") as f:
         f.write(html)
