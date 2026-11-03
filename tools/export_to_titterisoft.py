@@ -461,13 +461,23 @@ def export_one(key, dest_root, base_url):
     }
     page = f"<!-- {json.dumps(meta, ensure_ascii=False)} -->\n{html}"
 
-    with open(os.path.join(pages_dir, f"{key}.html"), "w", encoding="utf-8") as f:
+    slug = a.get("SLUG", key)
+    with open(os.path.join(pages_dir, f"{slug}.html"), "w", encoding="utf-8") as f:
         f.write(page)
-    print(f"exported {key} -> {dest_root}/src/pages/apps/{key}.html")
+    print(f"exported {key} -> {dest_root}/src/pages/apps/{slug}.html")
+
+    # If the app's public slug differs from its internal key (e.g. after a
+    # rename), remove any leftover page still sitting at the old key-based
+    # filename so there's only ever one live copy.
+    if slug != key:
+        stale_keyed_page = os.path.join(pages_dir, f"{key}.html")
+        if os.path.isfile(stale_keyed_page):
+            os.remove(stale_keyed_page)
+            print(f"removed stale {stale_keyed_page}")
 
     # Clean up the old (pre-redesign) standalone page if still present from
     # an earlier export, so there's only ever one copy of each app page.
-    old_page = os.path.join(pub, "apps", f"{key}.html")
+    old_page = os.path.join(pub, "apps", f"{slug}.html")
     if os.path.isfile(old_page):
         os.remove(old_page)
         print(f"removed stale {old_page}")
