@@ -138,7 +138,7 @@ applications = {
     SHOTS=["1.png"],
   ),
   "windoorgulf": dict(
-    NAME="Windoorgulf", VERSION="v4.1", LOGO="windoorgulf.png", APK="WindoorGulf.apk",
+    NAME="Windoorgulf", VERSION="v4.2", LOGO="windoorgulf.png", APK="WindoorGulf.apk",
     COLOR=dict(primary="#0d6fb8", accent="#c9972e"),
     TAGLINE="نسخة من Windoor مخصصة لدول الخليج — بنفس منطق تسعير النوافذ والأبواب الألمنيوم.",
     TAGLINE_EN="A Windoor edition for the Gulf market — same aluminium window and door pricing logic.",
