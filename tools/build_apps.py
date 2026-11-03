@@ -166,7 +166,7 @@ TPL = '''<!doctype html>
   <img class="icon" src="../logos/__LOGO__" alt="شعار __NAME__">
   <div class="info">
     <h1>__NAME__</h1>
-    <p class="dev">Construtech</p>
+    <p class="dev">__DEV__</p>
     <p class="meta-row"><span>__VERSION__</span><span class="dot"></span><span>Android</span><span class="dot"></span><span>APK مباشر</span></p>
     <p class="updated-badge" id="updatedBadge" data-updated="__UPDATED__">🆕 تم تحديث التطبيق مؤخرًا</p>
   </div>
@@ -178,7 +178,7 @@ TPL = '''<!doctype html>
   <div class="qf"><span class="ic">📦</span><b>__SIZE__</b><span>الحجم</span></div>
   <div class="qf"><span class="ic">🤖</span><b>7.0+</b><span>Android</span></div>
   <div class="qf"><span class="ic">🌐</span><b>الإنترنت</b><span>الأذونات</span></div>
-  <div class="qf"><span class="ic">🏷️</span><b>Construtech</b><span>المطور</span></div>
+  <div class="qf"><span class="ic">🏷️</span><b>__DEV__</b><span>المطور</span></div>
 </div>
 
 <div class="hero-actions">
@@ -224,7 +224,7 @@ __USAGE__
       <tr><td>الحجم</td><td>__SIZE__</td></tr>
       <tr><td>يتطلب</td><td>__MIN_ANDROID__</td></tr>
       <tr><td>الأذونات</td><td>__PERMISSIONS__</td></tr>
-      <tr><td>المطوّر</td><td>Construtech</td></tr>
+      <tr><td>المطوّر</td><td>__DEV__</td></tr>
       <tr><td>النسخة الحالية</td><td>__VERSION__</td></tr>
     </table>
   </section>
@@ -250,7 +250,7 @@ __FAQ__
   </section>
 </main>
 
-<footer>__NAME__ — Construtech © <span id="y"></span></footer>
+<footer>__NAME__ — __DEV__ © <span id="y"></span></footer>
 <script>
   document.getElementById('y').textContent = new Date().getFullYear();
   (function(){
@@ -286,6 +286,7 @@ for key, a in applications.items():
         continue
     html = TPL
     html = html.replace("__NAME__", a["NAME"])
+    html = html.replace("__DEV__", a.get("DEV", "Construtech"))
     html = html.replace("__VERSION__", a["VERSION"])
     html = html.replace("__LOGO__", a["LOGO"])
     html = html.replace("__APK__", a["APK"])
@@ -314,9 +315,10 @@ for key, a in applications.items():
     # FAQ — grounded in what we actually verified for each app; the data-storage
     # answer is only shown for apps we could confirm (local HTML/JS apps where
     # localStorage/indexedDB was found in the shipped assets), never guessed.
+    dev = a.get("DEV", "Construtech")
     faq_items = [
         ("هل هذا التطبيق آمن؟",
-         "التطبيق غير متوفر على Google Play، وهو تحميل مباشر (APK) موقَّع من Construtech. تأكد دائمًا من أنك حمّلته من هذه الصفحة بالذات قبل تثبيته."),
+         f"التطبيق غير متوفر على Google Play، وهو تحميل مباشر (APK) موقَّع من {dev}. تأكد دائمًا من أنك حمّلته من هذه الصفحة بالذات قبل تثبيته."),
     ]
     if a.get("LOCAL_DATA"):
         faq_items.append((

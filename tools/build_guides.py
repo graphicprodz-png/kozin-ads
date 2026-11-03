@@ -43,6 +43,7 @@ TIP_LABELS = {
     "warning": ("تنبيه", "Warning"),
 }
 TIP_ICON = {"note": "ℹ️", "tip": "💡", "warning": "⚠️"}
+CURRENT_DEV = "Construtech"  # set per-app at the top of build_one()
 
 def human_size(path):
     if not os.path.isfile(path):
@@ -188,7 +189,7 @@ def page_header(name, logo, title_ar, title_en, version):
     return f'''<div class="ph"><img src="{ROOT_URL}/logos/{logo}"><div class="t">{title_ar}<div class="en">{title_en}</div></div><div class="pill">{version}</div></div>'''
 
 def page_footer(name, version, pageno):
-    return f'''<div class="pf"><span>Construtech <span class="en">© {YEAR}</span></span><span>{name} {version} — {pageno}</span></div>'''
+    return f'''<div class="pf"><span>{CURRENT_DEV} <span class="en">© {YEAR}</span></span><span>{name} {version} — {pageno}</span></div>'''
 
 def render_cover(a, content, shots_dir, shots):
     name, logo, version = a["NAME"], a["LOGO"], a["VERSION"]
@@ -206,13 +207,13 @@ def render_cover(a, content, shots_dir, shots):
         </div>'''
     return f'''<section class="page cover">
       <div class="deco"></div>
-      <p class="kicker">CONSTRUTECH</p>
+      <p class="kicker">{CURRENT_DEV.upper()}</p>
       {phones}
       <h1>{name}</h1>
       <p class="guide-title">دليل الاستخدام الشامل<span class="en">Complete User Guide</span></p>
       <p class="tagline">{tagline_ar}<span class="en">{tagline_en}</span></p>
       <div class="ver-pill">📦 {version}</div>
-      <div class="brand">CONSTRUTECH · {YEAR}</div>
+      <div class="brand">{CURRENT_DEV.upper()} · {YEAR}</div>
     </section>'''
 
 def render_toc(a, toc_entries):
@@ -238,7 +239,7 @@ def render_overview(a, content, pageno):
         ("📦", human_size(apk_path), "الحجم", "Size"),
         ("🤖", MIN_ANDROID, "أندرويد", "Android"),
         ("🌐", PERMISSIONS_AR, "الصلاحيات", "Permissions"),
-        ("🏷️", "Construtech", "المطوّر", "Developer"),
+        ("🏷️", CURRENT_DEV, "المطوّر", "Developer"),
     ]
     facts_html = "\n".join(
         f'<div class="fact"><b>{ic} {val}</b><span>{lbl_ar}</span><span class="en">{lbl_en}</span></div>'
@@ -407,6 +408,7 @@ CONTACT_LABELS = {
     "phone": ("الهاتف", "Phone", "📞"),
     "whatsapp": ("واتساب", "WhatsApp", "💬"),
     "email": ("البريد الإلكتروني", "Email", "✉️"),
+    "website": ("الموقع الإلكتروني", "Website", "🌐"),
     "rip": ("الحساب البريدي (RIP)", "Bank account (RIP)", "🏦"),
     "rip_account_name": ("اسم صاحب الحساب", "Account holder", "👤"),
 }
@@ -422,7 +424,7 @@ def render_closing_page(a, content, pageno):
             if k in ("note", "note_ar", "note_en", "subscription_plans_dzd", "payment_methods") or not v:
                 continue
             lbl_ar, lbl_en, ic = CONTACT_LABELS.get(k, (k, k, "ℹ️"))
-            cards.append(f'<div class="contact-card"><div class="ic">{ic}</div><b>{esc(str(v))}</b><span class="en">{lbl_ar} / {lbl_en}</span></div>')
+            cards.append(f'<div class="contact-card"><div class="ic">{ic}</div><b dir="ltr">{esc(str(v))}</b><span class="en">{lbl_ar} / {lbl_en}</span></div>')
         if cards:
             contact_html = f'<h2 class="sec">للتواصل والدعم<span class="en">Contact &amp; support</span></h2><div class="sec-rule"></div><div class="contact-grid">{"".join(cards)}</div>'
         plans = contact.get("subscription_plans_dzd")
@@ -450,7 +452,9 @@ def render_closing_page(a, content, pageno):
 
 
 def build_one(key):
+    global CURRENT_DEV
     a = dict(applications[key])
+    CURRENT_DEV = a.get("DEV", "Construtech")
     a["_key"] = key
     content_path = os.path.join(CONTENT_DIR, f"{key}.json")
     if not os.path.isfile(content_path):
