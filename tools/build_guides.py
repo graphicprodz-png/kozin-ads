@@ -249,7 +249,7 @@ def render_overview(a, content, pageno):
     gd = content.get("gulf_differences")
     if gd and gd.get("ar"):
         gd_ar, gd_en = bi(gd)
-        gulf_box = f'''<div class="audience-box" style="margin-top:14px"><p><b>الفروقات الخاصة بنسخة الخليج:</b> {gd_ar}</p><p class="en"><b>Gulf-edition differences:</b> {gd_en}</p></div>'''
+        gulf_box = f'''<div class="audience-box" style="margin-top:14px"><p><b>مزايا مخصَّصة لدول الخليج:</b> {gd_ar}</p><p class="en"><b>Gulf-specific features:</b> {gd_en}</p></div>'''
     return f'''<section class="page pad">
       {page_header(name, logo, "نظرة عامة على التطبيق", "App overview", version)}
       <h2 class="sec">ما هو {name}؟<span class="en">What is {name}?</span></h2>

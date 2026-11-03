@@ -139,11 +139,11 @@ applications = {
   ),
   "windoorgulf": dict(
     NAME="WindoorPro", DEV="TitteriSoft", VERSION="v4.5", LOGO="windoorgulf.png", APK="WindoorGulf.apk",
-    COLOR=dict(primary="#0d6fb8", accent="#c9972e"),
-    TAGLINE="نسخة من Windoor مخصصة لدول الخليج — بنفس منطق تسعير النوافذ والأبواب الألمنيوم.",
-    TAGLINE_EN="A Windoor edition for the Gulf market — same aluminium window and door pricing logic.",
-    AUDIENCE="نسخة من Windoor مخصصة لسوق دول الخليج، موجَّهة لمصانع وورشات تصنيع النوافذ والأبواب الألمنيوم التي ترغب في إدارة مشاريعها وتسعيرها بنفس منطق Windoor.",
-    AUDIENCE_EN="A Windoor edition built for the Gulf market, for aluminium window and door factories and workshops who want to manage their projects and pricing with the same Windoor logic.",
+    COLOR=dict(primary="#1676d8", accent="#e8a324"),
+    TAGLINE="تطبيق شامل لحساب تسعيرة وتفصيل تصنيع النوافذ والأبواب الألمنيوم، بمزايا مصمَّمة خصّيصًا لدول الخليج.",
+    TAGLINE_EN="A complete app for pricing and manufacturing-calculating aluminium windows and doors, with features built specifically for the Gulf market.",
+    AUDIENCE="تطبيق شامل مخصَّص لسوق دول الخليج، موجَّه لمصانع وورشات تصنيع النوافذ والأبواب الألمنيوم التي ترغب في إدارة مشاريعها وتسعيرها بدقة واحترافية.",
+    AUDIENCE_EN="A complete app built for the Gulf market, for aluminium window and door factories and workshops who want to manage their projects and pricing with precision and professionalism.",
     HIGHLIGHTS=[
       dict(icon="📋", title="إدارة المشاريع والزبائن", desc="لكل زبون ملفٌ خاص يضم مشاريعه ومواضعه.",
            title_en="Manage projects and customers", desc_en="Each customer has their own file with their projects and openings."),
