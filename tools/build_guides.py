@@ -245,11 +245,6 @@ def render_overview(a, content, pageno):
         f'<div class="fact"><b>{ic} {val}</b><span>{lbl_ar}</span><span class="en">{lbl_en}</span></div>'
         for ic, val, lbl_ar, lbl_en in facts
     )
-    gulf_box = ""
-    gd = content.get("gulf_differences")
-    if gd and gd.get("ar"):
-        gd_ar, gd_en = bi(gd)
-        gulf_box = f'''<div class="audience-box" style="margin-top:14px"><p><b>مزايا مخصَّصة لدول الخليج:</b> {gd_ar}</p><p class="en"><b>Gulf-specific features:</b> {gd_en}</p></div>'''
     return f'''<section class="page pad">
       {page_header(name, logo, "نظرة عامة على التطبيق", "App overview", version)}
       <h2 class="sec">ما هو {name}؟<span class="en">What is {name}?</span></h2>
@@ -258,7 +253,6 @@ def render_overview(a, content, pageno):
       <h2 class="sec">الفئة المستهدفة<span class="en">Who it's for</span></h2>
       <div class="sec-rule"></div>
       <div class="audience-box"><p>{au_ar}</p><p class="en">{au_en}</p></div>
-      {gulf_box}
       <div class="facts-strip">{facts_html}</div>
       {page_footer(name, version, pageno)}
     </section>'''
@@ -272,11 +266,19 @@ def render_pipeline(a, content, pageno):
         parts.append(f'<div class="pl-node"><div class="ic">{esc(n.get("icon","•"))}</div><div class="tt">{t_ar}<span class="en">{t_en}</span></div></div>')
         if i < len(nodes) - 1:
             parts.append('<div class="pl-arrow">←</div>')
+    gulf_box = ""
+    gd = content.get("gulf_differences")
+    if gd and gd.get("ar"):
+        gd_ar, gd_en = bi(gd)
+        gulf_box = f'''<h2 class="sec" style="margin-top:18px">مزايا مخصَّصة لدول الخليج<span class="en">Gulf-specific features</span></h2>
+      <div class="sec-rule"></div>
+      <div class="audience-box"><p style="line-height:1.6">{gd_ar}</p><p class="en" style="line-height:1.55">{gd_en}</p></div>'''
     return f'''<section class="page pad">
       {page_header(name, logo, "مخطط سير العمل", "Workflow pipeline", version)}
       <h2 class="sec">كيف تسير العملية من البداية إلى النهاية<span class="en">How the process flows end-to-end</span></h2>
       <div class="sec-rule"></div>
       <div class="pipeline">{''.join(parts)}</div>
+      {gulf_box}
       {page_footer(name, version, pageno)}
     </section>'''
 
