@@ -183,7 +183,7 @@ TPL = '''<!doctype html>
 
 <div class="hero-actions">
   <a class="dl-btn" id="dlBtn" href="../apks/__APK__" download>⬇ تحميل وتثبيت</a>
-  <a class="pdf-btn" href="../guides/__KEY__-guide.pdf" download>📄 دليل الاستخدام (PDF)</a>
+  <a class="pdf-btn" href="../guides/__GUIDE_FILE__" download>📄 دليل الاستخدام (PDF)</a>
 </div>
 <p class="dl-hint">عند الضغط، يبدأ تحميل ملف APK — وبعدها تظهر خطوات التثبيت تلقائيًا في الأسفل 👇</p>
 
@@ -290,6 +290,7 @@ for key, a in applications.items():
     html = html.replace("__VERSION__", a["VERSION"])
     html = html.replace("__LOGO__", a["LOGO"])
     html = html.replace("__APK__", a["APK"])
+    html = html.replace("__GUIDE_FILE__", a.get("GUIDE_FILE", f"{key}-guide.pdf"))
     html = html.replace("__KEY__", key)
     html = html.replace("__TAGLINE__", a["TAGLINE"])
     html = html.replace("__AUDIENCE__", a["AUDIENCE"])

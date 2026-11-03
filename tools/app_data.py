@@ -139,6 +139,7 @@ applications = {
   ),
   "windoorgulf": dict(
     NAME="WindoorPro", DEV="TitteriSoft", VERSION="v4.5", LOGO="windoorgulf.png", APK="WindoorGulf.apk",
+    GUIDE_FILE="WindoorPro-Guide.pdf",
     COLOR=dict(primary="#1676d8", accent="#e8a324"),
     TAGLINE="تطبيق شامل لحساب تسعيرة وتفصيل تصنيع النوافذ والأبواب الألمنيوم، بمزايا مصمَّمة خصّيصًا لدول الخليج.",
     TAGLINE_EN="A complete app for pricing and manufacturing-calculating aluminium windows and doors, with features built specifically for the Gulf market.",

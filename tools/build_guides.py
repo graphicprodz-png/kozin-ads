@@ -579,7 +579,7 @@ def main():
             pg.goto("file://" + path)
             pg.wait_for_timeout(300)
             pg.pdf(
-                path=os.path.join(PDF_OUT, f"{key}-guide.pdf"),
+                path=os.path.join(PDF_OUT, applications[key].get("GUIDE_FILE", f"{key}-guide.pdf")),
                 format="A4",
                 print_background=True,
                 margin={"top": "0", "bottom": "0", "left": "0", "right": "0"},
