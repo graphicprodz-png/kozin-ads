@@ -73,7 +73,7 @@ __MINI_FEATS__
       </div>
       <div class="app-hero__actions">
         <a class="btn btn--primary" id="dlBtn" href="../apks/__APK__" download>تحميل التطبيق APK<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        <a class="btn btn--ghost" href="../guides/__KEY__-guide.pdf" download>دليل الاستخدام</a>
+        <a class="btn btn--ghost" href="../guides/__GUIDE_FILE__" download>دليل الاستخدام</a>
       </div>
     </div>
     <div class="app-hero__foot">
@@ -94,6 +94,7 @@ __FEATURE_STRIP__
   </div>
 </section>
 
+__VIDEO_SECTION__
 <section class="section section--tight">
   <div class="container app-shots">
 __SHOTS_NAV__
@@ -274,9 +275,28 @@ def export_one(key, dest_root, base_url):
         shutil.copy2(src_logo, os.path.join(pub, "logos", a["LOGO"]))
 
     # 3) guide PDF
-    src_guide = os.path.join(REPO_ROOT, "guides", f"{key}-guide.pdf")
+    guide_file = a.get("GUIDE_FILE", f"{key}-guide.pdf")
+    src_guide = os.path.join(REPO_ROOT, "guides", guide_file)
     if os.path.isfile(src_guide):
-        shutil.copy2(src_guide, os.path.join(pub, "guides", f"{key}-guide.pdf"))
+        shutil.copy2(src_guide, os.path.join(pub, "guides", guide_file))
+
+    # 3b) intro video (optional)
+    video_file = a.get("VIDEO_FILE")
+    video_poster = a.get("VIDEO_POSTER")
+    if video_file:
+        os.makedirs(os.path.join(pub, "videos"), exist_ok=True)
+        src_video = os.path.join(REPO_ROOT, "videos", video_file)
+        if os.path.isfile(src_video):
+            shutil.copy2(src_video, os.path.join(pub, "videos", video_file))
+        else:
+            video_file = None
+    if video_poster:
+        src_poster = os.path.join(REPO_ROOT, "videos", video_poster)
+        if os.path.isfile(src_poster):
+            os.makedirs(os.path.join(pub, "videos"), exist_ok=True)
+            shutil.copy2(src_poster, os.path.join(pub, "videos", video_poster))
+        else:
+            video_poster = None
 
     # 4) screenshots (only the ones actually used on the page)
     for s in a.get("SHOTS", []):
@@ -302,6 +322,7 @@ def export_one(key, dest_root, base_url):
     html = html.replace("__LOGO__", a["LOGO"])
     html = html.replace("__APK__", a["APK"])
     html = html.replace("__KEY__", key)
+    html = html.replace("__GUIDE_FILE__", guide_file)
     html = html.replace("__TAGLINE__", a["TAGLINE"])
     html = html.replace("__AUDIENCE__", a["AUDIENCE"])
     html = html.replace("__UPDATED__", updated)
@@ -386,6 +407,24 @@ def export_one(key, dest_root, base_url):
     html = html.replace("__SHOTS__", shots_html)
     html = html.replace("__SHOTS_NAV__", shots_nav)
     html = html.replace("__EXTRA_NOTE__", extra_note)
+
+    if video_file:
+        poster_attr = f' poster="../videos/{video_poster}"' if video_poster else ""
+        video_section = (
+            '<section class="section section--tight">\n'
+            '  <div class="container app-video">\n'
+            f'    <h3>فيديو تعريفي بـ{a["NAME"]}</h3>\n'
+            '    <div class="app-video__wrap">\n'
+            f'      <video controls preload="metadata"{poster_attr}>\n'
+            f'        <source src="../videos/{video_file}" type="video/mp4">\n'
+            '      </video>\n'
+            '    </div>\n'
+            '  </div>\n'
+            '</section>'
+        )
+    else:
+        video_section = ""
+    html = html.replace("__VIDEO_SECTION__", video_section)
 
     # Hero phone mockups — the first 1-2 real screenshots, framed. Omitted
     # entirely (not just hidden) when there are none, so no empty box is left.
