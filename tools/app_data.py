@@ -70,7 +70,7 @@ applications = {
     SHOTS=["w1-splash.png","w2-editor.png","w3-trapezoid.png","w4-diagonal.png","w5-sliding.png","w6-summary.png","w7-arch-door.png"],
   ),
   "rclean": dict(
-    NAME="Rclean", VERSION="v1.40", LOGO="rclean.png", APK="RClean.apk",
+    NAME="Rclean", VERSION="v1.41", LOGO="rclean.png", APK="RClean.apk",
     VIDEO_FILE="rclean-intro.mp4", VIDEO_POSTER="rclean-intro-poster.jpg",
     COLOR=dict(primary="#159e8a", accent="#1fb87f"),
     TAGLINE="تطبيق لإدارة تصنيع ومبيعات مواد التنظيف: مواد أولية، وصفات وإنتاج، مخزون، مبيعات وفواتير PDF، زبائن وموردون، وتقارير.",
