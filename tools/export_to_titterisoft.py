@@ -16,7 +16,7 @@ dist/apks/, dist/guides/, ... either way). The QR code is re-rendered to
 point at the titterisoft domain instead of kozin-ads.
 
 Usage:
-  python3 export_to_titterisoft.py --dest /path/to/titterisoft-website [--key windoor] [--base-url https://tettrisoft.pages.dev]
+  python3 export_to_titterisoft.py --dest /path/to/titterisoft-website [--key windoor] [--base-url https://www.titterisoft.com]
 
 Requires: the app's current apk/guide/screenshots already present under
 kozin-ads's own apks/, guides/, screenshots/<key>/ (i.e. run update_app.py
@@ -29,7 +29,7 @@ REPO_ROOT = os.path.abspath(os.path.join(HERE, '..'))
 sys.path.insert(0, HERE)
 from app_data import applications  # noqa: E402
 
-DEFAULT_BASE_URL = "https://tettrisoft.pages.dev"
+DEFAULT_BASE_URL = "https://www.titterisoft.com"
 
 MIN_ANDROID = "Android 7.0 أو أحدث"
 PERMISSIONS = "الإنترنت فقط"
