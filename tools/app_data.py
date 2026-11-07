@@ -1,6 +1,6 @@
 applications = {
   "kozinalum": dict(
-    NAME="Kozinalum", VERSION="v2.66", LOGO="kozinalum.png", APK="KozinAlum.apk",
+    NAME="Kozinalum", VERSION="v2.67", LOGO="kozinalum.png", APK="KozinAlum.apk",
     COLOR=dict(primary="#1a1a1a", accent="#d9a441"),
     TAGLINE="حساب القياسات وتسعير مطابخ الألمنيوم — الأبواب، الكيسونات، الفواصل والرفوف.",
     TAGLINE_EN="Measure and price aluminium kitchens — doors, cabinet boxes, dividers and shelves.",
