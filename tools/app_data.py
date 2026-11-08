@@ -105,7 +105,7 @@ applications = {
     SHOTS=["r1-home.png","r2-invoice.png","r3-report.png","r4-materials.png","r5-production.png","r6-reports.png"],
   ),
   "plafonpro": dict(
-    NAME="Plafonpro", VERSION="v1.43", LOGO="plafonpro.png", APK="PlafonPro.apk",
+    NAME="Plafonpro", VERSION="v1.44", LOGO="plafonpro.png", APK="PlafonPro.apk",
     COLOR=dict(primary="#1b2f6e", accent="#f2a93c"),
     TAGLINE="حساب وتسعير مشاريع أسقف الجبس (Plafond) — PVC و Placo.",
     TAGLINE_EN="Pricing and calculation for gypsum ceiling (Plafond) projects — PVC and Placo.",
