@@ -34,7 +34,7 @@ applications = {
     SHOTS=["1.png","2.png"],
   ),
   "windoor": dict(
-    NAME="Windoor", VERSION="v2.54", LOGO="windoor.png", APK="Windoor.apk",
+    NAME="Windoor", VERSION="v2.55", LOGO="windoor.png", APK="Windoor.apk",
     COLOR=dict(primary="#0d6fb8", accent="#0a4f8a"),
     TAGLINE="تسعير وتصنيع النوافذ والأبواب الألمنيوم — إدارة المشاريع والزبائن.",
     TAGLINE_EN="Pricing and manufacturing for aluminium windows and doors — projects and customers.",
