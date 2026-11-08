@@ -27,13 +27,20 @@ def mark_updated_today(key):
 def update_app_data_version(key, new_version):
     path = os.path.join(HERE, 'app_data.py')
     src = open(path, encoding='utf-8').read()
-    # Find the dict block for this key: `"key": dict(\n ... VERSION="vX.Y", ...)`
-    pattern = re.compile(
-        r'("' + re.escape(key) + r'":\s*dict\(\s*\n\s*NAME="[^"]*",\s*VERSION=")([^"]*)(")'
-    )
-    new_src, n = pattern.subn(lambda m: m.group(1) + new_version + m.group(3), src)
+    # Find this key's dict( block, then replace its VERSION="..." field wherever it sits
+    # inside it - some entries put DEV= (or other fields) between NAME= and VERSION=, so we
+    # don't assume they're adjacent. Limited to a short window after the opening paren since
+    # VERSION is always declared near the top, before any nested dict(...) (e.g. COLOR=dict(...))
+    # that would otherwise make bracket-matching this block non-trivial.
+    start = re.search(r'"' + re.escape(key) + r'":\s*dict\(', src)
+    if not start:
+        raise SystemExit(f"could not find dict( block for key={key} in app_data.py")
+    window_end = min(len(src), start.end() + 400)
+    window = src[start.end():window_end]
+    new_window, n = re.subn(r'VERSION="[^"]*"', f'VERSION="{new_version}"', window, count=1)
     if n != 1:
         raise SystemExit(f"could not find/replace VERSION for key={key} in app_data.py (matched {n} times)")
+    new_src = src[:start.end()] + new_window + src[window_end:]
     open(path, 'w', encoding='utf-8').write(new_src)
     print(f"app_data.py: {key} -> VERSION={new_version}")
 
@@ -47,7 +54,11 @@ def update_index_html(key, new_version, updated_date=None):
     )
     m = pattern.search(src)
     if not m:
-        raise SystemExit(f"could not find index.html card entry for key={key}")
+        # Not every app is listed on the public landing page (e.g. Windoor is only
+        # distributed directly, not via a kozin-ads card) - that's a deliberate choice, not
+        # a bug, so don't fail the whole sync over it.
+        print(f"index.html: no public card for key={key} - skipping (not listed on landing page)")
+        return
     entry = m.group(1)
     new_entry, n = re.subn(r'version:"[^"]*"', f'version:"{new_version}"', entry, count=1)
     if n != 1:
