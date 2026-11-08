@@ -139,7 +139,7 @@ applications = {
     SHOTS=["1.png"],
   ),
   "windoorgulf": dict(
-    NAME="WindoorPro", DEV="TitteriSoft", VERSION="v4.5", LOGO="windoorgulf.png", APK="WindoorGulf.apk",
+    NAME="WindoorPro", DEV="TitteriSoft", VERSION="v4.6", LOGO="windoorgulf.png", APK="WindoorGulf.apk",
     SLUG="windoorpro",
     GUIDE_FILE="WindoorPro-Guide.pdf",
     VIDEO_FILE="windoorpro-intro.mp4", VIDEO_POSTER="windoorpro-intro-poster.jpg",
